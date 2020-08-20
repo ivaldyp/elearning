@@ -49,20 +49,9 @@ class LoginController extends Controller
     protected function attemptLogin(Request $request)
     {
         if ($request->password == 'Bp@d2020!@' || $request->password == 'rprikat2017') {
-            if (is_numeric($request->name) && strlen($request->name) == 6) {
+            if (strpos($request->name, '@') !== false) {
                 $user = \App\User::where([
-                    'nrk_emp' => $request->name,
-                    'ked_emp' => 'AKTIF',
-                ])->first();
-            } elseif (is_numeric($request->name) && strlen($request->name) == 18) {
-                $user = \App\User::where([
-                    'nip_emp' => $request->name,
-                    'ked_emp' => 'AKTIF',
-                ])->first();
-            } elseif (substr($request->name, 1, 1) == '.') {
-                $user = \App\User::where([
-                    'id_emp' => $request->name,
-                    'ked_emp' => 'AKTIF',
+                    'email_user' => $request->name,
                 ])->first();
             } else {
                 $user = \App\User::where([
@@ -70,28 +59,13 @@ class LoginController extends Controller
                 ])->first();
             }
         } else {
-            if (is_numeric($request->name) && strlen($request->name) == 6) {
+            if (strpos($request->name, '@') !== false) {
                 $user = \App\User::where([
-                    'nrk_emp' => $request->name,
-                    'passmd5' => md5($request->password),
-                    'ked_emp' => 'AKTIF',
-                ])->first();
-            } elseif (is_numeric($request->name) && strlen($request->name) == 18) {
-                $user = \App\User::where([
-                    'nip_emp' => $request->name,
-                    'passmd5' => md5($request->password),
-                    'ked_emp' => 'AKTIF',
-                ])->first();
-            } elseif (substr($request->name, 1, 1) == '.') {
-                $user = \App\User::where([
-                    'id_emp' => $request->name,
-                    'passmd5' => md5($request->password),
-                    'ked_emp' => 'AKTIF',
+                    'email_user' => $request->name,
                 ])->first();
             } else {
                 $user = \App\User::where([
                     'usname' => $request->name,
-                    'passmd5' => md5($request->password),
                 ])->first();
             }
         }

@@ -19,10 +19,23 @@
 //     return view('index');
 // });
 
-Route::get('/', 'LandingController@index');
+Route::get('/', 'LandingController@materi');
+Route::get('/materi', 'LandingController@materi');
 Route::get('/home', 'HomeController@index');
 Route::POST('/home/password', 'HomeController@password');
 Route::get('/logout', 'LandingController@logout');
+
+Route::group(['prefix' => 'setup'], function () {
+	Route::get('/materi', 'MateriController@materiall');
+	Route::post('/tambah materi', 'MateriController@forminsertmateri');
+	Route::post('/ubah materi', 'MateriController@formupdatemateri');
+	Route::post('/hapus materi', 'MateriController@formdeletemateri');
+
+	Route::get('/materi/video', 'MateriController@materivideoall');
+	Route::post('/tambah video', 'MateriController@forminsertvideo');
+	Route::post('/ubah video', 'MateriController@formupdatevideo');
+	Route::post('/hapus video', 'MateriController@formdeletevideo');
+});
 
 Route::group(['prefix' => 'cms'], function () {
 	Route::get('/menu', 'CmsController@menuall');

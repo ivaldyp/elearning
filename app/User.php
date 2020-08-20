@@ -11,7 +11,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $connection = 'sqlsrv';
-    protected $table = 'new_loginbpad';
+    protected $table = 'new_login';
     protected $primaryKey = 'ids';
     // public $incrementing = false;
 

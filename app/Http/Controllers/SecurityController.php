@@ -29,10 +29,10 @@ class SecurityController extends Controller
 		}
 
 		$query = Sec_menu::
-				join('bpadpengamanan.dbo.sec_access', 'bpadpengamanan.dbo.sec_access.idtop', '=', 'bpadpengamanan.dbo.Sec_menu.ids')
-                ->where('bpadpengamanan.dbo.sec_access.idgroup', $idgroup)
-                ->where('bpadpengamanan.dbo.Sec_menu.sao', $parent)
-                ->orderBy('bpadpengamanan.dbo.Sec_menu.urut')
+				join('bpadelearning.dbo.sec_access', 'bpadelearning.dbo.sec_access.idtop', '=', 'bpadelearning.dbo.Sec_menu.ids')
+                ->where('bpadelearning.dbo.sec_access.idgroup', $idgroup)
+                ->where('bpadelearning.dbo.Sec_menu.sao', $parent)
+                ->orderBy('bpadelearning.dbo.Sec_menu.urut')
 				->get();
 
 		$result = '';
@@ -91,6 +91,8 @@ class SecurityController extends Controller
 	public function grupubah(Request $request)
 	{
 		$this->checkSessionTime();
+		$access = json_decode('{"sts":"1","uname":"qnoy","tgl":"2019-08-16 08:51:44.000","ip":"10.192.153.42","logbuat":null,"idgroup":"SUPERUSER","idtop":"4.0","zviw":"y","zadd":"y","zupd":"y","zdel":"y","zapr":"y","zprint":null,"zdwd":null,"zfor":null,"zint":null}');
+		$access = json_decode(json_encode($access), true);
 
 		$groups = Sec_access::
 					distinct('idgroup')
@@ -105,6 +107,7 @@ class SecurityController extends Controller
 		return view('pages.bpadsecurity.ubahgrup')
 				->with('pagename', $pagename)
 				->with('menus', $menus)
+				->with('access', $access)
 				->with('groups', $groups);
 	}
 
@@ -128,9 +131,8 @@ class SecurityController extends Controller
 					->orderBy('idtop')
 					->get();
 
-		$result = array();
 		foreach ($query as $key => $data) {
-			array_push($result, [
+			$insert_idgroup = [
 				'sts' => 1,
 				'uname'     => (Auth::user()->usname ? Auth::user()->usname : Auth::user()->id_emp),
 				'tgl'       => date('Y-m-d H:i:s'),
@@ -138,18 +140,13 @@ class SecurityController extends Controller
 				'logbuat'   => '',
 				'idgroup' => strtoupper($request->idgroup),
 				'idtop' => $data['idtop'],
-			]);
+			];
+			Sec_access::insert($insert_idgroup);
 		}
 
-		if (Sec_access::insert($result)) {
-			return redirect('/security/group user')
+		return redirect('/security/group user')
 					->with('message', 'Grup user '.$request->idgroup.' berhasil ditambah')
 					->with('msg_num', 1);
-		} else {
-			return redirect('/security/group user')
-					->with('message', 'Grup user '.$request->idgroup.' gagal ditambah')
-					->with('msg_num', 2);
-		}	
 	}
 
 	public function formupdategrup(Request $request)
@@ -188,11 +185,7 @@ class SecurityController extends Controller
 					where('idgroup', $request->idgroup)
 					->count();
 
-		$cari2 = Emp_data::
-					where('idgroup', $request->idgroup)
-					->count();
-
-		if ($cari1 > 0 || $cari2 > 0) {
+		if ($cari1 > 0) {
 			return redirect('/security/group user')
 				->with('message', 'Grup user '.$request->idgroup.' tidak dapat dihapus karena terdapat user yang merupakan grup user tersebut')
 				->with('msg_num', 2);

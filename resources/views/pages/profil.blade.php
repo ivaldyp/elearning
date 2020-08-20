@@ -22,22 +22,22 @@
 					<!-- article img -->
 					<div id="home-owl" class="owl-carousel owl-theme">
 						<div class="home-item" style="height: 600px">
-							<div class="section-bg" style="background-image: url('{{ ('/pengamanan/public/img/profil/image-01-full.jpg') }}') ; background-size: contain; background-repeat: no-repeat;"></div>
+							<div class="section-bg" style="background-image: url('{{ ('/elearning/public/img/profil/image-01-full.jpg') }}') ; background-size: contain; background-repeat: no-repeat;"></div>
 						</div>
 						<div class="home-item" style="height: 600px">
-							<div class="section-bg" style="background-image: url('{{ ('/pengamanan/public/img/profil/image-02-full.jpg') }}') ; background-size: contain; background-repeat: no-repeat;"></div>
+							<div class="section-bg" style="background-image: url('{{ ('/elearning/public/img/profil/image-02-full.jpg') }}') ; background-size: contain; background-repeat: no-repeat;"></div>
 						</div>
 						<div class="home-item" style="height: 600px">
-							<div class="section-bg" style="background-image: url('{{ ('/pengamanan/public/img/profil/image-03-full.jpg') }}') ; background-size: contain; background-repeat: no-repeat;"></div>
+							<div class="section-bg" style="background-image: url('{{ ('/elearning/public/img/profil/image-03-full.jpg') }}') ; background-size: contain; background-repeat: no-repeat;"></div>
 						</div>
 						<div class="home-item" style="height: 600px">
-							<div class="section-bg" style="background-image: url('{{ ('/pengamanan/public/img/profil/image-04-full.jpg') }}') ; background-size: contain; background-repeat: no-repeat;"></div>
+							<div class="section-bg" style="background-image: url('{{ ('/elearning/public/img/profil/image-04-full.jpg') }}') ; background-size: contain; background-repeat: no-repeat;"></div>
 						</div>
 						<div class="home-item" style="height: 600px">
-							<div class="section-bg" style="background-image: url('{{ ('/pengamanan/public/img/profil/image-05-full.jpg') }}') ; background-size: contain; background-repeat: no-repeat;"></div>
+							<div class="section-bg" style="background-image: url('{{ ('/elearning/public/img/profil/image-05-full.jpg') }}') ; background-size: contain; background-repeat: no-repeat;"></div>
 						</div>
 						<div class="home-item" style="height: 600px">
-							<div class="section-bg" style="background-image: url('{{ ('/pengamanan/public/img/profil/image-06-full.jpg') }}') ; background-size: contain; background-repeat: no-repeat;"></div>
+							<div class="section-bg" style="background-image: url('{{ ('/elearning/public/img/profil/image-06-full.jpg') }}') ; background-size: contain; background-repeat: no-repeat;"></div>
 						</div>
 					</div>
 					<!-- <div class="article-img">
@@ -77,21 +77,21 @@
 			            <br>
 
 			            <h2 class="article-title">Struktur Organisasi - BPAD</h2>
-			            <!-- <img id="img-overlay" src="{{ ('/pengamanan/public/img/profil/organisasi.png') }}" style="width: 100%"> -->
+			            <!-- <img id="img-overlay" src="{{ ('/elearning/public/img/profil/organisasi.png') }}" style="width: 100%"> -->
 			            <!-- <div id="overlay"></div> -->
 			            <span class='zoom' id='ex2'>
 							<!-- <svgs>       
 								<image href="https://mdn.mozillademos.org/files/6457/mdn_logo_only_color.png" height="200" width="200"/>
 							</svg> -->
-							<img src="{{ ('/pengamanan/public/img/profil/organisasi2.jpg') }}" width='100%' alt='Struktur Organisasi BPAD'/>
+							<img src="{{ ('/elearning/public/img/profil/organisasi2.jpg') }}" width='100%' alt='Struktur Organisasi BPAD'/>
 						</span>
 			            <br><br>
 
 			            <h2 class="article-title">Struktur Organisasi - Suku Badan</h2>
-			            <!-- <img id="img-overlay" src="{{ ('/pengamanan/public/img/profil/organisasi.png') }}" style="width: 100%"> -->
+			            <!-- <img id="img-overlay" src="{{ ('/elearning/public/img/profil/organisasi.png') }}" style="width: 100%"> -->
 			            <!-- <div id="overlay"></div> -->
 			            <span class='zoom' id='ex1'>
-							<img src="{{ ('/pengamanan/public/img/profil/organisasi_suban2.jpg') }}" width='100%' alt='Struktur Organisasi BPAD'/>
+							<img src="{{ ('/elearning/public/img/profil/organisasi_suban2.jpg') }}" width='100%' alt='Struktur Organisasi BPAD'/>
 						</span>
 			            <br><br>
 

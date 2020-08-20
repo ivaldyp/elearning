@@ -7,15 +7,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-use App\Content_tb;
-use App\Glo_kategori;
-use App\Help;
-use App\Produk_aset;
-use App\Setup_tb;
-use App\Fr_disposisi;
+
+use App\Dat_materi;
 
 session_start();
 
@@ -24,6 +17,29 @@ class LandingController extends Controller
 	public function index()
 	{
 		return view('index');
+	}
+
+	public function materi(Request $request)
+	{
+		$materis = Dat_materi::
+					where('sts', 1)
+					->orderByRaw('(case when sao = 0 then ids else sao end), sao, urut')
+					->get();
+
+		// $materis = Dat_materi::
+		// 			where('sts', 1)
+		// 			->where('sao', 0)
+		// 			->orderBy('urut', 'asc')
+		// 			->get();
+
+		$countmateri = Dat_materi::
+					where('sts', 1)
+					->where('sao', 0)
+					->count();
+
+		return view('index')
+			->with('materis', $materis)
+			->with('countmateri', $countmateri);
 	}
 
 	public function logout()

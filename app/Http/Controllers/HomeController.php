@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Traits\SessionCheckTraits;
 
-use App\Emp_data;
+use App\Dat_materi;
 use App\Sec_access;
 use App\Sec_logins;
 use App\Sec_menu;
+use App\Sec_student;
 
 session_start();
 
@@ -36,13 +37,13 @@ class HomeController extends Controller
 							
 		$query = DB::select( DB::raw("
 					SELECT *
-					FROM bpadpengamanan.dbo.sec_menu
-					JOIN bpadpengamanan.dbo.sec_access ON bpadpengamanan.dbo.sec_access.idtop = bpadpengamanan.dbo.sec_menu.ids
-					WHERE bpadpengamanan.dbo.sec_access.idgroup = '$idgroup'
-					AND bpadpengamanan.dbo.sec_access.zviw = 'y'
+					FROM bpadelearning.dbo.sec_menu
+					JOIN bpadelearning.dbo.sec_access ON bpadelearning.dbo.sec_access.idtop = bpadelearning.dbo.sec_menu.ids
+					WHERE bpadelearning.dbo.sec_access.idgroup = '$idgroup'
+					AND bpadelearning.dbo.sec_access.zviw = 'y'
 					AND $sao
-					AND bpadpengamanan.dbo.sec_menu.tampilnew = 1
-					ORDER BY bpadpengamanan.dbo.sec_menu.urut
+					AND bpadelearning.dbo.sec_menu.tampilnew = 1
+					ORDER BY bpadelearning.dbo.sec_menu.urut
 					"));
 		$query = json_decode(json_encode($query), true);
 
@@ -54,6 +55,10 @@ class HomeController extends Controller
 		if (count($query) > 0) {
 
 			$result .= $arrLevel[$level];
+
+			if ($level == 0) {
+				$result .= '<li id="li_portal"> <a href="/elearning" class="waves-effect"> <i class="fa fa-globe fa-fw"></i> <span class="hide-menu">E-Learning BPAD</span></a></li>';
+			}
 		
 			foreach ($query as $menu) {
 				if (is_null($menu['urlnew'])) {
@@ -86,30 +91,30 @@ class HomeController extends Controller
 		return $result;
 	}
 
-	public function password(Request $request)
-	{
-		if (Auth::user()->id_emp) {
-			$ids = Auth::user()->id_emp;
+	// public function password(Request $request)
+	// {
+	// 	if (Auth::user()->id_emp) {
+	// 		$ids = Auth::user()->id_emp;
 
-			Emp_data::
-			where('id_emp', $ids)
-			->update([
-				'passmd5' => md5($request->passmd5),
-			]);
-		} else {
-			$ids = Auth::user()->usname;
+	// 		Emp_data::
+	// 		where('id_emp', $ids)
+	// 		->update([
+	// 			'passmd5' => md5($request->passmd5),
+	// 		]);
+	// 	} else {
+	// 		$ids = Auth::user()->usname;
 
-			Sec_logins::
-			where('usname', $ids)
-			->update([
-				'passmd5' => md5($request->passmd5),
-			]);
-		}
+	// 		Sec_logins::
+	// 		where('usname', $ids)
+	// 		->update([
+	// 			'passmd5' => md5($request->passmd5),
+	// 		]);
+	// 	}
 
-		return redirect('/home')
-					->with('message', 'Password berhasil diubah')
-					->with('msg_num', 1);
-	}
+	// 	return redirect('/home')
+	// 				->with('message', 'Password berhasil diubah')
+	// 				->with('msg_num', 1);
+	// }
 
 	public function index(Request $request)
 	{
@@ -120,24 +125,15 @@ class HomeController extends Controller
 		date_default_timezone_set('Asia/Jakarta');
 		
 		if (is_null(Auth::user()->usname)) {
-			$iduser = Auth::user()->id_emp;
+			$iduser = Auth::user()->id_user;
 
-			$user_data = DB::select( DB::raw("
-						SELECT id_emp,a.uname+'::'+convert(varchar,a.tgl)+'::'+a.ip,createdate,nip_emp,nrk_emp,nm_emp,nrk_emp+'-'+nm_emp as c2,gelar_dpn,gelar_blk,jnkel_emp,tempat_lahir,tgl_lahir,CONVERT(VARCHAR(10), tgl_lahir, 103) AS [DD/MM/YYYY],idagama,alamat_emp,tlp_emp,email_emp,status_emp,ked_emp,status_nikah,gol_darah,nm_bank,cb_bank,an_bank,nr_bank,no_taspen,npwp,no_askes,no_jamsos,tgl_join,CONVERT(VARCHAR(10), tgl_join, 103) AS [DD/MM/YYYY],tgl_end,reason,a.idgroup,pass_emp,foto,ttd,a.telegram_id,a.lastlogin,tbgol.tmt_gol,CONVERT(VARCHAR(10), tbgol.tmt_gol, 103) AS [DD/MM/YYYY],tbgol.tmt_sk_gol,CONVERT(VARCHAR(10), tbgol.tmt_sk_gol, 103) AS [DD/MM/YYYY],tbgol.no_sk_gol,tbgol.idgol,tbgol.jns_kp,tbgol.mk_thn,tbgol.mk_bln,tbgol.gambar,tbgol.nm_pangkat,tbjab.tmt_jab,CONVERT(VARCHAR(10), tbjab.tmt_jab, 103) AS [DD/MM/YYYY],tbjab.idskpd,tbjab.idunit,tbjab.idjab, tbunit.child, tbjab.idlok,tbjab.tmt_sk_jab,CONVERT(VARCHAR(10), tbjab.tmt_sk_jab, 103) AS [DD/MM/YYYY],tbjab.no_sk_jab,tbjab.jns_jab,tbjab.idjab,tbjab.eselon,tbjab.gambar,tbdik.iddik,tbdik.prog_sek,tbdik.no_sek,tbdik.th_sek,tbdik.nm_sek,tbdik.gelar_dpn_sek,tbdik.gelar_blk_sek,tbdik.ijz_cpns,tbdik.gambar,tbdik.nm_dik,b.nm_skpd,c.nm_unit,c.notes,d.nm_lok, tbunit.sao FROM bpadpengamanan.dbo.emp_data as a
-							CROSS APPLY (SELECT TOP 1 tmt_gol,tmt_sk_gol,no_sk_gol,idgol,jns_kp,mk_thn,mk_bln,gambar,nm_pangkat FROM  bpadpengamanan.dbo.emp_gol,bpadpengamanan.dbo.glo_org_golongan WHERE a.id_emp = emp_gol.noid AND emp_gol.idgol=glo_org_golongan.gol AND emp_gol.sts='1' AND glo_org_golongan.sts='1' ORDER BY tmt_gol DESC) tbgol
-							CROSS APPLY (SELECT TOP 1 tmt_jab,idskpd,idunit,idlok,tmt_sk_jab,no_sk_jab,jns_jab,replace(idjab,'NA::','') as idjab,eselon,gambar FROM  bpadpengamanan.dbo.emp_jab WHERE a.id_emp=emp_jab.noid AND emp_jab.sts='1' ORDER BY tmt_jab DESC) tbjab
-							CROSS APPLY (SELECT TOP 1 iddik,prog_sek,no_sek,th_sek,nm_sek,gelar_dpn_sek,gelar_blk_sek,ijz_cpns,gambar,nm_dik FROM  bpadpengamanan.dbo.emp_dik,bpadpengamanan.dbo.glo_dik WHERE a.id_emp = emp_dik.noid AND emp_dik.iddik=glo_dik.dik AND emp_dik.sts='1' AND glo_dik.sts='1' ORDER BY th_sek DESC) tbdik
-							CROSS APPLY (SELECT TOP 1 * FROM bpadpengamanan.dbo.glo_org_unitkerja WHERE glo_org_unitkerja.kd_unit = tbjab.idunit) tbunit
-							,bpadpengamanan.dbo.glo_skpd as b,bpadpengamanan.dbo.glo_org_unitkerja as c,bpadpengamanan.dbo.glo_org_lokasi as d WHERE tbjab.idskpd=b.skpd AND tbjab.idskpd+'::'+tbjab.idunit=c.kd_skpd+'::'+c.kd_unit AND tbjab.idskpd+'::'+tbjab.idlok=d.kd_skpd+'::'+d.kd_lok AND a.sts='1' AND b.sts='1' AND c.sts='1' AND d.sts='1' 
-							and id_emp like '". Auth::user()->id_emp ."'
-							"))[0];
+			$user_data = Sec_student::where('id_user', $iduser)->first();
 
-			$user_data = json_decode(json_encode($user_data), true);
-
-			Emp_data::where('id_emp', $user_data['id_emp'])
+			Sec_student::where('id_user', $user_data['id_user'])
 			->update([
 				'lastlogin' => date('Y-m-d H:i:s'),
 			]);	
+
 		} else {
 			$iduser = Auth::user()->usname;
 
@@ -153,13 +149,26 @@ class HomeController extends Controller
 
 		$_SESSION['user_data'] = $user_data;
 
-		$all_menu = [];
+		if (Auth::user()->id_user) {
 
-		$menus = $this->display_menus($all_menu, 0, 0, $_SESSION['user_data']['idgroup']);
+			$materis = Dat_materi::
+						where('sts', 1)
+						->orderByRaw('case when sao = 0 then ids else sao end), sao, ids')
+						->get();
 
-		$_SESSION['menus'] = $menus;
+			return view('index')
+				->with('iduser', $iduser)
+				->with('materis', $materis);
+		} else {
+			$all_menu = [];
 
-		return view('home')
+			$menus = $this->display_menus($all_menu, 0, 0, $_SESSION['user_data']['idgroup']);
+
+			$_SESSION['menus'] = $menus;
+
+			return view('home')
 				->with('iduser', $iduser);
+		}
+
 	}
 }

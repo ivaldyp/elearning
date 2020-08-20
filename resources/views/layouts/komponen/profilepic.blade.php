@@ -41,7 +41,7 @@
 <div id="modal-password" class="modal fade" role="dialog" data-backdrop="false">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form method="POST" action="/pengamanan/home/password" class="form-horizontal">
+			<form method="POST" action="/elearning/home/password" class="form-horizontal">
 			@csrf
 				<div class="modal-header">
 					<h4 class="modal-title"><b>Ubah Password</b></h4>

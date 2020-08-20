@@ -63,27 +63,23 @@
 				<div class="col-md-12">
 					<!-- <div class="white-box"> -->
 					<div class="panel panel-default">
-                        <div class="panel-heading">Menu</div>
+                        <div class="panel-heading">Materi</div>
                     	<div class="panel-wrapper collapse in">
                             <div class="panel-body">
 								@if($access['zadd'] == 'y')
-								<button class="btn btn-info btn-insert" style="margin-bottom: 10px" data-toggle="modal" data-target="#modal-insert" data-ids="0" data-desk="Tidak Ada">Tambah Level 0</button>
+								<button class="btn btn-info btn-insert" style="margin-bottom: 10px" data-toggle="modal" data-target="#modal-insert" data-desk="Tidak Ada">Tambah</button>
 								@endif
 								<div class="table-responsive">
 									<table id="myTable" class="table table-hover">
 										<thead>
 											<tr>
-												<th>Level</th>
 												<th>ID</th>
-												<th>Nama</th>
-												<th>Ket</th>
-												<th>Icon</th>
-												<th>Url</th>
 												<th class="text-center">Urut</th>
-												<th class="text-center">Child</th>
-												<th class="text-center">Tampil</th>
+												<th>Nama</th>
+												<th class="text-center">Tampilkan?</th>
+												<th class="text-center">Total Video</th>
 												@if($access['zadd'] == 'y')
-												<th class="text-center">Tambah Anak</th>
+												<th class="text-center">Manage Video</th>
 												@endif
 												@if($access['zupd'] == 'y' || $access['zdel'] == 'y')
 												<th class="col-md-2">Action</th>
@@ -91,7 +87,29 @@
 											</tr>
 										</thead>
 										<tbody>
-										{!! $menus !!}
+											@foreach($materis as $key => $mat)
+											<tr style="background-color:">
+												<td class="col-md-1">{{ $mat['ids'] }}</td>
+												<td class="text-center">{{ intval($mat['urut']) }}</td>
+												<td>{{ $mat['nm_materi'] }} </td>
+												<td class="text-center">{!! $mat['tampilkan'] == 0 ? '<i class="fa fa-close" style="color: red"></i>' : '<i class="fa fa-check" style="color: green"></i>' !!}</td>
+												<td class="text-center">{{ $mat['total'] }}</td>
+												
+												<td class="text-center"><a href="/elearning/setup/materi/video?mat={{ $mat['ids'] }}"><button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button></a></td>
+
+												@if($access['zupd'] == 'y' || $access['zdel'] == 'y')
+													<td class="col-md-2">
+														@if($access['zupd'] == 'y')
+															<button type="button" class="btn btn-info btn-update" data-toggle="modal" data-target="#modal-update" data-ids="{{ $mat['ids'] }}" data-nm_materi="{{ $mat['nm_materi'] }}" data-urut="{{ $mat['urut'] }}" data-tampilkan="{{ $mat['tampilkan'] }}"><i class="fa fa-edit"></i></button>
+														@endif
+														@if($access['zdel'] == 'y') 
+															<button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target="#modal-delete" data-ids="{{ $mat['ids'] }}" data-nm_materi="{{ $mat['nm_materi'] }}"><i class="fa fa-trash"></i></button>
+														@endif
+													</td>
+												@endif
+												
+											</tr>
+											@endforeach
 										</tbody>
 									</table>
 								</div>
@@ -104,30 +122,17 @@
 			<div id="modal-insert" class="modal fade" role="dialog">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
-						<form method="POST" action="/elearning/cms/form/tambahmenu" class="form-horizontal" data-toggle="validator">
+						<form method="POST" action="/elearning/setup/tambah materi" class="form-horizontal" data-toggle="validator">
 						@csrf
 							<div class="modal-header">
-								<h4 class="modal-title"><b>Tambah Menu</b></h4>
+								<h4 class="modal-title"><b>Tambah Materi</b></h4>
 							</div>
 							<div class="modal-body">
 								<div class="form-group">
-									<label for="desk" class="col-md-2 control-label"><span style="color: red">*</span> Nama Menu </label>
+									<label for="nm_materi" class="col-md-2 control-label"><span style="color: red">*</span> Materi </label>
 									<div class="col-md-8">
-										<input type="text" name="desk" id="modal_insert_desk" class="form-control" data-error="Masukkan nama" autocomplete="off" required>
+										<input type="text" name="nm_materi" id="modal_insert_desk" class="form-control" data-error="Masukkan nama materi" autocomplete="off" required>
 										<div class="help-block with-errors"></div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="desk" class="col-md-2 control-label"> Keterangan </label>
-									<div class="col-md-8">
-										<textarea name="zket" id="modal_insert_zket" class="form-control" autocomplete="off"></textarea>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="sao" class="col-md-2 control-label"> Parent </label>
-									<div class="col-md-8">
-										<input type="text" name="sao" id="modal_insert_sao" class="form-control" disabled>
-										<input type="hidden" name="sao" id="modal_insert_sao_real" class="form-control">
 									</div>
 								</div>
 								<div class="form-group">
@@ -136,32 +141,19 @@
 										<input type="text" name="urut" id="modal_insert_urut" class="form-control" placeholder="Boleh dikosongkan" autocomplete="off">
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="iconnew" class="col-md-2 control-label"> Icon </label>
-									<div class="col-md-8">
-										<input type="text" name="iconnew" id="modal_insert_iconnew" class="form-control" placeholder="Boleh dikosongkan" autocomplete="off">
-										<div class="help-block with-errors"></div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="urlnew" class="col-md-2 control-label"> URL </label>
-									<div class="col-md-8">
-										<input type="text" name="urlnew" id="modal_insert_urlnew" class="form-control" placeholder="Boleh dikosongkan" autocomplete="off">
-										<div class="help-block with-errors"></div>
-									</div>
-								</div>
+								
 								<div class="form-group">
 									<label class="col-md-2 control-label"><span style="color: red">*</span> Tampilkan? </label>
 									<div class="radio-list col-md-8">
 										<label class="radio-inline">
 											<div class="radio radio-info">
-												<input type="radio" name="tampilnew" id="tampil1" value="1" data-error="Pilih salah satu" required>
+												<input type="radio" name="tampilkan" id="tampil1" value="1" data-error="Pilih salah satu" required>
 												<label for="tampil1">Ya</label> 
 											</div>
 										</label>
 										<label class="radio-inline">
 											<div class="radio radio-info">
-												<input type="radio" name="tampilnew" id="tampil2" value="0">
+												<input type="radio" name="tampilkan" id="tampil2" value="0">
 												<label for="tampil2">Tidak </label>
 											</div>
 										</label>
@@ -180,65 +172,41 @@
 			<div id="modal-update" class="modal fade" role="dialog">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
-						<form method="POST" action="/elearning/cms/form/ubahmenu" class="form-horizontal" data-toggle="validator">
+						<form method="POST" action="/elearning/setup/ubah materi" class="form-horizontal" data-toggle="validator">
 						@csrf
 							<div class="modal-header">
-								<h4 class="modal-title"><b>Ubah Menu</b></h4>
+								<h4 class="modal-title"><b>Ubah Materi</b></h4>
 							</div>
 							<div class="modal-body">
 								<input type="hidden" name="ids" id="modal_update_ids">
+
 								<div class="form-group">
-									<label for="desk" class="col-md-2 control-label"><span style="color: red">*</span> Nama Menu </label>
+									<label for="nm_materi" class="col-md-2 control-label"><span style="color: red">*</span> Materi </label>
 									<div class="col-md-8">
-										<input type="text" name="desk" id="modal_update_desk" class="form-control" data-error="Masukkan nama" autocomplete="off" required>
+										<input type="text" name="nm_materi" id="modal_update_nm_materi" class="form-control" data-error="Masukkan nama materi" autocomplete="off" required>
 										<div class="help-block with-errors"></div>
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="desk" class="col-md-2 control-label"> Keterangan </label>
-									<div class="col-md-8">
-										<textarea name="zket" id="modal_update_zket" class="form-control" autocomplete="off"></textarea>
-									</div>
-								</div>
-								<!-- <div class="form-group">
-									<label for="sao" class="col-md-2 control-label"> Parent </label>
-									<div class="col-md-8">
-										<input type="text" name="sao" id="modal_update_sao" class="form-control" disabled>
-										<input type="hidden" name="sao" id="modal_update_sao_real" class="form-control">
-									</div>
-								</div> -->
+
 								<div class="form-group">
 									<label for="urut" class="col-md-2 control-label"> Urut </label>
 									<div class="col-md-8">
 										<input type="text" name="urut" id="modal_update_urut" class="form-control" placeholder="Boleh dikosongkan" autocomplete="off">
 									</div>
 								</div>
-								<div class="form-group">
-									<label for="iconnew" class="col-md-2 control-label"> Icon </label>
-									<div class="col-md-8">
-										<input type="text" name="iconnew" id="modal_update_iconnew" class="form-control" placeholder="Boleh dikosongkan" autocomplete="off">
-										<div class="help-block with-errors"></div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="urlnew" class="col-md-2 control-label"> URL </label>
-									<div class="col-md-8">
-										<input type="text" name="urlnew" id="modal_update_urlnew" class="form-control" placeholder="Boleh dikosongkan" autocomplete="off">
-										<div class="help-block with-errors"></div>
-									</div>
-								</div>
+								
 								<div class="form-group">
 									<label class="col-md-2 control-label"><span style="color: red">*</span> Tampilkan? </label>
 									<div class="radio-list col-md-8">
 										<label class="radio-inline">
 											<div class="radio radio-info">
-												<input type="radio" name="tampilnew" id="update_tampil1" value="1" data-error="Pilih salah satu" required>
+												<input type="radio" name="tampilkan" id="update_tampil1" value="1" data-error="Pilih salah satu" required>
 												<label for="update_tampil1">Ya</label> 
 											</div>
 										</label>
 										<label class="radio-inline">
 											<div class="radio radio-info">
-												<input type="radio" name="tampilnew" id="update_tampil2" value="0">
+												<input type="radio" name="tampilkan" id="update_tampil2" value="0">
 												<label for="update_tampil2">Tidak </label>
 											</div>
 										</label>
@@ -257,16 +225,15 @@
 			<div id="modal-delete" class="modal fade" role="dialog">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
-						<form method="POST" action="/elearning/cms/form/hapusmenu" class="form-horizontal">
+						<form method="POST" action="/elearning/setup/hapus materi" class="form-horizontal">
 						@csrf
 							<div class="modal-header">
-								<h4 class="modal-title"><b>Hapus Menu</b></h4>
+								<h4 class="modal-title"><b>Hapus Materi</b></h4>
 							</div>
 							<div class="modal-body">
 								<h4 id="label_delete"></h4>
 								<input type="hidden" name="ids" id="modal_delete_ids" value="">
-								<input type="hidden" name="sao" id="modal_delete_sao" value="">
-								<input type="hidden" name="desk" id="modal_delete_desk" value="">
+								<input type="hidden" name="nm_materi" id="modal_delete_nm_materi" value="">
 							</div>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-danger pull-right">Hapus</button>
@@ -276,6 +243,7 @@
 					</div>
 				</div>
 			</div>
+			
 		</div>
 		<!-- /.container-fluid -->
 		<footer class="footer text-center"> 
@@ -304,24 +272,15 @@
 
 	<script>
 		$(function () {
-			$('.btn-insert').on('click', function () {
-				var $el = $(this);
-
-				$("#modal_insert_sao").val("("+$el.data('ids')+") - "+$el.data('desk'));
-				$("#modal_insert_sao_real").val($el.data('ids'));
-			});
 
 			$('.btn-update').on('click', function () {
 				var $el = $(this);
 
 				$("#modal_update_ids").val($el.data('ids'));
-				$("#modal_update_desk").val($el.data('desk'));
-				$("#modal_update_zket").val($el.data('zket'));
+				$("#modal_update_nm_materi").val($el.data('nm_materi'));
 				$("#modal_update_urut").val($el.data('urut'));
-				$("#modal_update_iconnew").val($el.data('iconnew'));
-				$("#modal_update_urlnew").val($el.data('urlnew'));
 
-				if ($el.data('tampilnew') == 1) {
+				if ($el.data('tampilkan') == 1) {
 					$("#update_tampil1").attr('checked', true);
 				} else {
 					$("#update_tampil2").attr('checked', true);
@@ -331,10 +290,9 @@
 			$('.btn-delete').on('click', function () {
 				var $el = $(this);
 
-				$("#label_delete").append('Apakah anda yakin ingin menghapus menu <b>' + $el.data('desk') + '</b>?');
+				$("#label_delete").append('Apakah anda yakin ingin menghapus materi <b>' + $el.data('nm_materi') + '</b> dan seluruh isinya?');
 				$("#modal_delete_ids").val($el.data('ids'));
-				$("#modal_delete_sao").val($el.data('sao'));
-				$("#modal_delete_desk").val($el.data('desk'));
+				$("#modal_delete_nm_materi").val($el.data('desk'));
 			});
 
 			$("#modal-delete").on("hidden.bs.modal", function () {

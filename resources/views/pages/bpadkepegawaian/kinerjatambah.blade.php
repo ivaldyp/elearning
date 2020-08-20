@@ -2,21 +2,21 @@
 
 @section('css')
 	<!-- Bootstrap Core CSS -->
-	<link href="{{ ('/pengamanan/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link href="{{ ('/pengamanan/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ ('/elearning/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/elearning/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
 	<!-- Menu CSS -->
-	<link href="{{ ('/pengamanan/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
 	<!-- Page plugins css -->
-	<link href="{{ ('/pengamanan/public/ample/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/elearning/public/ample/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.css') }}" rel="stylesheet">
 	<!-- Date picker plugins css -->
-	<link href="{{ ('/pengamanan/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ ('/elearning/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
 	<!-- animation CSS -->
-	<link href="{{ ('/pengamanan/public/ample/css/animate.css') }}" rel="stylesheet">
+	<link href="{{ ('/elearning/public/ample/css/animate.css') }}" rel="stylesheet">
 	<!-- Custom CSS -->
-	<link href="{{ ('/pengamanan/public/ample/css/style.css') }}" rel="stylesheet">
+	<link href="{{ ('/elearning/public/ample/css/style.css') }}" rel="stylesheet">
 	<!-- color CSS -->
-	<link href="{{ ('/pengamanan/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
+	<link href="{{ ('/elearning/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -67,7 +67,7 @@
 			<div class="row ">
 				<div class="col-md-2"></div>
 				<div class="col-md-8">
-					<form class="form-horizontal" method="POST" action="/pengamanan/kepegawaian/form/tambahkinerja" data-toggle="validator" enctype="multipart/form-data">
+					<form class="form-horizontal" method="POST" action="/elearning/kepegawaian/form/tambahkinerja" data-toggle="validator" enctype="multipart/form-data">
 					@csrf
 						<div class="panel panel-info">
 							<div class="panel-heading"> Input Kinerja </div>
@@ -202,23 +202,23 @@
 <!-- /////////////////////////////////////////////////////////////// -->
 
 @section('js')
-	<script src="{{ ('/pengamanan/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
+	<script src="{{ ('/elearning/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
 	<!-- Bootstrap Core JavaScript -->
-	<script src="{{ ('/pengamanan/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+	<script src="{{ ('/elearning/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 	<!-- Menu Plugin JavaScript -->
-	<script src="{{ ('/pengamanan/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+	<script src="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
 	<!--slimscroll JavaScript -->
-	<script src="{{ ('/pengamanan/public/ample/js/jquery.slimscroll.js') }}"></script>
+	<script src="{{ ('/elearning/public/ample/js/jquery.slimscroll.js') }}"></script>
 	<!--Wave Effects -->
-	<script src="{{ ('/pengamanan/public/ample/js/waves.js') }}"></script>
+	<script src="{{ ('/elearning/public/ample/js/waves.js') }}"></script>
 	<!-- Custom Theme JavaScript -->
-	<script src="{{ ('/pengamanan/public/ample/js/custom.min.js') }}"></script>
-	<script src="{{ ('/pengamanan/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
-	<script src="{{ ('/pengamanan/public/ample/js/validator.js') }}"></script>
+	<script src="{{ ('/elearning/public/ample/js/custom.min.js') }}"></script>
+	<script src="{{ ('/elearning/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ ('/elearning/public/ample/js/validator.js') }}"></script>
 	<!-- Clock Plugin JavaScript -->
-	<script src="{{ ('/pengamanan/public/ample/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.js') }}"></script>
+	<script src="{{ ('/elearning/public/ample/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.js') }}"></script>
 	<!-- Date Picker Plugin JavaScript -->
-	<script src="{{ ('/pengamanan/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+	<script src="{{ ('/elearning/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 
 	<script>
 		// alert($("#jns_hadir option").hasClass("lainnya"));
@@ -281,7 +281,7 @@
 
 			$.ajax({ 
 			method: "GET", 
-			url: "/pengamanan/kepegawaian/getaktivitas",
+			url: "/elearning/kepegawaian/getaktivitas",
 			}).done(function( data ) { 
 				var idemp = $('#idemp').val();
 				var csrf_js_var = "{{ csrf_token() }}"
@@ -330,7 +330,7 @@
 
 				$.ajax({ 
 				type: "GET", 
-				url: "/pengamanan/kepegawaian/form/hapusaktivitas",
+				url: "/elearning/kepegawaian/form/hapusaktivitas",
 				data: { idemp : varidemp, tgltrans : vartgltrans, time1 : vartime1 },
 				dataType: "JSON",
 				}).done(function( data ) { 
@@ -392,7 +392,7 @@
 				if (flag == 0) {
 					$.ajax({ 
 					type: "POST", 
-					url: "/pengamanan/kepegawaian/form/tambahaktivitas",
+					url: "/elearning/kepegawaian/form/tambahaktivitas",
 					data: { tgltrans : vartgltrans, time1 : vartime1, time2 : vartime2, uraian : varuraian, keterangan : varketerangan, _token : csrf_js_var, tipehadir : vartipehadir, jnshadir : varjnshadir, lainnya : varlainnya,  },
 					dataType: "JSON",
 					}).done(function( data ) { 
