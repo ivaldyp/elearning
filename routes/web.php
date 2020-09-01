@@ -19,7 +19,7 @@
 //     return view('index');
 // });
 
-Route::get('/', 'LandingController@materi');
+Route::get('/', 'LandingController@index');
 Route::get('/materi', 'LandingController@materi');
 Route::get('/home', 'HomeController@index');
 Route::POST('/home/password', 'HomeController@password');

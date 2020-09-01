@@ -36,7 +36,7 @@ class CmsController extends Controller
 
 		$query = DB::select( DB::raw("
 					SELECT *
-					FROM bpadelearning.dbo.sec_menu
+					FROM bpadlaporan.dbo.sec_menu
 					WHERE $sao
 					ORDER BY urut, ids
 				"));
@@ -67,7 +67,7 @@ class CmsController extends Controller
 									'<td class="col-md-2">
 										'.(($access['zupd'] == 'y') ? 
 											'<button type="button" class="btn btn-info btn-update" data-toggle="modal" data-target="#modal-update" data-ids="'.$menu['ids'].'" data-desk="'.$menu['desk'].'" data-child="'.$menu['child'].'" data-iconnew="'.$menu['iconnew'].'" data-urlnew="'.$menu['urlnew'].'" data-urut="'.$menu['urut'].'" data-tampilnew="'.$menu['tampilnew'].'" data-zket="'.$menu['zket'].'"><i class="fa fa-edit"></i></button>
-											<a href="/elearning/cms/menuakses?menu='.$menu['ids'].'&nama='.$menu['desk'].'"><button type="button" class="btn btn-warning"><i class="fa fa-key"></i></button></a>
+											<a href="/laporanbmd/cms/menuakses?menu='.$menu['ids'].'&nama='.$menu['desk'].'"><button type="button" class="btn btn-warning"><i class="fa fa-key"></i></button></a>
 											'
 										: '').'
 										'.(($access['zdel'] == 'y') ? 

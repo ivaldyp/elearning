@@ -29,10 +29,10 @@ class SecurityController extends Controller
 		}
 
 		$query = Sec_menu::
-				join('bpadelearning.dbo.sec_access', 'bpadelearning.dbo.sec_access.idtop', '=', 'bpadelearning.dbo.Sec_menu.ids')
-                ->where('bpadelearning.dbo.sec_access.idgroup', $idgroup)
-                ->where('bpadelearning.dbo.Sec_menu.sao', $parent)
-                ->orderBy('bpadelearning.dbo.Sec_menu.urut')
+				join('bpadlaporan.dbo.sec_access', 'bpadlaporan.dbo.sec_access.idtop', '=', 'bpadlaporan.dbo.Sec_menu.ids')
+                ->where('bpadlaporan.dbo.sec_access.idgroup', $idgroup)
+                ->where('bpadlaporan.dbo.Sec_menu.sao', $parent)
+                ->orderBy('bpadlaporan.dbo.Sec_menu.urut')
 				->get();
 
 		$result = '';

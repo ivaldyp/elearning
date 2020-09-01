@@ -37,13 +37,13 @@ class HomeController extends Controller
 							
 		$query = DB::select( DB::raw("
 					SELECT *
-					FROM bpadelearning.dbo.sec_menu
-					JOIN bpadelearning.dbo.sec_access ON bpadelearning.dbo.sec_access.idtop = bpadelearning.dbo.sec_menu.ids
-					WHERE bpadelearning.dbo.sec_access.idgroup = '$idgroup'
-					AND bpadelearning.dbo.sec_access.zviw = 'y'
+					FROM bpadlaporan.dbo.sec_menu
+					JOIN bpadlaporan.dbo.sec_access ON bpadlaporan.dbo.sec_access.idtop = bpadlaporan.dbo.sec_menu.ids
+					WHERE bpadlaporan.dbo.sec_access.idgroup = '$idgroup'
+					AND bpadlaporan.dbo.sec_access.zviw = 'y'
 					AND $sao
-					AND bpadelearning.dbo.sec_menu.tampilnew = 1
-					ORDER BY bpadelearning.dbo.sec_menu.urut
+					AND bpadlaporan.dbo.sec_menu.tampilnew = 1
+					ORDER BY bpadlaporan.dbo.sec_menu.urut
 					"));
 		$query = json_decode(json_encode($query), true);
 
@@ -57,7 +57,7 @@ class HomeController extends Controller
 			$result .= $arrLevel[$level];
 
 			if ($level == 0) {
-				$result .= '<li id="li_portal"> <a href="/elearning" class="waves-effect"> <i class="fa fa-globe fa-fw"></i> <span class="hide-menu">E-Learning BPAD</span></a></li>';
+				$result .= '<li id="li_portal"> <a href="/laporanbmd" class="waves-effect"> <i class="fa fa-globe fa-fw"></i> <span class="hide-menu">E-Learning BPAD</span></a></li>';
 			}
 		
 			foreach ($query as $menu) {
@@ -153,12 +153,18 @@ class HomeController extends Controller
 
 			$materis = Dat_materi::
 						where('sts', 1)
-						->orderByRaw('case when sao = 0 then ids else sao end), sao, ids')
+						->orderByRaw('(case when sao = 0 then ids else sao end), sao, ids')
 						->get();
+
+			$countmateri = Dat_materi::
+					where('sts', 1)
+					->where('sao', 0)
+					->count();
 
 			return view('index')
 				->with('iduser', $iduser)
-				->with('materis', $materis);
+				->with('materis', $materis)
+				->with('countmateri', $countmateri);
 		} else {
 			$all_menu = [];
 

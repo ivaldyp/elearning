@@ -3,19 +3,19 @@
 @section('css')
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<!-- Bootstrap Core CSS -->
-	<link href="{{ ('/elearning/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 	<!-- Menu CSS -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
 	<!-- xeditable css -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css') }}" rel="stylesheet" />
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css') }}" rel="stylesheet" />
 	<!-- animation CSS -->
-	<link href="{{ ('/elearning/public/ample/css/animate.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/animate.css') }}" rel="stylesheet">
 	<!-- Custom CSS -->
-	<link href="{{ ('/elearning/public/ample/css/style.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/style.css') }}" rel="stylesheet">
 	<!-- color CSS -->
-	<link href="{{ ('/elearning/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
 	<!-- Date picker plugins css -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -70,7 +70,7 @@
 								<div class="user-content">
 									<!-- <?php if ($emp_data['foto'] && $emp_data['foto'] != '') : ?>
 										<?php if ($emp_data['tampilnew'] == 1) : ?>
-											<img src="/elearning/public/publicimg/{{ $emp_data['foto'] }}" style="height: 150%" class="thumb-lg img-circle" alt="img">
+											<img src="/laporanbmd/public/publicimg/{{ $emp_data['foto'] }}" style="height: 150%" class="thumb-lg img-circle" alt="img">
 										<?php else : ?>
 											<img src="http://bpad.jakarta.go.id/images/emp/{{ $emp_data['foto'] }}" style="height: 150%" class="thumb-lg img-circle" alt="img">
 										<?php endif ?>
@@ -91,7 +91,7 @@
 								{{ ucwords(strtolower($emp_jab[0]['unit']['nm_unit'])) }}
 							</strong></h3>
 						</div>
-						<form method="POST" action="/elearning/profil/form/ubahidpegawai" data-toggle="validator" enctype="multipart/form-data">
+						<form method="POST" action="/laporanbmd/profil/form/ubahidpegawai" data-toggle="validator" enctype="multipart/form-data">
 						@csrf
 						<div class="user-btm-box" style="text-align: center;">
 							<div class="col-md-6 text-center row-in-br">
@@ -516,7 +516,7 @@
 														<?php if ($gol['gambar'] == 1) : ?>
 															<td style="vertical-align: middle;">
 																<strong>File</strong>
-																<br><a target="_blank" href="/elearning/public/publicimg/{{ $gol['gambar'] }}"></a>
+																<br><a target="_blank" href="/laporanbmd/public/publicimg/{{ $gol['gambar'] }}"></a>
 															</td>
 														<?php else : ?>
 															<td style="vertical-align: middle;">
@@ -529,7 +529,7 @@
 													<?php if ($gol['gambar'] && $gol['gambar'] != '' && $gol['tampilnew'] == 1) : ?> 
 														<td style="vertical-align: middle;">
 															<strong>File</strong>
-															<br><a target="_blank" href="/elearning/public/publicimg/gol/{{ $gol['gambar'] }}"></a>
+															<br><a target="_blank" href="/laporanbmd/public/publicimg/gol/{{ $gol['gambar'] }}"></a>
 														</td>
 													<?php else : ?>
 														<td style="vertical-align: middle;">
@@ -590,7 +590,7 @@
 														<?php if ($jab['gambar'] == 1) : ?>
 															<td style="vertical-align: middle;">
 																<strong>File</strong>
-																<br><a target="_blank" href="/elearning/public/publicimg/{{ $jab['gambar'] }}"></a>
+																<br><a target="_blank" href="/laporanbmd/public/publicimg/{{ $jab['gambar'] }}"></a>
 															</td>
 														<?php else : ?>
 															<td style="vertical-align: middle;">
@@ -603,7 +603,7 @@
 													<?php if ($jab['gambar'] && $jab['gambar'] != '' && $jab['tampilnew'] == 1) : ?> 
 														<td style="vertical-align: middle;">
 															<strong>File</strong>
-															<br><a target="_blank" href="/elearning/public/publicimg/jab/{{ $jab['gambar'] }}"></a>
+															<br><a target="_blank" href="/laporanbmd/public/publicimg/jab/{{ $jab['gambar'] }}"></a>
 														</td>
 													<?php else : ?>
 														<td style="vertical-align: middle;">
@@ -636,7 +636,7 @@
 			<div id="modal-insert-dik" class="modal fade" role="dialog">
 				<div class="modal-dialog">
 					<div class="modal-content">
-						<form method="POST" action="/elearning/profil/form/tambahdikpegawai" class="form-horizontal" enctype="multipart/form-data">
+						<form method="POST" action="/laporanbmd/profil/form/tambahdikpegawai" class="form-horizontal" enctype="multipart/form-data">
 						@csrf
 							<div class="modal-header">
 								<h4 class="modal-title"><b>Ubah Pendidikan</b></h4>
@@ -716,7 +716,7 @@
 			<div id="modal-update-dik" class="modal fade" role="dialog">
 				<div class="modal-dialog">
 					<div class="modal-content">
-						<form method="POST" action="/elearning/profil/form/ubahdikpegawai" class="form-horizontal" enctype="multipart/form-data">
+						<form method="POST" action="/laporanbmd/profil/form/ubahdikpegawai" class="form-horizontal" enctype="multipart/form-data">
 						@csrf
 							<div class="modal-header">
 								<h4 class="modal-title"><b>Ubah Pendidikan</b></h4>
@@ -799,7 +799,7 @@
 			<div class="modal fade" id="modal-delete-dik">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form method="POST" action="/elearning/profil/form/hapusdikpegawai" class="form-horizontal">
+                        <form method="POST" action="/laporanbmd/profil/form/hapusdikpegawai" class="form-horizontal">
                         @csrf
                             <div class="modal-header">
                                 <h4 class="modal-title"><b>Hapus Pendidikan</b></h4>
@@ -825,23 +825,23 @@
 <!-- /////////////////////////////////////////////////////////////// -->
 
 @section('js')
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
 	<!-- Bootstrap Core JavaScript -->
-	<script src="{{ ('/elearning/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 	<!-- Menu Plugin JavaScript -->
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
 	<!--slimscroll JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/jquery.slimscroll.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/jquery.slimscroll.js') }}"></script>
 	<!--Wave Effects -->
-	<script src="{{ ('/elearning/public/ample/js/waves.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/waves.js') }}"></script>
 	<!-- Custom Theme JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/custom.min.js') }}"></script>
-	<script src="{{ ('/elearning/public/ample/js/validator.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/custom.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/validator.js') }}"></script>
 	<!-- Date Picker Plugin JavaScript -->
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 	<!-- jQuery x-editable -->
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/moment/moment.js') }}"></script>
-	<script type="text/javascript" src="{{ ('/elearning/public/ample/plugins/bower_components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/moment/moment.js') }}"></script>
+	<script type="text/javascript" src="{{ ('/laporanbmd/public/ample/plugins/bower_components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js') }}"></script>
 	<script type="text/javascript">
 		$('#inline-nm_emp ').editable({
 			type: 'text'
@@ -857,7 +857,7 @@
 			, success: function(response, newValue) {
 				$.ajax({
 					type: "POST",
-					url: "/elearning/post",
+					url: "/laporanbmd/post",
 					data: { somefield: "Some field value", another: "another", _token: '{{csrf_token()}}' },
 					success: function(data){
 						alert(data);

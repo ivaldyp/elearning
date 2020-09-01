@@ -2,19 +2,19 @@
 
 @section('css')
 	<!-- Bootstrap Core CSS -->
-	<link href="{{ ('/elearning/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ ('/laporanbmd/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
 	<!-- Menu CSS -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
 		<!-- animation CSS -->
-	<link href="{{ ('/elearning/public/ample/css/animate.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/animate.css') }}" rel="stylesheet">
 	<!-- Custom CSS -->
-	<link href="{{ ('/elearning/public/ample/css/style.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/style.css') }}" rel="stylesheet">
 	<!-- color CSS -->
-	<link href="{{ ('/elearning/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
 	<!-- Date picker plugins css -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -69,7 +69,7 @@
 						<div class="panel-wrapper collapse in">
 							<div class="panel-body">
 								<div class="row" style="margin-bottom: 10px">
-									<form method="GET" action="/elearning/profil/disposisi">
+									<form method="GET" action="/laporanbmd/profil/disposisi">
 										<div class=" col-md-2">
 											<select class="form-control" name="signnow" id="signnow" onchange="this.form.submit()">
 												<option <?php if ($signnow == "="): ?> selected <?php endif ?> value="=">=</option>
@@ -87,7 +87,7 @@
 									</form>
 								</div>
 								@if($access['zadd'] == 'y' && isset(Auth::user()->usname))
-								<a href="/elearning/profil/tambah disposisi"><button class="btn btn-info" style="margin-bottom: 10px">Tambah </button></a> 
+								<a href="/laporanbmd/profil/tambah disposisi"><button class="btn btn-info" style="margin-bottom: 10px">Tambah </button></a> 
 								@endif
 								@if($isEmployee == 1)
 									<ul class="nav customtab nav-tabs" role="tablist">
@@ -207,7 +207,7 @@
 																	@if ($access['zupd'] == 'y' || $access['zdel'] == 'y')
 																	<td style="vertical-align: middle;">
 																		@if ($access['zupd'] == 'y')
-																		<form method="POST" action="/elearning/profil/lihat disposisi">
+																		<form method="POST" action="/laporanbmd/profil/lihat disposisi">
 																			@csrf
 																			<input type="hidden" name="ids" value="{{ $disp['ids'] }}">
 																			<input type="hidden" name="no_form" value="{{ $disp['no_form'] }}">
@@ -228,7 +228,7 @@
 																<div id="modal-delete-{{ $disp['ids'] }}" class="modal fade" role="dialog">
 																	<div class="modal-dialog">
 																		<div class="modal-content">
-																			<form method="POST" action="/elearning/profil/form/hapusdisposisi" class="form-horizontal">
+																			<form method="POST" action="/laporanbmd/profil/form/hapusdisposisi" class="form-horizontal">
 																			@csrf
 																				<div class="modal-header">
 																					<h4 class="modal-title"><b>Hapus Disposisi</b></h4>
@@ -356,7 +356,7 @@
 																	@if ($access['zupd'] == 'y' || $access['zdel'] == 'y')
 																	<td style="vertical-align: middle;">
 																		@if ($access['zupd'] == 'y')
-																		<form method="POST" action="/elearning/profil/lihat disposisi">
+																		<form method="POST" action="/laporanbmd/profil/lihat disposisi">
 																			@csrf
 																			<input type="hidden" name="ids" value="{{ $disp['ids'] }}">
 																			<input type="hidden" name="no_form" value="{{ $disp['no_form'] }}">
@@ -376,7 +376,7 @@
 																<div id="modal-delete-{{ $disp['ids'] }}" class="modal fade" role="dialog">
 																	<div class="modal-dialog">
 																		<div class="modal-content">
-																			<form method="POST" action="/elearning/profil/form/hapusdisposisi" class="form-horizontal">
+																			<form method="POST" action="/laporanbmd/profil/form/hapusdisposisi" class="form-horizontal">
 																			@csrf
 																				<div class="modal-header">
 																					<h4 class="modal-title"><b>Hapus Disposisi</b></h4>
@@ -461,7 +461,7 @@
 															@if ($access['zupd'] == 'y' || $access['zdel'] == 'y')
 															<td style="vertical-align: middle;">
 																@if ($access['zupd'] == 'y')
-																<form method="POST" action="/elearning/profil/lihat disposisi">
+																<form method="POST" action="/laporanbmd/profil/lihat disposisi">
 																	@csrf
 																	<input type="hidden" name="ids" value="{{ $disp['ids'] }}">
 																	<input type="hidden" name="no_form" value="{{ $disp['no_form'] }}">
@@ -478,7 +478,7 @@
 														<div id="modal-delete-{{ $disp['ids'] }}" class="modal fade" role="dialog">
 															<div class="modal-dialog">
 																<div class="modal-content">
-																	<form method="POST" action="/elearning/profil/form/hapusdisposisi" class="form-horizontal">
+																	<form method="POST" action="/laporanbmd/profil/form/hapusdisposisi" class="form-horizontal">
 																	@csrf
 																		<div class="modal-header">
 																			<h4 class="modal-title"><b>Hapus Disposisi</b></h4>
@@ -556,7 +556,7 @@
 															@if ($access['zupd'] == 'y' || $access['zdel'] == 'y')
 															<td style="vertical-align: middle;">
 																@if ($access['zupd'] == 'y')
-																<form method="POST" action="/elearning/profil/lihat disposisi">
+																<form method="POST" action="/laporanbmd/profil/lihat disposisi">
 																	@csrf
 																	<input type="hidden" name="ids" value="{{ $draft['ids'] }}">
 																	<input type="hidden" name="no_form" value="{{ $draft['no_form'] }}">
@@ -573,7 +573,7 @@
 														<div id="modal-delete-{{ $draft['ids'] }}" class="modal fade" role="dialog">
 															<div class="modal-dialog">
 																<div class="modal-content">
-																	<form method="POST" action="/elearning/profil/form/hapusdisposisi" class="form-horizontal">
+																	<form method="POST" action="/laporanbmd/profil/form/hapusdisposisi" class="form-horizontal">
 																	@csrf
 																		<div class="modal-header">
 																			<h4 class="modal-title"><b>Hapus Disposisi</b></h4>
@@ -615,21 +615,21 @@
 <!-- /////////////////////////////////////////////////////////////// -->
 
 @section('js')
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
 	<!-- Bootstrap Core JavaScript -->
-	<script src="{{ ('/elearning/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 	<!-- Menu Plugin JavaScript -->
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
 	<!--slimscroll JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/jquery.slimscroll.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/jquery.slimscroll.js') }}"></script>
 	<!--Wave Effects -->
-	<script src="{{ ('/elearning/public/ample/js/waves.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/waves.js') }}"></script>
 	<!-- Custom Theme JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/custom.min.js') }}"></script>
-	<script src="{{ ('/elearning/public/ample/js/validator.js') }}"></script>
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/custom.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/validator.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
 	<!-- Date Picker Plugin JavaScript -->
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 
 	<script>
 		$(function () {

@@ -2,17 +2,17 @@
 
 @section('css')
 	<!-- Bootstrap Core CSS -->
-	<link href="{{ ('/elearning/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ ('/laporanbmd/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
 	<!-- Menu CSS -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
 	<!-- animation CSS -->
-	<link href="{{ ('/elearning/public/ample/css/animate.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/animate.css') }}" rel="stylesheet">
 	<!-- Custom CSS -->
-	<link href="{{ ('/elearning/public/ample/css/style.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/style.css') }}" rel="stylesheet">
 	<!-- color CSS -->
-	<link href="{{ ('/elearning/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -104,7 +104,7 @@
 			<div id="modal-insert" class="modal fade" role="dialog">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
-						<form method="POST" action="/elearning/cms/form/tambahmenu" class="form-horizontal" data-toggle="validator">
+						<form method="POST" action="/laporanbmd/cms/form/tambahmenu" class="form-horizontal" data-toggle="validator">
 						@csrf
 							<div class="modal-header">
 								<h4 class="modal-title"><b>Tambah Menu</b></h4>
@@ -180,7 +180,7 @@
 			<div id="modal-update" class="modal fade" role="dialog">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
-						<form method="POST" action="/elearning/cms/form/ubahmenu" class="form-horizontal" data-toggle="validator">
+						<form method="POST" action="/laporanbmd/cms/form/ubahmenu" class="form-horizontal" data-toggle="validator">
 						@csrf
 							<div class="modal-header">
 								<h4 class="modal-title"><b>Ubah Menu</b></h4>
@@ -257,7 +257,7 @@
 			<div id="modal-delete" class="modal fade" role="dialog">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
-						<form method="POST" action="/elearning/cms/form/hapusmenu" class="form-horizontal">
+						<form method="POST" action="/laporanbmd/cms/form/hapusmenu" class="form-horizontal">
 						@csrf
 							<div class="modal-header">
 								<h4 class="modal-title"><b>Hapus Menu</b></h4>
@@ -287,19 +287,19 @@
 <!-- /////////////////////////////////////////////////////////////// -->
 
 @section('js')
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
 	<!-- Bootstrap Core JavaScript -->
-	<script src="{{ ('/elearning/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 	<!-- Menu Plugin JavaScript -->
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
 	<!--slimscroll JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/jquery.slimscroll.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/jquery.slimscroll.js') }}"></script>
 	<!--Wave Effects -->
-	<script src="{{ ('/elearning/public/ample/js/waves.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/waves.js') }}"></script>
 	<!-- Custom Theme JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/custom.min.js') }}"></script>
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
-	<script src="{{ ('/elearning/public/ample/js/validator.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/custom.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/validator.js') }}"></script>
 
 
 	<script>

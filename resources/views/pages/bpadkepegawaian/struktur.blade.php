@@ -2,15 +2,15 @@
 
 @section('css')
 	<!-- Bootstrap Core CSS -->
-	<link href="{{ ('/elearning/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 	<!-- Menu CSS -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
 	<!-- animation CSS -->
-	<link href="{{ ('/elearning/public/ample/css/animate.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/animate.css') }}" rel="stylesheet">
 	<!-- Custom CSS -->
-	<link href="{{ ('/elearning/public/ample/css/style.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/style.css') }}" rel="stylesheet">
 	<!-- color CSS -->
-	<link href="{{ ('/elearning/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -65,21 +65,21 @@
 						<div class="panel-wrapper collapse in">
 							<div class="panel-body">
 								<h2 class="article-title">Struktur Organisasi - BPAD</h2>
-					            <!-- <img id="img-overlay" src="{{ ('/elearning/public/img/profil/organisasi.png') }}" style="width: 100%"> -->
+					            <!-- <img id="img-overlay" src="{{ ('/laporanbmd/public/img/profil/organisasi.png') }}" style="width: 100%"> -->
 					            <!-- <div id="overlay"></div> -->
 					            <span class="zoom" id="ex2">
 									<!-- <svgs>       
 										<image href="https://mdn.mozillademos.org/files/6457/mdn_logo_only_color.png" height="200" width="200"/>
 									</svg> -->
-									<a href="/elearning/public/img/profil/organisasi2.jpg" target="_blank"><img src="{{ ('/elearning/public/img/profil/organisasi2.jpg') }}" width='100%' alt='Struktur Organisasi BPAD'/></a>
+									<a href="/laporanbmd/public/img/profil/organisasi2.jpg" target="_blank"><img src="{{ ('/laporanbmd/public/img/profil/organisasi2.jpg') }}" width='100%' alt='Struktur Organisasi BPAD'/></a>
 								</span>
 					            <br><br>
 
 					            <h2 class="article-title">Struktur Organisasi - Suku Badan</h2>
-					            <!-- <img id="img-overlay" src="{{ ('/elearning/public/img/profil/organisasi.png') }}" style="width: 100%"> -->
+					            <!-- <img id="img-overlay" src="{{ ('/laporanbmd/public/img/profil/organisasi.png') }}" style="width: 100%"> -->
 					            <!-- <div id="overlay"></div> -->
 					            <span class="zoom" id="ex1">
-									<a href="/elearning/public/img/profil/organisasi_suban2.jpg" target="_blank"><img src="{{ ('/elearning/public/img/profil/organisasi_suban2.jpg') }}" width='100%' alt='Struktur Organisasi BPAD'/></a>
+									<a href="/laporanbmd/public/img/profil/organisasi_suban2.jpg" target="_blank"><img src="{{ ('/laporanbmd/public/img/profil/organisasi_suban2.jpg') }}" width='100%' alt='Struktur Organisasi BPAD'/></a>
 								</span>
 					            <br><br>
 
@@ -95,19 +95,19 @@
 <!-- /////////////////////////////////////////////////////////////// -->
 
 @section('js')
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
 	<!-- Bootstrap Core JavaScript -->
-	<script src="{{ ('/elearning/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 	<!-- Menu Plugin JavaScript -->
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
 	<!--slimscroll JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/jquery.slimscroll.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/jquery.slimscroll.js') }}"></script>
 	<!--Wave Effects -->
-	<script src="{{ ('/elearning/public/ample/js/waves.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/waves.js') }}"></script>
 	<!-- Custom Theme JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/custom.min.js') }}"></script>
-	<script src="{{ ('/elearning/public/js/jquery.zoom.js') }}"></script>
-	<script src="{{ ('/elearning/public/js/jquery.zoom.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/custom.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/js/jquery.zoom.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/js/jquery.zoom.min.js') }}"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			// $('#ex1').zoom({

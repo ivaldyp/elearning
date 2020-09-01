@@ -2,17 +2,17 @@
 
 @section('css')
 	<!-- Bootstrap Core CSS -->
-	<link href="{{ ('/elearning/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ ('/laporanbmd/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
 	<!-- Menu CSS -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
 	<!-- animation CSS -->
-	<link href="{{ ('/elearning/public/ample/css/animate.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/animate.css') }}" rel="stylesheet">
 	<!-- Custom CSS -->
-	<link href="{{ ('/elearning/public/ample/css/style.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/style.css') }}" rel="stylesheet">
 	<!-- color CSS -->
-	<link href="{{ ('/elearning/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -68,7 +68,7 @@
 						<div class="panel-wrapper collapse in">
 							<div class="panel-body">
 								@if($access['zadd'] == 'y')
-								<a href="/elearning/security/tambah user"><button class="btn btn-info" style="margin-bottom: 10px">Tambah</button></a>
+								<a href="/laporanbmd/security/tambah user"><button class="btn btn-info" style="margin-bottom: 10px">Tambah</button></a>
 								@endif
 								<div class="table-responsive">
 									<table id="myTable" class="table table-hover">
@@ -108,7 +108,7 @@
 													<div id="modal-password-{{$key}}" class="modal fade" role="dialog">
 														<div class="modal-dialog">
 															<div class="modal-content">
-																<form method="POST" action="/elearning/security/form/ubahpassuser" class="form-horizontal">
+																<form method="POST" action="/laporanbmd/security/form/ubahpassuser" class="form-horizontal">
 																@csrf
 																	<div class="modal-header">
 																		<h4 class="modal-title"><b>Ubah Password</b></h4>
@@ -152,7 +152,7 @@
 			<div class="modal fade" id="modal-update">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
-						<form method="POST" action="/elearning/security/form/ubahuser" class="form-horizontal" data-toggle="validator">
+						<form method="POST" action="/laporanbmd/security/form/ubahuser" class="form-horizontal" data-toggle="validator">
 						@csrf
 							<div class="modal-header">
 								<h4 class="modal-title"><b>Ubah User</b></h4>
@@ -206,7 +206,7 @@
 			<div class="modal fade" id="modal-delete">
 				<div class="modal-dialog">
 					<div class="modal-content">
-						<form method="POST" action="/elearning/security/form/hapususer" class="form-horizontal">
+						<form method="POST" action="/laporanbmd/security/form/hapususer" class="form-horizontal">
 						@csrf
 							<div class="modal-header">
 								<h4 class="modal-title"><b>Hapus User</b></h4>
@@ -236,19 +236,19 @@
 
 @section('js')
 	<!-- jQuery -->
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
 	<!-- Bootstrap Core JavaScript -->
-	<script src="{{ ('/elearning/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 	<!-- Menu Plugin JavaScript -->
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
 	<!--slimscroll JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/jquery.slimscroll.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/jquery.slimscroll.js') }}"></script>
 	<!--Wave Effects -->
-	<script src="{{ ('/elearning/public/ample/js/waves.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/waves.js') }}"></script>
 	<!-- Custom Theme JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/custom.min.js') }}"></script>
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
-	<script src="{{ ('/elearning/public/ample/js/validator.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/custom.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/validator.js') }}"></script>
 
 	<script>
 		$(document).ready(function() {

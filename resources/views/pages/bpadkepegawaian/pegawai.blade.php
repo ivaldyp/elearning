@@ -2,20 +2,20 @@
 
 @section('css')
 	<!-- Bootstrap Core CSS -->
-	<link href="{{ ('/elearning/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ ('/laporanbmd/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
 	<!-- Menu CSS -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
-	<link rel="stylesheet" href="{{ ('/elearning/public/ample/plugins/bower_components/html5-editor/bootstrap-wysihtml5.css') }}" />
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" href="{{ ('/laporanbmd/public/ample/plugins/bower_components/html5-editor/bootstrap-wysihtml5.css') }}" />
 	<!-- animation CSS -->
-	<link href="{{ ('/elearning/public/ample/css/animate.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/animate.css') }}" rel="stylesheet">
 	<!-- Custom CSS -->
-	<link href="{{ ('/elearning/public/ample/css/style.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/style.css') }}" rel="stylesheet">
 	<!-- color CSS -->
-	<link href="{{ ('/elearning/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
 	<!-- page CSS -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/custom-select/custom-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/custom-select/custom-select.css') }}" rel="stylesheet" type="text/css" />
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -72,14 +72,14 @@
                             	<div class="row " style="margin-bottom: 10px">
                             		@if ($access['zadd'] == 'y')
                             		<div class="col-md-1">
-				                      	<a href="/elearning/kepegawaian/tambah pegawai"><button class="btn btn-info col-md-12" type="button">Tambah</button></a>
+				                      	<a href="/laporanbmd/kepegawaian/tambah pegawai"><button class="btn btn-info col-md-12" type="button">Tambah</button></a>
                             		</div>
                             		@endif
                             		<div class="col-md-1">
-										<a href="/elearning/kepegawaian/excelpegawai?unit={{ $idunit }}&ked={{ $kednow }}"><button class="btn btn-success col-md-12" type="button"> Excel </button></a>
+										<a href="/laporanbmd/kepegawaian/excelpegawai?unit={{ $idunit }}&ked={{ $kednow }}"><button class="btn btn-success col-md-12" type="button"> Excel </button></a>
 									</div>
                             		<div class="col-md-10">
-                            			<form method="GET" action="/elearning/kepegawaian/data pegawai">
+                            			<form method="GET" action="/laporanbmd/kepegawaian/data pegawai">
 					                      	<div class=" col-md-2">
 					                        	<select class="form-control" name="kednow" id="kednow" required onchange="this.form.submit()">
 					                          	<?php foreach ($kedudukans as $key => $kedudukan) { ?>
@@ -154,7 +154,7 @@
 													<td>{{ $employee['status_emp'] }}</td>
 													@if($access['zupd'] == 'y' || $access['zdel'] == 'y')
 														<td>
-															<form method="GET" action="/elearning/kepegawaian/ubah pegawai">
+															<form method="GET" action="/laporanbmd/kepegawaian/ubah pegawai">
 															@if($access['zupd'] == 'y')
 																<input type="hidden" name="id_emp" value="{{ $employee['id_emp'] }}">
 																<button type="submit" class="btn btn-info btn-update"><i class="fa fa-edit"></i></button>
@@ -167,7 +167,7 @@
 															<div id="modal-password-{{$key}}" class="modal fade" role="dialog">
 																<div class="modal-dialog">
 																	<div class="modal-content">
-																		<form method="POST" action="/elearning/kepegawaian/form/ubahpassuser" class="form-horizontal">
+																		<form method="POST" action="/laporanbmd/kepegawaian/form/ubahpassuser" class="form-horizontal">
 																		@csrf
 																			<div class="modal-header">
 																				<h4 class="modal-title"><b>Ubah Password</b></h4>
@@ -212,7 +212,7 @@
 			<div id="modal-delete" class="modal fade" role="dialog">
 				<div class="modal-dialog">
 					<div class="modal-content">
-						<form method="POST" action="/elearning/kepegawaian/form/hapuspegawai" class="form-horizontal">
+						<form method="POST" action="/laporanbmd/kepegawaian/form/hapuspegawai" class="form-horizontal">
 						@csrf
 							<div class="modal-header">
 								<h4 class="modal-title"><b>Hapus Pegawai</b></h4>
@@ -237,23 +237,23 @@
 <!-- /////////////////////////////////////////////////////////////// -->
 
 @section('js')
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
 	<!-- Bootstrap Core JavaScript -->
-	<script src="{{ ('/elearning/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 	<!-- Menu Plugin JavaScript -->
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
 	<!--slimscroll JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/jquery.slimscroll.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/jquery.slimscroll.js') }}"></script>
 	<!--Wave Effects -->
-	<script src="{{ ('/elearning/public/ample/js/waves.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/waves.js') }}"></script>
 	<!-- Custom Theme JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/custom.min.js') }}"></script>
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
-	<script src="{{ ('/elearning/public/ample/js/validator.js') }}"></script>
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/custom-select/custom-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/custom.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/validator.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/custom-select/custom-select.min.js') }}" type="text/javascript"></script>
 	<!-- wysuhtml5 Plugin JavaScript -->
-    <script src="{{ ('/elearning/public/ample/plugins/bower_components/html5-editor/wysihtml5-0.3.0.js') }}"></script>
-    <script src="{{ ('/elearning/public/ample/plugins/bower_components/html5-editor/bootstrap-wysihtml5.js') }}"></script>
+    <script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/html5-editor/wysihtml5-0.3.0.js') }}"></script>
+    <script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/html5-editor/bootstrap-wysihtml5.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('.textarea_editor').wysihtml5();
@@ -303,7 +303,7 @@
 				} else if (appr == 'N') {
 					$("#btn_update_href").html('Setuju');
 				}
-				$("#modal_update_href").attr("href", "/elearning/cms/form/apprcontent?ids=" + ids + "&idkat=" + idkat + "&appr=" + appr + "&judul=" + judul );
+				$("#modal_update_href").attr("href", "/laporanbmd/cms/form/apprcontent?ids=" + ids + "&idkat=" + idkat + "&appr=" + appr + "&judul=" + judul );
 
 			});
 

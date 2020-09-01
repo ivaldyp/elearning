@@ -2,19 +2,19 @@
 
 @section('css')
 	<!-- Bootstrap Core CSS -->
-	<link href="{{ ('/elearning/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 	<!-- Menu CSS -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
 	<!-- animation CSS -->
-	<link href="{{ ('/elearning/public/ample/css/animate.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/animate.css') }}" rel="stylesheet">
 	<!-- Custom CSS -->
-	<link href="{{ ('/elearning/public/ample/css/style.css') }}" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/style.css') }}" rel="stylesheet">
 	<!-- color CSS -->
-	<link href="{{ ('/elearning/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
+	<link href="{{ ('/laporanbmd/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
 	<!-- Date picker plugins css -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
 	<!-- page CSS -->
-	<link href="{{ ('/elearning/public/ample/plugins/bower_components/custom-select/custom-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ ('/laporanbmd/public/ample/plugins/bower_components/custom-select/custom-select.css') }}" rel="stylesheet" type="text/css" />
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -81,7 +81,7 @@
 									</nav>
 									<div class="content-wrap">
 										<section id="section-underline-1">
-										<form class="form-horizontal" method="POST" action="/elearning/kepegawaian/form/ubahpegawai" data-toggle="validator" enctype="multipart/form-data">
+										<form class="form-horizontal" method="POST" action="/laporanbmd/kepegawaian/form/ubahpegawai" data-toggle="validator" enctype="multipart/form-data">
 										@csrf
 											<div class="col-md-12">
 												<input type="hidden" name="id_emp" value="{{ $id_emp }}">
@@ -330,7 +330,7 @@
 												<?php endif ?>
 											</div> -->
 											<button type="submit" class="m-b-20 m-t-10 btn btn-success pull-right"> Simpan </button>
-											<a href="/elearning/kepegawaian/data pegawai"><button type="button" class="m-b-20 m-t-10 btn btn-default pull-right m-r-10"> Kembali </button></a>	
+											<a href="/laporanbmd/kepegawaian/data pegawai"><button type="button" class="m-b-20 m-t-10 btn btn-default pull-right m-r-10"> Kembali </button></a>	
 										
 											</form>
 										</section>
@@ -365,7 +365,7 @@
 																	<div id="modal-delete-dik-{{$key}}" class="modal fade" role="dialog">
 																		<div class="modal-dialog">
 																			<div class="modal-content">
-																				<form method="POST" action="/elearning/kepegawaian/form/hapusdikpegawai" class="form-horizontal">
+																				<form method="POST" action="/laporanbmd/kepegawaian/form/hapusdikpegawai" class="form-horizontal">
 																				@csrf
 																					<div class="modal-header">
 																						<h4 class="modal-title"><b>Hapus Pendidikan</b></h4>
@@ -389,7 +389,7 @@
 															<div id="modal-update-dik-{{$key}}" class="modal fade" role="dialog">
 																<div class="modal-dialog">
 																	<div class="modal-content">
-																		<form method="POST" action="/elearning/kepegawaian/form/ubahdikpegawai" class="form-horizontal" enctype="multipart/form-data">
+																		<form method="POST" action="/laporanbmd/kepegawaian/form/ubahdikpegawai" class="form-horizontal" enctype="multipart/form-data">
 																		@csrf
 																			<div class="modal-header">
 																				<h4 class="modal-title"><b>Ubah Pendidikan</b></h4>
@@ -459,12 +459,12 @@
 													</tbody>
 												</table>
 											</div>
-											<a href="/elearning/kepegawaian/data pegawai"><button type="button" class="btn btn-default pull-right m-b-20 m-t-10"> Kembali </button></a>	
+											<a href="/laporanbmd/kepegawaian/data pegawai"><button type="button" class="btn btn-default pull-right m-b-20 m-t-10"> Kembali </button></a>	
 										</section>
 										<div id="modal-insert-dik" class="modal fade" role="dialog">
 											<div class="modal-dialog">
 												<div class="modal-content">
-													<form method="POST" action="/elearning/kepegawaian/form/tambahdikpegawai" class="form-horizontal" enctype="multipart/form-data">
+													<form method="POST" action="/laporanbmd/kepegawaian/form/tambahdikpegawai" class="form-horizontal" enctype="multipart/form-data">
 													@csrf
 														<div class="modal-header">
 															<h4 class="modal-title"><b>Tambah Pendidikan</b></h4>
@@ -556,7 +556,7 @@
 																	<div id="modal-delete-gol-{{$key}}" class="modal fade" role="dialog">
 																		<div class="modal-dialog">
 																			<div class="modal-content">
-																				<form method="POST" action="/elearning/kepegawaian/form/hapusgolpegawai" class="form-horizontal">
+																				<form method="POST" action="/laporanbmd/kepegawaian/form/hapusgolpegawai" class="form-horizontal">
 																				@csrf
 																					<div class="modal-header">
 																						<h4 class="modal-title"><b>Hapus Golongan</b></h4>
@@ -580,7 +580,7 @@
 															<div id="modal-update-gol-{{$key}}" class="modal fade" role="dialog">
 																<div class="modal-dialog">
 																	<div class="modal-content">
-																		<form method="POST" action="/elearning/kepegawaian/form/ubahgolpegawai" class="form-horizontal" enctype="multipart/form-data">
+																		<form method="POST" action="/laporanbmd/kepegawaian/form/ubahgolpegawai" class="form-horizontal" enctype="multipart/form-data">
 																		@csrf
 																			<div class="modal-header">
 																				<h4 class="modal-title"><b>Ubah Golongan</b></h4>
@@ -658,12 +658,12 @@
 													</tbody>
 												</table>
 											</div>
-											<a href="/elearning/kepegawaian/data pegawai"><button type="button" class="btn btn-default pull-right m-b-20 m-t-10"> Kembali </button></a>
+											<a href="/laporanbmd/kepegawaian/data pegawai"><button type="button" class="btn btn-default pull-right m-b-20 m-t-10"> Kembali </button></a>
 										</section>
 										<div id="modal-insert-gol" class="modal fade" role="dialog">
 											<div class="modal-dialog">
 												<div class="modal-content">
-													<form method="POST" action="/elearning/kepegawaian/form/tambahgolpegawai" class="form-horizontal" enctype="multipart/form-data">
+													<form method="POST" action="/laporanbmd/kepegawaian/form/tambahgolpegawai" class="form-horizontal" enctype="multipart/form-data">
 													@csrf
 														<div class="modal-header">
 															<h4 class="modal-title"><b>Tambah Golongan</b></h4>
@@ -766,7 +766,7 @@
 																	<div id="modal-delete-jab-{{$key}}" class="modal fade" role="dialog">
 																		<div class="modal-dialog">
 																			<div class="modal-content">
-																				<form method="POST" action="/elearning/kepegawaian/form/hapusjabpegawai" class="form-horizontal">
+																				<form method="POST" action="/laporanbmd/kepegawaian/form/hapusjabpegawai" class="form-horizontal">
 																				@csrf
 																					<div class="modal-header">
 																						<h4 class="modal-title"><b>Hapus Jabatan</b></h4>
@@ -790,7 +790,7 @@
 															<div id="modal-update-jab-{{$key}}" class="modal fade" role="dialog">
 																<div class="modal-dialog">
 																	<div class="modal-content">
-																		<form method="POST" action="/elearning/kepegawaian/form/ubahjabpegawai" class="form-horizontal" enctype="multipart/form-data">
+																		<form method="POST" action="/laporanbmd/kepegawaian/form/ubahjabpegawai" class="form-horizontal" enctype="multipart/form-data">
 																		@csrf
 																			<div class="modal-header">
 																				<h4 class="modal-title"><b>Ubah Jabatan</b></h4>
@@ -880,12 +880,12 @@
 													</tbody>
 												</table>
 											</div>
-											<a href="/elearning/kepegawaian/data pegawai"><button type="button" class="btn btn-default pull-right m-b-20 m-t-10"> Kembali </button></a>
+											<a href="/laporanbmd/kepegawaian/data pegawai"><button type="button" class="btn btn-default pull-right m-b-20 m-t-10"> Kembali </button></a>
 										</section>
 										<div id="modal-insert-jab" class="modal fade" role="dialog">
 											<div class="modal-dialog">
 												<div class="modal-content">
-													<form method="POST" action="/elearning/kepegawaian/form/tambahjabpegawai" class="form-horizontal" enctype="multipart/form-data">
+													<form method="POST" action="/laporanbmd/kepegawaian/form/tambahjabpegawai" class="form-horizontal" enctype="multipart/form-data">
 													@csrf
 														<div class="modal-header">
 															<h4 class="modal-title"><b>Tambah Jabatan</b></h4>
@@ -969,7 +969,7 @@
 											</div>
 										</div>
 										<section id="section-underline-5">
-											<form class="form-horizontal" method="POST" action="/elearning/kepegawaian/form/ubahstatuspegawai" data-toggle="validator" enctype="multipart/form-data">
+											<form class="form-horizontal" method="POST" action="/laporanbmd/kepegawaian/form/ubahstatuspegawai" data-toggle="validator" enctype="multipart/form-data">
 											@csrf
 												<div class="col-md-12">
 													<input type="hidden" name="id_emp" value="{{ $id_emp }}">
@@ -998,7 +998,7 @@
 													</div>
 												</div>
 												<button type="submit" class="m-b-20 m-t-10 btn btn-success pull-right"> Simpan </button>
-												<a href="/elearning/kepegawaian/data pegawai"><button type="button" class="m-b-20 m-t-10 btn btn-default pull-right m-r-10"> Kembali </button></a>	
+												<a href="/laporanbmd/kepegawaian/data pegawai"><button type="button" class="m-b-20 m-t-10 btn btn-default pull-right m-r-10"> Kembali </button></a>	
 											</form>
 										</section>
 								</div>
@@ -1021,17 +1021,17 @@
 <!-- /////////////////////////////////////////////////////////////// -->
 
 @section('js')
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
 	<!-- Bootstrap Core JavaScript -->
-	<script src="{{ ('/elearning/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 	<!-- Menu Plugin JavaScript -->
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
 	<!--slimscroll JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/jquery.slimscroll.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/jquery.slimscroll.js') }}"></script>
 	<!--Wave Effects -->
-	<script src="{{ ('/elearning/public/ample/js/waves.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/waves.js') }}"></script>
 	<!-- Custom Theme JavaScript -->
-	<script src="{{ ('/elearning/public/ample/js/cbpFWTabs.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/cbpFWTabs.js') }}"></script>
 	<script type="text/javascript">
 		(function () {
 				[].slice.call(document.querySelectorAll('.sttabs')).forEach(function (el) {
@@ -1039,11 +1039,11 @@
 			});
 		})();
 	</script>
-	<script src="{{ ('/elearning/public/ample/js/custom.min.js') }}"></script>
-	<script src="{{ ('/elearning/public/ample/js/validator.js') }}"></script>
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/custom-select/custom-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/custom.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/js/validator.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/custom-select/custom-select.min.js') }}" type="text/javascript"></script>
 	<!-- Date Picker Plugin JavaScript -->
-	<script src="{{ ('/elearning/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
 	<script>
 
 		$(".select2").select2();
