@@ -1,16 +1,35 @@
 <li class="dropdown">
 	<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> 
-	  <?php if ($_SESSION['user_data']['foto'] && $_SESSION['user_data']['foto'] != '') : ?>
-			<img src="{{ config('app.openfileimg') }}/{{ $_SESSION['user_data']['foto'] }}" width="36" class=" img-circle" alt="img">
-		<?php else : ?>
-			<img src="{{ config('app.openfileimgdefault') }}" width="36" class=" img-circle" alt="img">
-		<?php endif ?>
+	 <img src="{{ config('app.openfileimgdefault') }}" width="36" class=" img-circle" alt="img">
 
 	  <b class="hidden-xs pull-right">Welcome</b><span class="caret"></span> </a>
 	<ul class="dropdown-menu dropdown-user animated flipInY">
 		<li>
 			<div class="dw-user-box">                
-				<div class="u-text"><h4><?php echo isset($_SESSION['user_data']['nm_emp']) ? $_SESSION['user_data']['nm_emp'] : $_SESSION['user_data']['nama_user']; ?></h4><p class="text-muted"><?php echo isset($_SESSION['user_data']['email_emp']) ? $_SESSION['user_data']['email_emp'] : ''; ?></p><h4><?php echo $_SESSION['user_data']['idgroup']; ?></h4></div>
+				<div class="u-text">
+					<h4>
+						@if(Auth::user()->usname_skpd)
+						{{ $_SESSION['user_data']['deskripsi_user'] }}
+						@elseif(Auth::user()->usname_admin)
+						{{ $_SESSION['user_data']['usname'] }}
+						@elseif(Auth::user()->id_emp)
+						{{ $_SESSION['user_data']['nm_emp'] }}
+						@endif
+					</h4>
+					<h4 class="text-muted">
+						@if(Auth::user()->usname_skpd)
+							@if($_SESSION['user_data']['TLEVEL'] == 2)
+							P3B
+							@elseif($_SESSION['user_data']['TLEVEL'] == 3)
+							Pengurus Barang
+							@endif
+						@elseif(Auth::user()->usname_admin)
+						{{ $_SESSION['user_data']['idgroup'] }}
+						@elseif(Auth::user()->id_emp)
+						{{ $_SESSION['user_data']['idgroup'] }}
+						@endif
+					</h4>
+				</div>
 			</div>
 		</li>
 		<li role="separator" class="divider"></li>
@@ -41,7 +60,7 @@
 <div id="modal-password" class="modal fade" role="dialog" data-backdrop="false">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form method="POST" action="/elearning/home/password" class="form-horizontal">
+			<form method="POST" action="/laporanbmd/home/password" class="form-horizontal">
 			@csrf
 				<div class="modal-header">
 					<h4 class="modal-title"><b>Ubah Password</b></h4>

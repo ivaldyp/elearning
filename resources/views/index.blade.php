@@ -13,19 +13,19 @@
 				  	<img src="{{ ('/laporanbmd/public/landing/img/bpad-logo-01.png') }}" alt="BPAD" width="10%" class="navbar-brand">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-						  	<a class="nav-link cust-nav" href="http://aset.jakarta.go.id/fileapp/files/02_BM_eHarga.pdf">Manual Book</a>
+						  	<a class="nav-link cust-nav" href="#">Manual Book</a>
 						</li>
 						<li class="nav-item">
-						  	<a class="nav-link cust-nav" href="http://aset.jakarta.go.id/fileapp/files/BP_02-eHarga.jpg">Bisnis Proses</a>
+						  	<a class="nav-link cust-nav" href="#">Bisnis Proses</a>
 						</li>
 						<li class="nav-item">
-						  	<a class="nav-link cust-nav" href="https://youtu.be/RCXbZfmz0ZQ">Video Tutorial</a>
+						  	<a class="nav-link cust-nav" href="#">Video Tutorial</a>
 						</li>
 						<li class="nav-item">
-						  	<a class="nav-link cust-nav" href="http://aset.jakarta.go.id/fileapp/files/04_SOP_eHarga.pdf">SOP</a>
+						  	<a class="nav-link cust-nav" href="#">SOP</a>
 						</li>
 						<li class="nav-item">
-						  	<a class="nav-link cust-nav" href="http://aset.jakarta.go.id/appdoc/public/faq/eHARGA">FAQ</a>
+						  	<a class="nav-link cust-nav" href="#">FAQ</a>
 						</li>
 					</ul>
 				</div>
@@ -41,7 +41,7 @@
 							<p style="font-family: 'Myriad Pro Regular'; color: #002853; font-size: 48px; ">E-<span style="font-family: 'Myriad Pro Bold'; color: #002853; font-size: 48px;">LAPORAN</span> BMD</p>
 						</div>
 						<div class="row">
-							<p style="font-family: 'Myriad Pro Regular'; text-align: justify; font-size: 20px">Sistem pengamanan berdasarkan dokumen Barang Milik Daerah, pengamanan Barang Milik Daerah juga dilakukan dengan pengamanan fisik</p>
+							<p style="font-family: 'Myriad Pro Regular'; text-align: justify; font-size: 20px">Sistem yang menunjukkan laporan BMD</p>
 						</div>
 						<div class="row">
 							<form method="POST" action="{{ route('login') }}">
@@ -52,11 +52,11 @@
 								@else
 								<div class="form-group">
 									<label for="name" style="font-family: 'Myriad Pro Regular'; font-size: 18px; color: #5793ce;">Username</label>
-									<input required="" autocomplete="off" type="text" name="name" class="form-control no-outline">	
+									<input required="" autocomplete="off" type="text" name="name" class="form-control no-outline @error('name') is-invalid @enderror">	
 								</div>
 								<div class="form-group">
 									<label for="password" style="font-family: 'Myriad Pro Regular'; font-size: 18px; color: #5793ce;">Password</label>
-									<input required="" autocomplete="off" type="password" name="password" class="form-control no-outline">	
+									<input required="" autocomplete="off" type="password" name="password" class="form-control no-outline @error('password') is-invalid @enderror">	
 								</div>
 								<button type="submit" class="btn btn-warning" style="color: white">LOGIN</button>
 								@endif

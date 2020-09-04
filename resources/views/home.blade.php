@@ -73,7 +73,14 @@
 								<div class="panel-wrapper collapse in">
 									<div class="panel-body">
 										<div>
-											Welcome Admin	
+											Welcome 
+											@if(Auth::user()->usname_skpd)
+											{{ $_SESSION['user_data']['deskripsi_user'] }}
+											@elseif(Auth::user()->usname_admin)
+											{{ $_SESSION['user_data']['usname'] }}
+											@elseif(Auth::user()->id_emp)
+											{{ $_SESSION['user_data']['nm_emp'] }}
+											@endif	
 										</div>
 									</div>
 								</div>

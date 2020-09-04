@@ -8,7 +8,7 @@
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 	<title>BPAD DKI Jakarta</title>
-	<link rel="shortcut icon" type="image/x-icon" href="{{ ('/elearning/public/img/photo/bpad-logo-00.png') }}" />
+	<link rel="shortcut icon" type="image/x-icon" href="{{ ('/laporanbmd/public/img/photo/bpad-logo-00.png') }}" />
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,7 +30,7 @@
 				<div class="navbar-header">
 					<!-- Logo -->
 					<div class="navbar-brand">
-						<a  href="{{ url('/') }}"><img src="{{ ('/elearning/public/img/photo/bpad-logo-04b.png') }}" alt="logo" height="85"></a>
+						<a  href="{{ url('/') }}"><img src="{{ ('/laporanbmd/public/img/photo/bpad-logo-04b.png') }}" alt="logo" height="85"></a>
 					</div>
 					<!-- Logo -->
 
@@ -101,7 +101,7 @@
 					<div class="col-sm-6" style="top: -20px">
 						<div class="footer-copyright pull-right">
 							
-							<!-- <img src="{{ ('/elearning/public/img/photo/plusjakartalogo2.png') }}" alt="" height="100"> -->
+							<!-- <img src="{{ ('/laporanbmd/public/img/photo/plusjakartalogo2.png') }}" alt="" height="100"> -->
 						</div>
 					</div>
 				</div>

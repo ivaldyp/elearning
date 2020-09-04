@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Collection;
 use App\Traits\SessionCheckTraits;
 
-use App\Dat_materi;
+use App\Aset_quserid;
+use App\Emp_data;
+use App\Glo_profile_skpd;
 use App\Sec_access;
 use App\Sec_logins;
 use App\Sec_menu;
@@ -57,7 +60,7 @@ class HomeController extends Controller
 			$result .= $arrLevel[$level];
 
 			if ($level == 0) {
-				$result .= '<li id="li_portal"> <a href="/laporanbmd" class="waves-effect"> <i class="fa fa-globe fa-fw"></i> <span class="hide-menu">E-Learning BPAD</span></a></li>';
+				$result .= '<li id="li_portal"> <a href="/laporanbmd" class="waves-effect"> <i class="fa fa-globe fa-fw"></i> <span class="hide-menu">Laporan BPAD</span></a></li>';
 			}
 		
 			foreach ($query as $menu) {
@@ -118,63 +121,76 @@ class HomeController extends Controller
 
 	public function index(Request $request)
 	{
-		$this->checkSessionTime();
+		// $this->checkSessionTime();
 		
 		unset($_SESSION['user_data']);
+		unset($_SESSION['idgroup']);
 
 		date_default_timezone_set('Asia/Jakarta');
 		
-		if (is_null(Auth::user()->usname)) {
-			$iduser = Auth::user()->id_user;
+		if (Auth::user()->usname_skpd) {
+			$iduser = Auth::user()->usname_skpd;
+			$_SESSION['kolok'] = substr($iduser, 2, -1);
 
-			$user_data = Sec_student::where('id_user', $iduser)->first();
+			// $user_data = Aset_quserid::
+			// 				where('usname', $iduser)
+			// 				->first();
 
-			Sec_student::where('id_user', $user_data['id_user'])
-			->update([
-				'lastlogin' => date('Y-m-d H:i:s'),
-			]);	
-
-		} else {
-			$iduser = Auth::user()->usname;
-
-			$user_data = Sec_logins::
+			$asetid1 = Aset_quserid::
 							where('usname', $iduser)
 							->first();
+			$asetid1 = new Collection($asetid1);
+
+			$asetid2 = Glo_profile_skpd::
+							where('kolok', $_SESSION['kolok'])
+							->orderBy('tahun', 'desc')
+							->first();
+			$asetid2 = new Collection($asetid2);
+
+			$merged = $asetid1->merge($asetid2);
+
+			$user_data = $merged;
+
+			$idgroup = 'SKPD';
+
+
+		} elseif (Auth::user()->usname_admin) {
+			$iduser = Auth::user()->usname_admin;
+
+			$user_data = Sec_logins::where('usname', $iduser)->first();
 
 			Sec_logins::where('usname', $user_data['usname'])
 			->update([
 				'lastlogin' => date('Y-m-d H:i:s'),
 			]);	
+
+			$idgroup = $user_data['idgroup'];
+
+			$_SESSION['kolok'] = '512';
+		} elseif (Auth::user()->id_emp){
+			$iduser = Auth::user()->id_emp;
+
+			$user_data = Emp_data::where('id_emp', $iduser)->first();
+
+			Emp_data::where('id_emp', $user_data['id_emp'])
+			->update([
+				'lastlogin' => date('Y-m-d H:i:s'),
+			]);	
+
+			$idgroup = $user_data['idgroup'];
+
+			$_SESSION['kolok'] = '512';
 		}
 
+		$_SESSION['idgroup'] = $idgroup;
 		$_SESSION['user_data'] = $user_data;
 
-		if (Auth::user()->id_user) {
+		$all_menu = [];
 
-			$materis = Dat_materi::
-						where('sts', 1)
-						->orderByRaw('(case when sao = 0 then ids else sao end), sao, ids')
-						->get();
+		$menus = $this->display_menus($all_menu, 0, 0, $_SESSION['idgroup']);
 
-			$countmateri = Dat_materi::
-					where('sts', 1)
-					->where('sao', 0)
-					->count();
+		$_SESSION['menus'] = $menus;
 
-			return view('index')
-				->with('iduser', $iduser)
-				->with('materis', $materis)
-				->with('countmateri', $countmateri);
-		} else {
-			$all_menu = [];
-
-			$menus = $this->display_menus($all_menu, 0, 0, $_SESSION['user_data']['idgroup']);
-
-			$_SESSION['menus'] = $menus;
-
-			return view('home')
-				->with('iduser', $iduser);
-		}
-
+		return view('home');
 	}
 }

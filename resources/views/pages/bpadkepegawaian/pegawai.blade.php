@@ -70,45 +70,7 @@
                     	<div class="panel-wrapper collapse in">
                             <div class="panel-body">
                             	<div class="row " style="margin-bottom: 10px">
-                            		@if ($access['zadd'] == 'y')
-                            		<div class="col-md-1">
-				                      	<a href="/laporanbmd/kepegawaian/tambah pegawai"><button class="btn btn-info col-md-12" type="button">Tambah</button></a>
-                            		</div>
-                            		@endif
-                            		<div class="col-md-1">
-										<a href="/laporanbmd/kepegawaian/excelpegawai?unit={{ $idunit }}&ked={{ $kednow }}"><button class="btn btn-success col-md-12" type="button"> Excel </button></a>
-									</div>
-                            		<div class="col-md-10">
-                            			<form method="GET" action="/laporanbmd/kepegawaian/data pegawai">
-					                      	<div class=" col-md-2">
-					                        	<select class="form-control" name="kednow" id="kednow" required onchange="this.form.submit()">
-					                          	<?php foreach ($kedudukans as $key => $kedudukan) { ?>
-					                            	<option value="{{ $kedudukan['ked_emp'] }}" 
-					                              	<?php 
-					                                	if ($kednow == $kedudukan['ked_emp']) {
-						                                 	echo "selected";
-						                                }
-					                              	?>
-					                            	>{{ $kedudukan['ked_emp'] }}</option>
-					                          	<?php } ?>
-					                        	</select>
-				                      		</div>
-				                      		<div class=" col-md-6">
-					                        	<select class="form-control select2" name="unit" id="unit" required onchange="this.form.submit()">
-					                          	<?php foreach ($units as $key => $unit) { ?>
-					                            	<option value="{{ $unit['kd_unit'] }}" 
-					                              	<?php 
-					                                	if ($idunit == $unit['kd_unit']) {
-						                                 	echo "selected";
-						                                }
-					                              	?>
-					                            	>[{{ $unit['kd_unit'] }}] - {{ ($unit['kd_unit'] == '01' ? 'SEMUA' : $unit['notes'])   }}</option>
-					                          	<?php } ?>
-					                        	</select>
-				                      		</div>
-				                      		
-						                </form>
-                            		</div>
+                            		
                             		
                             		
                             	</div>

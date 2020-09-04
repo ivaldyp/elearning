@@ -18,21 +18,10 @@ use App\Emp_data;
 use App\Emp_dik;
 use App\Emp_gol;
 use App\Emp_jab;
-use App\Fr_suratkeluar;
-use App\Fr_disposisi;
-use App\Glo_dik;
-use App\Glo_disposisi_kode;
-use App\Glo_org_golongan;
-use App\Glo_org_jabatan;
+use App\Glo_org_unitkerja;
 use App\Glo_org_kedemp;
-use App\Glo_org_lokasi;
-use App\Glo_org_statusemp;
-use App\glo_org_unitkerja;
-use App\Kinerja_data;
-use App\Kinerja_detail;
 use App\Sec_access;
 use App\Sec_menu;
-use App\V_disposisi;
 
 session_start();
 
@@ -59,43 +48,24 @@ class KepegawaianController extends Controller
 
 		$units = Glo_org_unitkerja::orderBy('kd_unit')->get();
 
-		if (is_null($request->kednow)) {
-			$kednow = 'AKTIF';
-		} else {
-			$kednow = $request->kednow;
-		}
-
-		if (is_null($request->unit)) {
-			if (Auth::user()->id_emp) {
-				$idunit = $_SESSION['user_data']['idunit'];
-			} else {
-				$idunit = '01';
-			}
-		} else {
-			$idunit = $request->unit;
-		}
-
 		$employees = DB::select( DB::raw("  
-					SELECT id_emp, nrk_emp, nip_emp, nm_emp, a.idgroup as idgroup, tgl_lahir, jnkel_emp, tgl_join, status_emp, tbjab.idjab, tbjab.idunit, tbunit.nm_unit, tbunit.child, d.nm_lok from bpadlaporan.dbo.emp_data as a
-					CROSS APPLY (SELECT TOP 1 tmt_gol,tmt_sk_gol,no_sk_gol,idgol,jns_kp,mk_thn,mk_bln,gambar,nm_pangkat FROM  bpadlaporan.dbo.emp_gol,bpadlaporan.dbo.glo_org_golongan WHERE a.id_emp = emp_gol.noid AND emp_gol.idgol=glo_org_golongan.gol AND emp_gol.sts='1' AND glo_org_golongan.sts='1' ORDER BY tmt_gol DESC) tbgol
-					CROSS APPLY (SELECT TOP 1 tmt_jab,idskpd,idunit,idlok,tmt_sk_jab,no_sk_jab,jns_jab,replace(idjab,'NA::','') as idjab,eselon,gambar FROM  bpadlaporan.dbo.emp_jab WHERE a.id_emp=emp_jab.noid AND emp_jab.sts='1' ORDER BY tmt_jab DESC) tbjab
-					CROSS APPLY (SELECT TOP 1 iddik,prog_sek,no_sek,th_sek,nm_sek,gelar_dpn_sek,gelar_blk_sek,ijz_cpns,gambar,nm_dik FROM  bpadlaporan.dbo.emp_dik,bpadlaporan.dbo.glo_dik WHERE a.id_emp = emp_dik.noid AND emp_dik.iddik=glo_dik.dik AND emp_dik.sts='1' AND glo_dik.sts='1' ORDER BY th_sek DESC) tbdik
-					CROSS APPLY (SELECT TOP 1 * FROM bpadlaporan.dbo.glo_org_unitkerja WHERE glo_org_unitkerja.kd_unit = tbjab.idunit) tbunit
-					,bpadlaporan.dbo.glo_skpd as b,bpadlaporan.dbo.glo_org_unitkerja as c,bpadlaporan.dbo.glo_org_lokasi as d WHERE tbjab.idskpd=b.skpd AND tbjab.idskpd+'::'+tbjab.idunit=c.kd_skpd+'::'+c.kd_unit AND tbjab.idskpd+'::'+tbjab.idlok=d.kd_skpd+'::'+d.kd_lok AND a.sts='1' AND b.sts='1' AND c.sts='1' AND d.sts='1'
-					and idunit like '$idunit%' AND ked_emp = '$kednow'
+					SELECT id_emp, nrk_emp, nip_emp, nm_emp, a.idgroup as idgroup, tgl_lahir, jnkel_emp, tgl_join, status_emp, tbjab.idjab, tbjab.idunit, tbunit.nm_unit, tbunit.child, d.nm_lok from bpaddtfake.dbo.emp_data as a
+					CROSS APPLY (SELECT TOP 1 tmt_gol,tmt_sk_gol,no_sk_gol,idgol,jns_kp,mk_thn,mk_bln,gambar,nm_pangkat FROM  bpaddtfake.dbo.emp_gol,bpaddtfake.dbo.glo_org_golongan WHERE a.id_emp = emp_gol.noid AND emp_gol.idgol=glo_org_golongan.gol AND emp_gol.sts='1' AND glo_org_golongan.sts='1' ORDER BY tmt_gol DESC) tbgol
+					CROSS APPLY (SELECT TOP 1 tmt_jab,idskpd,idunit,idlok,tmt_sk_jab,no_sk_jab,jns_jab,replace(idjab,'NA::','') as idjab,eselon,gambar FROM  bpaddtfake.dbo.emp_jab WHERE a.id_emp=emp_jab.noid AND emp_jab.sts='1' ORDER BY tmt_jab DESC) tbjab
+					CROSS APPLY (SELECT TOP 1 iddik,prog_sek,no_sek,th_sek,nm_sek,gelar_dpn_sek,gelar_blk_sek,ijz_cpns,gambar,nm_dik FROM  bpaddtfake.dbo.emp_dik,bpaddtfake.dbo.glo_dik WHERE a.id_emp = emp_dik.noid AND emp_dik.iddik=glo_dik.dik AND emp_dik.sts='1' AND glo_dik.sts='1' ORDER BY th_sek DESC) tbdik
+					CROSS APPLY (SELECT TOP 1 * FROM bpaddtfake.dbo.glo_org_unitkerja WHERE glo_org_unitkerja.kd_unit = tbjab.idunit) tbunit
+					,bpaddtfake.dbo.glo_skpd as b,bpaddtfake.dbo.glo_org_unitkerja as c,bpaddtfake.dbo.glo_org_lokasi as d WHERE tbjab.idskpd=b.skpd AND tbjab.idskpd+'::'+tbjab.idunit=c.kd_skpd+'::'+c.kd_unit AND tbjab.idskpd+'::'+tbjab.idlok=d.kd_skpd+'::'+d.kd_lok AND a.sts='1' AND b.sts='1' AND c.sts='1' AND d.sts='1'
+					and idunit like '01%' AND ked_emp = 'AKTIF'
 					order by idunit asc, nm_emp ASC") );
 		$employees = json_decode(json_encode($employees), true);
 		
 		$kedudukans = Glo_org_kedemp::get();
 
 		return view('pages.bpadkepegawaian.pegawai')
-				->with('access', $access)
-				->with('kednow', $kednow)
-				->with('idunit', $idunit)
+				->with('access', $access)		
 				->with('employees', $employees)
 				->with('units', $units)
 				->with('kedudukans', $kedudukans);
-		
 	}
 
 	public function pegawaitambah()
