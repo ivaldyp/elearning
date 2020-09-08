@@ -22,19 +22,31 @@
 Route::get('/', 'LandingController@index');
 Route::get('/materi', 'LandingController@materi');
 Route::get('/home', 'HomeController@index');
-Route::POST('/home/password', 'HomeController@password');
+Route::post('/home/password', 'HomeController@password');
 Route::get('/logout', 'LandingController@logout');
 
 Route::group(['prefix' => 'tanda tangan'], function () {
 	Route::get('/', 'TtdController@index');
-	Route::POST('/form/tambahttd', 'TtdController@forminsertttd');
+	Route::post('/form/tambahttd', 'TtdController@forminsertttd');
 });
 
-Route::group(['prefix' => 'lbkp'], function () {
-	Route::get('/gabungan/rekap', 'LbkpGabunganController@rekap');
-	Route::get('/lapgabunganrekap', 'LbkpGabunganController@excelrekap');
-	Route::get('/gabungan/detail', 'LbkpGabunganController@detail');
-	Route::get('/lapgabungandetail', 'LbkpGabunganController@exceldetail');
+Route::group(['prefix' => 'setup'], function () {
+	Route::get('/laporan', 'SetupController@laporanall');
+	Route::post('/form/tambahlaporan', 'SetupController@forminsertlaporan');
+	Route::post('/form/ubahlaporan', 'SetupController@formupdatelaporan');
+	Route::post('/form/hapuslaporan', 'SetupController@formdeletelaporan');
+});
+
+// Route::group(['prefix' => 'lbkp'], function () {
+// 	Route::get('/gabungan/rekap', 'LbkpGabunganController@rekap');
+// 	Route::get('/lapgabunganrekap', 'LbkpGabunganController@excelrekap');
+// 	Route::get('/gabungan/detail', 'LbkpGabunganController@detail');
+// 	Route::get('/lapgabungandetail', 'LbkpGabunganController@exceldetail');
+// });
+
+Route::group(['prefix' => 'laporan'], function () {
+	Route::get('/', 'LaporanController@index');
+	Route::post('/excel', 'LaporanController@excel');
 });
 
 Route::group(['prefix' => 'cms'], function () {

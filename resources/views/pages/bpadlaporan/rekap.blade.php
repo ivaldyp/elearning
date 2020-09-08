@@ -62,14 +62,15 @@
 				</div>
 			</div>
 			<div class="row ">
-				<div class="col-md-12">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
 					<!-- <div class="white-box"> -->
 					<div class="panel panel-info">
-						<div class="panel-heading">LBKP Gabungan</div>
+						<div class="panel-heading">Laporan</div>
 						<div class="panel-wrapper collapse in">
 							<div class="panel-body">
 								<div class="row" style="margin-bottom: 10px">
-									<form method="GET" action="/laporanbmd/lbkp/gabungan/rekap">
+									<form method="GET" action="/laporanbmd/laporan">
 										<div class="row col-md-12">
 											
 											<div class=" col-md-2">
@@ -79,6 +80,18 @@
 													@endforeach
 												</select>
 											</div>
+											<div class=" col-md-2">
+												<select class="form-control" name="wilnow" id="wilnow" onchange="this.form.submit()">
+													<option <?php if ($wilnow == "all"): ?> selected <?php endif ?> value="all">--SEMUA--</option>
+													<option <?php if ($wilnow == "prov"): ?> selected <?php endif ?> value="prov">Provinsi</option>
+													<option <?php if ($wilnow == 1): ?> selected <?php endif ?> value="1">Jakarta Pusat</option>
+													<option <?php if ($wilnow == 2): ?> selected <?php endif ?> value="2">Jakarta Utara</option>
+													<option <?php if ($wilnow == 3): ?> selected <?php endif ?> value="3">Jakarta Barat</option>
+													<option <?php if ($wilnow == 4): ?> selected <?php endif ?> value="4">Jakarta Selatan</option>
+													<option <?php if ($wilnow == 5): ?> selected <?php endif ?> value="5">Jakarta Timur</option>
+													<option <?php if ($wilnow == 6): ?> selected <?php endif ?> value="6">Pulau Seribu</option>
+												</select>
+											</div>											
 											<div class=" col-md-6">
 												<select class="form-control select2" name="koloknow" id="koloknow" onchange="this.form.submit()">
 													@foreach($pds as $pd)
@@ -87,19 +100,74 @@
 												</select>
 											</div>
 										</div>
-										<div class="row col-md-12" style="margin-top: 10px">
-											<div class="col-md-2">
-												<a href="/lapgabungan/rekap?kolok={{$koloknow}}&tahun={{$yearnow}}"><button type="button" class="btn btn-success">EXCEL</button></a>
-											</div>
-										</div>
 									</form>
 								</div>
+								<hr>
 								<div class="row">
-									<div class="table-responsive">
-										<table class=" table table-hover">
+									<form method="POST" action="/laporanbmd/laporan/excel" class="form-horizontal">
+										@csrf
+										<div class="col-md-1"></div>
+										<div class="col-md-10">
 											
-										</table>
-									</div>
+											<input type="hidden" name="tahun" value="{{ $yearnow }}">
+											<input type="hidden" name="kolok" value="{{ $koloknow }}">
+
+											<div class="form-group">
+												<label for="kib" class="col-md-2 control-label"> KIB </label>
+												<div class="col-md-8">
+													<input id="kiball" type="checkbox" name="kib[]" value="semua" checked=""> <b> SEMUA</b><br>
+													<input class="kib" type="checkbox" name="kib[]" value="A"> <b> A</b><br>
+													<input class="kib" type="checkbox" name="kib[]" value="B"> <b> B</b><br>
+													<input class="kib" type="checkbox" name="kib[]" value="C"> <b> C</b><br>
+													<input class="kib" type="checkbox" name="kib[]" value="D"> <b> D</b><br>
+													<input class="kib" type="checkbox" name="kib[]" value="E"> <b> E</b><br>
+													<input class="kib" type="checkbox" name="kib[]" value="F"> <b> F</b>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label for="durasi" class="col-md-2 control-label"> Durasi </label>
+												<div class="col-md-8">
+													<select class="form-control" name="durasi" id="durasi">
+														<option value="saldoawal::semester1">Saldo Awal -> Semester 1</option>
+														<option value="saldoawal::saldoakhir">Saldo Awal -> Saldo Akhir</option>
+														<option value="saldoawal::audited">Saldo Awal -> Audited</option>
+													</select>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label for="laporan" class="col-md-2 control-label"> Laporan </label>
+												<div class="col-md-8">
+													<select class="form-control" name="laporan" id="laporan">
+														@foreach($laporans as $lap)
+														<option value="{{ $lap['jns_laporan'] }}">{{ ucwords(strtolower($lap['jns_laporan'])) }}</option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+
+											<!-- <div class="form-group">
+												<label for="tipe" class="col-md-2 control-label"> Tipe </label>
+												<div class="col-md-8">
+													<select class="form-control" name="tipe" id="tipe">
+														<option value="rekap">Rekap</option>
+														<option value="detail">Detail</option>
+													</select>
+												</div>
+											</div> -->
+
+											<div class="form-group">
+												<div class="col-md-10">
+													<button type="submit" class="btn btn-success pull-right">SUSUN</button>	
+												</div>
+											</div>
+
+
+										</div>
+										
+									</form>
+									<div class="clearfix"></div>
 								</div>
 								
 							</div>
@@ -129,7 +197,15 @@
 	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/custom-select/custom-select.min.js') }}" type="text/javascript"></script>
 
 	<script>
+		var ckbox = $('#kiball');
+
+	    $('input').on('click',function () {
+	        if (ckbox.is(':checked')) {
+	            $('.kib').prop('checked', false);
+	        }
+	    });
 		$(function () {
+
 			$(".select2").select2();
 			$('.myTable').DataTable();
 		});
