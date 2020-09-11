@@ -91,14 +91,8 @@
 													<option <?php if ($wilnow == 5): ?> selected <?php endif ?> value="5">Jakarta Timur</option>
 													<option <?php if ($wilnow == 6): ?> selected <?php endif ?> value="6">Pulau Seribu</option>
 												</select>
-											</div>											
-											<div class=" col-md-6">
-												<select class="form-control select2" name="koloknow" id="koloknow" onchange="this.form.submit()">
-													@foreach($pds as $pd)
-													<option <?php if ($koloknow == $pd['kolok']): ?> selected <?php endif ?> value="{{ $pd['kolok'] }}">{{ $pd['kolok'] }} - {{ $pd['nalok'] }}</option>
-													@endforeach
-												</select>
 											</div>
+											<button type="submit" class="btn btn-info">Cari</button>
 										</div>
 									</form>
 								</div>
@@ -110,7 +104,29 @@
 										<div class="col-md-10">
 											
 											<input type="hidden" name="tahun" value="{{ $yearnow }}">
-											<input type="hidden" name="kolok" value="{{ $koloknow }}">
+
+											@if(!(is_null($pds)))
+											<table class="myTable table table-hover table-striped">
+												<thead>
+													<tr>
+														<th><input id="kolokall" type="checkbox"></th>
+														<th>Kolok SKPD</th>		
+														<th>Kolok</th>	
+														<th>Nalok</th>											
+													</tr>
+												</thead>
+												<tbody id="bodykolok">
+													@foreach($pds as $pd)
+													<tr>
+														<td><input class="kolokchoose" type="checkbox" name="kolok[]" value="{{ $pd['kolok'] }}"></td>
+														<td>{{ $pd['kolokskpd'] }}</td>
+														<td>{{ $pd['kolok'] }}</td>
+														<td>{{ $pd['nalok'] }}</td>
+													</tr>
+													@endforeach
+												</tbody>
+											</table>
+											@endif
 
 											<div class="form-group">
 												<label for="kib" class="col-md-2 control-label"> KIB </label>
@@ -141,7 +157,7 @@
 												<div class="col-md-8">
 													<select class="form-control" name="laporan" id="laporan">
 														@foreach($laporans as $lap)
-														<option value="{{ $lap['jns_laporan'] }}">{{ ucwords(strtolower($lap['jns_laporan'])) }}</option>
+														<option value="{{ $lap['kode'] }}">{{ ucwords(strtolower($lap['jns_laporan'])) }}</option>
 														@endforeach
 													</select>
 												</div>
@@ -198,16 +214,41 @@
 
 	<script>
 		var ckbox = $('#kiball');
+		var ckbox2 = $('#kolokall');
 
-	    $('input').on('click',function () {
-	        if (ckbox.is(':checked')) {
-	            $('.kib').prop('checked', false);
-	        }
-	    });
+		$('#kiball').on('click' , function() {
+			$('.kib').each(function(){
+				$(this).removeAttr('checked');
+			})
+		});
+
+		$('.kib').on('click', function(){
+			$('#kiball').removeAttr('checked');
+		});
+
+		$('#kolokall').change(function(){
+			if($(this).prop('checked')){
+				$('#bodykolok tr td input[type="checkbox"]').each(function(){
+					$(this).prop('checked', true);
+				});
+			}else{
+				$('#bodykolok tr td input[type="checkbox"]').each(function(){
+					$(this).prop('checked', false);
+				});
+			}
+		});
+
 		$(function () {
 
 			$(".select2").select2();
-			$('.myTable').DataTable();
+			$('.myTable').DataTable({
+				"ordering" : false,
+				// "searching": false,
+				"bPaginate": false,
+				"bInfo" : false,
+				"lengthChange": false,
+				"pageLength": 50,
+			});
 		});
 	</script>
 @endsection

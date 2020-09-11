@@ -60,8 +60,8 @@
 				</div>
 			</div>
 			<div class="row ">
-				<div class="col-sm-3"></div>
-				<div class="col-md-6">
+				<div class="col-sm-1"></div>
+				<div class="col-md-10">
 					<!-- <div class="white-box"> -->
 					<div class="panel panel-info">
                         <div class="panel-heading"> Jenis Laporan </div>
@@ -76,6 +76,7 @@
 											<thead>
 												<tr>
 													<th>No</th>
+													<th>Kode</th>
 													<th>Jenis Laporan</th>
 													<th class="col-md-2">Action</th>
 												</tr>
@@ -84,10 +85,11 @@
 												@foreach($laporans as $key => $lap)
 												<tr>
 													<td>{{ $key + 1 }}</td>
+													<td>{{ $lap['kode'] }}</td>
 													<td>{{ ucwords(strtolower($lap['jns_laporan'])) }}</td>
 													
 													<td>
-															<button type="button" class="btn btn-info btn-update" data-toggle="modal" data-target="#modal-update" data-ids="{{ $lap['ids'] }}" data-jns_laporan="{{ $lap['jns_laporan'] }}"><i class="fa fa-edit"></i></button>
+															<button type="button" class="btn btn-info btn-update" data-toggle="modal" data-target="#modal-update" data-ids="{{ $lap['ids'] }}" data-jns_laporan="{{ $lap['jns_laporan'] }}" data-kode="{{ $lap['kode'] }}"><i class="fa fa-edit"></i></button>
 															<button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target="#modal-delete" data-ids="{{ $lap['ids'] }}"><i class="fa fa-trash"></i></button>
 													</td>
 												</tr>
@@ -111,6 +113,13 @@
 								<h4 class="modal-title"><b> Jenis Laporan Baru </b></h4>
 							</div>
 							<div class="modal-body">
+								<div class="form-group">
+									<label for="kode" class="col-sm-2 control-label"> Kode </label>
+									<div class="col-sm-8">
+										<input type="text" name="kode" id="kode" class="form-control" autocomplete="off" required="" placeholder="">
+									</div>
+								</div>
+
 								<div class="form-group">
 									<label for="jns_laporan" class="col-sm-2 control-label"> Nama </label>
 									<div class="col-sm-8">
@@ -136,6 +145,12 @@
 							</div>
 							<div class="modal-body">
 								<input type="hidden" name="ids" id="modal_update_ids">
+								<div class="form-group">
+									<label for="kode" class="col-sm-2 control-label"> Kode </label>
+									<div class="col-sm-8">
+										<input type="text" name="kode" id="modal_update_kode" class="form-control" autocomplete="off" required="" placeholder="">
+									</div>
+								</div>
 								<div class="form-group">
 									<label for="jns_laporan" class="col-sm-2 control-label"> Nama </label>
 									<div class="col-sm-8">
@@ -199,6 +214,7 @@
 				var $el = $(this);
 
 				$("#modal_update_ids").val($el.data('ids'));
+				$("#modal_update_kode").val($el.data('kode'));
 				$("#modal_update_jns_laporan").val($el.data('jns_laporan'));
 
 			});

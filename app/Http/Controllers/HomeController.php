@@ -125,6 +125,9 @@ class HomeController extends Controller
 		
 		unset($_SESSION['user_data']);
 		unset($_SESSION['idgroup']);
+		unset($_SESSION['kolok']);
+		unset($_SESSION['menus']);
+
 
 		date_default_timezone_set('Asia/Jakarta');
 		
@@ -166,7 +169,7 @@ class HomeController extends Controller
 
 			$idgroup = $user_data['idgroup'];
 
-			$_SESSION['kolok'] = '512';
+			// $_SESSION['kolok'] = '512';
 		} elseif (Auth::user()->id_emp){
 			$iduser = Auth::user()->id_emp;
 
@@ -179,7 +182,7 @@ class HomeController extends Controller
 
 			$idgroup = $user_data['idgroup'];
 
-			$_SESSION['kolok'] = '512';
+			// $_SESSION['kolok'] = '512';
 		}
 
 		$_SESSION['idgroup'] = $idgroup;

@@ -18,7 +18,7 @@ class SetupController extends Controller
     {
     	$laporans = Dat_laporan::
     				where('sts', 1)
-    				->orderBy('jns_laporan')
+    				->orderBy('kode')
     				->get();
 
     	return view('pages.bpadsetup.laporan')
@@ -31,6 +31,7 @@ class SetupController extends Controller
 			'sts'       => 1,
 			'uname'     => Auth::user()->usname,
 			'tgl'       => date('Y-m-d H:i:s'),
+			'kode'		=> $request->kode,
 			'jns_laporan' => $request->jns_laporan,
 		];
 
@@ -46,6 +47,7 @@ class SetupController extends Controller
     	Dat_laporan::
 			where('ids', $request->ids)
 			->update([
+				'kode'		=> $request->kode,
 				'jns_laporan' => $request->jns_laporan,
 			]);
 
