@@ -145,13 +145,17 @@
 											<div class="col-md-8">
 												@if(is_null($ttd))
 													@if($_SESSION['user_data']['TLEVEL'] == 2)
-														<input type="text" class="form-control" name="nama" value="{{ $_SESSION['user_data']['nm_ka'] }}">
+														<p class="form-control-static">{{ $_SESSION['user_data']['nm_ka'] }}</p>
+														<input type="hidden" class="form-control" name="nama" value="{{ $_SESSION['user_data']['nm_ka'] }}">
 													@else
-														<input type="text" class="form-control" name="nama" value="{{ $_SESSION['user_data']['nm_pb'] }}">
+														<p class="form-control-static">{{ $_SESSION['user_data']['nm_pb'] }}</p>
+														<input type="hidden" class="form-control" name="nama" value="{{ $_SESSION['user_data']['nm_pb'] }}">
 													@endif
 												@else
-													<input type="text" class="form-control" name="nama" value="{{ $ttd['nama'] }}">
+													<p class="form-control-static">{{ $ttd['nama'] }}</p>
+													<input type="hidden" class="form-control" name="nama" value="{{ $ttd['nama'] }}">
 												@endif
+												<span class="help-block" style="color: red">*ubah nama melalui sistem SIERA</span>
 											</div>
 										</div>
 
