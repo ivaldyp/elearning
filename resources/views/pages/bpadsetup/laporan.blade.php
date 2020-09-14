@@ -78,6 +78,7 @@
 													<th>No</th>
 													<th>Kode</th>
 													<th>Jenis Laporan</th>
+													<th>Tampilkan</th>
 													<th class="col-md-2">Action</th>
 												</tr>
 											</thead>
@@ -87,9 +88,15 @@
 													<td>{{ $key + 1 }}</td>
 													<td>{{ $lap['kode'] }}</td>
 													<td>{{ ucwords(strtolower($lap['jns_laporan'])) }}</td>
-													
 													<td>
-															<button type="button" class="btn btn-info btn-update" data-toggle="modal" data-target="#modal-update" data-ids="{{ $lap['ids'] }}" data-jns_laporan="{{ $lap['jns_laporan'] }}" data-kode="{{ $lap['kode'] }}"><i class="fa fa-edit"></i></button>
+														@if($lap['tampilkan'] == 1)
+															<span style="color: green"><i class="fa fa-check"></i></span>
+														@else
+															<span style="color: red"><i class="fa fa-close"></i></span>
+														@endif
+													</td>
+													<td>
+															<button type="button" class="btn btn-info btn-update" data-toggle="modal" data-target="#modal-update" data-ids="{{ $lap['ids'] }}" data-jns_laporan="{{ $lap['jns_laporan'] }}" data-kode="{{ $lap['kode'] }}" data-tampilkan="{{ $lap['tampilkan'] }}"><i class="fa fa-edit"></i></button>
 															<button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target="#modal-delete" data-ids="{{ $lap['ids'] }}"><i class="fa fa-trash"></i></button>
 													</td>
 												</tr>
@@ -126,6 +133,25 @@
 										<input type="text" name="jns_laporan" id="jns_laporan" class="form-control" autocomplete="off" required="" placeholder="Ketikkan nama saja, tanpa 'laporan'">
 									</div>
 								</div>
+
+								<div class="form-group">
+									<label for="tampilkan" class="col-md-2 control-label"> Tampilkan? </label>
+									<div class="radio-list col-md-8">
+										<label class="radio-inline">
+											<div class="radio radio-info">
+												<input type="radio" name="tampilkan" id="tampil1" value="1" data-error="Pilih salah satu" required>
+												<label for="tampil1">Ya</label> 
+											</div>
+										</label>
+										<label class="radio-inline">
+											<div class="radio radio-info">
+												<input type="radio" name="tampilkan" id="tampil2" value="0">
+												<label for="tampil2">Tidak </label>
+											</div>
+										</label>
+										<div class="help-block with-errors"></div>  
+									</div>
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-danger pull-right">Tambah</button>
@@ -151,10 +177,30 @@
 										<input type="text" name="kode" id="modal_update_kode" class="form-control" autocomplete="off" required="" placeholder="">
 									</div>
 								</div>
+
 								<div class="form-group">
 									<label for="jns_laporan" class="col-sm-2 control-label"> Nama </label>
 									<div class="col-sm-8">
 										<input type="text" name="jns_laporan" id="modal_update_jns_laporan" class="form-control" autocomplete="off" required="">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="tampilkan" class="col-md-2 control-label"> Tampilkan? </label>
+									<div class="radio-list col-md-8">
+										<label class="radio-inline">
+											<div class="radio radio-info">
+												<input type="radio" name="tampilkan" id="update_tampil1" value="1" data-error="Pilih salah satu" required>
+												<label for="update_tampil1">Ya</label> 
+											</div>
+										</label>
+										<label class="radio-inline">
+											<div class="radio radio-info">
+												<input type="radio" name="tampilkan" id="update_tampil2" value="0">
+												<label for="update_tampil2">Tidak </label>
+											</div>
+										</label>
+										<div class="help-block with-errors"></div>  
 									</div>
 								</div>
 							</div>
@@ -216,6 +262,12 @@
 				$("#modal_update_ids").val($el.data('ids'));
 				$("#modal_update_kode").val($el.data('kode'));
 				$("#modal_update_jns_laporan").val($el.data('jns_laporan'));
+
+				if ($el.data('tampilkan') == 1) {
+					$("#update_tampil1").attr('checked', true);
+				} else {
+					$("#update_tampil2").attr('checked', true);
+				}
 
 			});
 

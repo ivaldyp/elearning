@@ -131,7 +131,7 @@
 											<div class="form-group">
 												<label for="kib" class="col-md-2 control-label"> KIB </label>
 												<div class="col-md-8">
-													<input id="kiball" type="checkbox" name="kib[]" value="semua" checked=""> <b> SEMUA</b><br>
+													<!-- <input id="kiball" type="checkbox" name="kib[]" value="semua" checked=""> <b> SEMUA</b><br> -->
 													<input class="kib" type="checkbox" name="kib[]" value="A"> <b> A</b><br>
 													<input class="kib" type="checkbox" name="kib[]" value="B"> <b> B</b><br>
 													<input class="kib" type="checkbox" name="kib[]" value="C"> <b> C</b><br>
@@ -244,8 +244,8 @@
 			$('.myTable').DataTable({
 				"ordering" : false,
 				// "searching": false,
-				"bPaginate": false,
-				"bInfo" : false,
+				// "bPaginate": false,
+				// "bInfo" : false,
 				"lengthChange": false,
 				"pageLength": 50,
 			});

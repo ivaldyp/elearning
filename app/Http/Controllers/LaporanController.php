@@ -282,6 +282,9 @@ class LaporanController extends Controller
 					$row = $result[0];
 					$col = $result[1];
 				}
+				$result = $this->excelfooter($sheet, $row, $col, $alphabet, $year, $cekrekap, $nowuser, $pd, $upd, $laporannow);
+				$row = $result[0];
+				$col = $result[1];
 			}
 		}
 
@@ -460,31 +463,77 @@ class LaporanController extends Controller
 
 		$sheet->getStyle($alphabet[$col].($row-count($cekrekap)).':'.$alphabet[$col+10].$row)->applyFromArray($styleArray);
 
+		// //TABLE FOOTER
+		// $row+=2;
+		// $sheet->setCellValue($alphabet[$col+8].$row, 'Jakarta, '. date('d M Y'));
+		// $sheet->mergeCells($alphabet[$col+8].$row.':'.$alphabet[$col+10].$row);
+
+		// $row+=2;
+		// $sheet->setCellValue($alphabet[$col+8].$row, 'KEPALA '.($upd == "NONE" ? strtoupper($pd) : strtoupper($upd)));
+		// $sheet->mergeCells($alphabet[$col+8].$row.':'.$alphabet[$col+10].$row);
+		// $sheet->getRowDimension($row)->setRowHeight(30);
+
+		// $row+=3;
+		// $sheet->setCellValue($alphabet[$col+8].$row, '..............');
+		// $sheet->mergeCells($alphabet[$col+8].($row-2).':'.$alphabet[$col+10].$row);
+
+		// $row++;
+		// $sheet->setCellValue($alphabet[$col+8].$row, $nowuser['nm_ka']);
+		// $sheet->mergeCells($alphabet[$col+8].$row.':'.$alphabet[$col+10].$row);
+
+		// $row++;
+		// $sheet->setCellValue($alphabet[$col+8].$row, 'NIP. '.$nowuser['nip_ka']);
+		// $sheet->mergeCells($alphabet[$col+8].$row.':'.$alphabet[$col+10].$row);
+
+		// $sheet->getStyle($alphabet[$col+8].($row-7).':'.$alphabet[$col+10].$row)->getAlignment()->setWrapText(true);
+		// $sheet->getStyle($alphabet[$col+8].($row-7).':'.$alphabet[$col+10].$row)->getAlignment()->setVertical('center');
+		// $sheet->getStyle($alphabet[$col+8].($row-7).':'.$alphabet[$col+10].$row)->getAlignment()->setHorizontal('center');
+
+		// $row+=3;
+
+		// foreach(range('B','Z') as $columnID) {
+		//     $sheet->getColumnDimension($columnID)
+		//         ->setAutoSize(true);
+		// }
+
+		// $sheet->getStyle('F:F')
+		//     ->getNumberFormat()
+		//     ->setFormatCode('###,###,###,###,###');
+
+		$arr = array($row, $col);
+
+		return $arr;
+	}
+
+	public function excelfooter($sheet, $row, $col, $alphabet, $year, $cekrekap, $nowuser, $pd, $upd, $laporannow)
+	{
+		
+
 		//TABLE FOOTER
 		$row+=2;
-		$sheet->setCellValue($alphabet[$col+8].$row, 'Jakarta, '. date('d M Y'));
-		$sheet->mergeCells($alphabet[$col+8].$row.':'.$alphabet[$col+10].$row);
+		$sheet->setCellValue($alphabet[$laporannow['back_column']-3].$row, 'Jakarta, '. date('d M Y'));
+		$sheet->mergeCells($alphabet[$laporannow['back_column']-3].$row.':'.$alphabet[$laporannow['back_column']-1].$row);
 
 		$row+=2;
-		$sheet->setCellValue($alphabet[$col+8].$row, 'KEPALA '.($upd == "NONE" ? strtoupper($pd) : strtoupper($upd)));
-		$sheet->mergeCells($alphabet[$col+8].$row.':'.$alphabet[$col+10].$row);
+		$sheet->setCellValue($alphabet[$laporannow['back_column']-3].$row, 'KEPALA '.($upd == "NONE" ? strtoupper($pd) : strtoupper($upd)));
+		$sheet->mergeCells($alphabet[$laporannow['back_column']-3].$row.':'.$alphabet[$laporannow['back_column']-1].$row);
 		$sheet->getRowDimension($row)->setRowHeight(30);
 
 		$row+=3;
-		$sheet->setCellValue($alphabet[$col+8].$row, '..............');
-		$sheet->mergeCells($alphabet[$col+8].($row-2).':'.$alphabet[$col+10].$row);
+		$sheet->setCellValue($alphabet[$laporannow['back_column']-3].$row, '..............');
+		$sheet->mergeCells($alphabet[$laporannow['back_column']-3].($row-2).':'.$alphabet[$laporannow['back_column']-1].$row);
 
 		$row++;
-		$sheet->setCellValue($alphabet[$col+8].$row, $nowuser['nm_ka']);
-		$sheet->mergeCells($alphabet[$col+8].$row.':'.$alphabet[$col+10].$row);
+		$sheet->setCellValue($alphabet[$laporannow['back_column']-3].$row, $nowuser['nm_ka']);
+		$sheet->mergeCells($alphabet[$laporannow['back_column']-3].$row.':'.$alphabet[$laporannow['back_column']-1].$row);
 
 		$row++;
-		$sheet->setCellValue($alphabet[$col+8].$row, 'NIP. '.$nowuser['nip_ka']);
-		$sheet->mergeCells($alphabet[$col+8].$row.':'.$alphabet[$col+10].$row);
+		$sheet->setCellValue($alphabet[$laporannow['back_column']-3].$row, 'NIP. '.$nowuser['nip_ka']);
+		$sheet->mergeCells($alphabet[$laporannow['back_column']-3].$row.':'.$alphabet[$laporannow['back_column']-1].$row);
 
-		$sheet->getStyle($alphabet[$col+8].($row-7).':'.$alphabet[$col+10].$row)->getAlignment()->setWrapText(true);
-		$sheet->getStyle($alphabet[$col+8].($row-7).':'.$alphabet[$col+10].$row)->getAlignment()->setVertical('center');
-		$sheet->getStyle($alphabet[$col+8].($row-7).':'.$alphabet[$col+10].$row)->getAlignment()->setHorizontal('center');
+		$sheet->getStyle($alphabet[$laporannow['back_column']-3].($row-7).':'.$alphabet[$laporannow['back_column']-1].$row)->getAlignment()->setWrapText(true);
+		$sheet->getStyle($alphabet[$laporannow['back_column']-3].($row-7).':'.$alphabet[$laporannow['back_column']-1].$row)->getAlignment()->setVertical('center');
+		$sheet->getStyle($alphabet[$laporannow['back_column']-3].($row-7).':'.$alphabet[$laporannow['back_column']-1].$row)->getAlignment()->setHorizontal('center');
 
 		$row+=3;
 
@@ -500,5 +549,6 @@ class LaporanController extends Controller
 		$arr = array($row, $col);
 
 		return $arr;
+
 	}
 }

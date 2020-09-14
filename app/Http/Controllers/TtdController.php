@@ -39,7 +39,7 @@ class TtdController extends Controller
     	if (is_null($ttd)) {
     		$ttd = null;
     	}
-    	
+
     	return view('pages.bpadttd.index')
     			->with('ttd', $ttd);
     }

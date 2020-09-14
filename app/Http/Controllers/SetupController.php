@@ -33,6 +33,7 @@ class SetupController extends Controller
 			'tgl'       => date('Y-m-d H:i:s'),
 			'kode'		=> $request->kode,
 			'jns_laporan' => $request->jns_laporan,
+			'tampilkan'	=> $request->tampilkan ?? 0,
 		];
 
 		Dat_laporan::insert($insert);
@@ -49,6 +50,7 @@ class SetupController extends Controller
 			->update([
 				'kode'		=> $request->kode,
 				'jns_laporan' => $request->jns_laporan,
+				'tampilkan'	=> $request->tampilkan ?? 0,
 			]);
 
 		return redirect('/setup/laporan')

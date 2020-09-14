@@ -70,7 +70,7 @@
 							<div class="panel-body">
 								<div class="row" style="margin-bottom: 10px">
 									<div class="table-responsive">
-										<table class="myTable table table-hover table-borderless">
+										<table class="table table-hover table-borderless">
 											<thead>
 												<tr>
 													<th>User</th>
