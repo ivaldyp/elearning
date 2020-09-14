@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 use App\Traits\SessionCheckTraits;
 
 use App\Aset_quserid;
@@ -117,6 +119,7 @@ class LaporanController extends Controller
 	{
 		// $kolok = $request->kolok;
 		$year = $request->tahun;
+		$wil = $request->wilayah;
 		$splitdurasi = explode("::", $request->durasi);
 
 		$laporannow = Dat_laporan::
@@ -125,19 +128,72 @@ class LaporanController extends Controller
 						->first();
 
 		if (is_null($request->kib)) {
-			return redirect('/laporan')
+			return redirect('/laporan?yearnow='.$year.'&wilnow='.$wil)
 					->with('message', 'Pilihan KIB tidak boleh kosong')
 					->with('msg_num', 2);
+		} else {
+			foreach ($request->kib as $key => $cekkib) {
+				$tblname = "bpadlaporandata.dbo." . $year . "_" . $cekkib . "_SALDOAWAL";
+				$query = DB::select( DB::raw("
+							IF OBJECT_ID('$tblname') IS NOT NULL
+							   BEGIN
+								  select 1 as nilai
+							   END;
+							ELSE
+							   BEGIN
+								  select 0 as nilai
+							   END;"))[0];
+				$query = json_decode(json_encode($query), true);
+				if ($query['nilai'] == 0) {
+					return redirect('/laporan?yearnow='.$year.'&wilnow='.$wil)
+					->with('message', 'Data KIB ' . $cekkib . ' tahun ' . $year . ' belum ada')
+					->with('msg_num', 2);
+				}
+
+				$tblname = "bpadlaporandata.dbo." . $year . "_" . $cekkib . "_SALDOAKHIR";
+				$query = DB::select( DB::raw("
+							IF OBJECT_ID('$tblname') IS NOT NULL
+							   BEGIN
+								  select 1 as nilai
+							   END;
+							ELSE
+							   BEGIN
+								  select 0 as nilai
+							   END;"))[0];
+				$query = json_decode(json_encode($query), true);
+				if ($query['nilai'] == 0) {
+					return redirect('/laporan?yearnow='.$year.'&wilnow='.$wil)
+					->with('message', 'Data KIB ' . $cekkib . ' tahun ' . $year . ' belum ada')
+					->with('msg_num', 2);
+				}
+
+				$tblname = "bpadlaporandata.dbo." . $year . "_" . $cekkib . "_REKAP_SALDOAWAL";
+				$query = DB::select( DB::raw("
+							IF OBJECT_ID('$tblname') IS NOT NULL
+							   BEGIN
+								  select 1 as nilai
+							   END;
+							ELSE
+							   BEGIN
+								  select 0 as nilai
+							   END;"))[0];
+				$query = json_decode(json_encode($query), true);
+				if ($query['nilai'] == 0) {
+					return redirect('/laporan?yearnow='.$year.'&wilnow='.$wil)
+					->with('message', 'Data KIB ' . $cekkib . ' tahun ' . $year . ' belum ada')
+					->with('msg_num', 2);
+				}
+			}
 		}
 
 		if (is_null($request->kolok) || $request->kolok == '') {
-			return redirect('/laporan')
+			return redirect('/laporan?yearnow='.$year.'&wilnow='.$wil)
 					->with('message', 'Pilihan kolok tidak boleh kosong')
 					->with('msg_num', 2);
 		}
 
 		if (is_null($year) || $year == '') {
-			return redirect('/laporan')
+			return redirect('/laporan?yearnow='.$year.'&wilnow='.$wil)
 					->with('message', 'Pilihan tahun tidak boleh kosong')
 					->with('msg_num', 2);
 		}
@@ -195,6 +251,13 @@ class LaporanController extends Controller
 				}
 
 				foreach ($request->kib as $key => $kib) {
+					// $tabelawal = $year . "_" . $kib . "_" . strtoupper($splitdurasi[0]);
+					// $tabelakhir = $year . "_" . $kib . "_" . strtoupper($splitdurasi[1]);
+					// $nmtabelawal = "bpadlaporandata.dbo.[" . $tabelawal . "]"; 
+					// $nmtabelawalrekap = "bpadlaporandata.dbo.[" . $tabelawal . "]"; 
+					// $nmtabelakhir = "bpadlaporandata.dbo.[" . $tabelakhir . "]"; 
+					// $nmtabelakhirrekap = "bpadlaporandata.dbo.[" . $tabelakhir . "]"; 
+
 					$nmtabelawal = "bpadlaporandata.dbo.[" . $year . "_" . $kib . "_" . strtoupper($splitdurasi[0]) . "]"; 
 					$nmtabelawalrekap = "bpadlaporandata.dbo.[" . $year . "_" . $kib . "_REKAP_" . strtoupper($splitdurasi[0]) . "]"; 
 					$nmtabelakhir = "bpadlaporandata.dbo.[" . $year . "_" . $kib . "_" . strtoupper($splitdurasi[1]) . "]"; 
@@ -205,7 +268,6 @@ class LaporanController extends Controller
 								FROM $nmtabelawalrekap
 								WHERE sts = 1
 								AND kolok = '$kolok'
-								ORDER BY KOBAR
 								"));
 					$cekrekap = json_decode(json_encode($cekrekap), true);
 
@@ -239,12 +301,12 @@ class LaporanController extends Controller
 								     'tahun' => $year,
 								     'KOLOK' => $data['kolok'],
 								     'NALOK' => '',
-								     'KOBAR' => $data['kobar'],
-								     'NABAR' => '',
-								     'NOREG' => '',
-								     'SATUAN' => ($data['satuan'] ?? ''),
-								     'KUANTITAS' => $data['kuantitas'],
-								     'HARGA' => $data['total'],
+								     'KOBAR_SALDOAWAL' => $data['kobar'],
+								     'NABAR_SALDOAWAL' => '',
+								     'NOREG_SALDOAWAL' => '',
+								     'SATUAN_SALDOAWAL' => ($data['satuan'] ?? ''),
+								     'KUANTITAS_SALDOAWAL' => $data['kuantitas'],
+								     'HARGA_SALDOAWAL' => $data['total'],
 
 								 	]
 								);
@@ -257,12 +319,9 @@ class LaporanController extends Controller
 									FROM $nmtabelawalrekap
 									WHERE sts = 1
 									AND kolok = '$kolok'
-									ORDER BY KOBAR
 									"));
 						$cekrekap = json_decode(json_encode($cekrekap), true);
 					} 
-
-					
 
 					//TABLE HEAD
 
@@ -352,7 +411,7 @@ class LaporanController extends Controller
 
 	public function excelkib($sheet, $row, $col, $alphabet, $kib)
 	{
-		$row++;
+		$row+=2;
 		$sheet->setCellValue($alphabet[$col].$row, 'KIB');
 		$sheet->setCellValue($alphabet[$col+1].$row, ': '.$kib);
 
@@ -432,12 +491,12 @@ class LaporanController extends Controller
 		} else {
 			foreach ($cekrekap as $key => $value) {
 				$row++;
-				$sheet->setCellValue($alphabet[$col].$row, $value['KOBAR']);
-				$sheet->setCellValue($alphabet[$col+1].$row, $value['NABAR']);
-				$sheet->setCellValue($alphabet[$col+2].$row, $value['SATUAN']);
-				$sheet->setCellValue($alphabet[$col+3].$row, $value['KUANTITAS']);
+				$sheet->setCellValue($alphabet[$col].$row, $value['KOBAR_SALDOAWAL']);
+				$sheet->setCellValue($alphabet[$col+1].$row, $value['NABAR_SALDOAWAL']);
+				$sheet->setCellValue($alphabet[$col+2].$row, $value['SATUAN_SALDOAWAL']);
+				$sheet->setCellValue($alphabet[$col+3].$row, $value['KUANTITAS_SALDOAWAL']);
 				$sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('###');
-				$sheet->setCellValueExplicit($alphabet[$col+4].$row, $value['HARGA'], DataType::TYPE_NUMERIC);
+				$sheet->setCellValueExplicit($alphabet[$col+4].$row, $value['HARGA_SALDOAWAL'], DataType::TYPE_NUMERIC);
 				$sheet->setCellValue($alphabet[$col+5].$row, '');
 				$sheet->setCellValue($alphabet[$col+6].$row, '');
 				$sheet->setCellValue($alphabet[$col+7].$row, '');
@@ -445,7 +504,7 @@ class LaporanController extends Controller
 				$sheet->setCellValue($alphabet[$col+9].$row, '');
 				$sheet->setCellValue($alphabet[$col+10].$row, '');
 
-				$total += $value['HARGA'];
+				$total += $value['HARGA_SALDOAWAL'];
 			}
 		}
 		

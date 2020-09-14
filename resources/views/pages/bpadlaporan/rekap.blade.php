@@ -104,6 +104,7 @@
 										<div class="col-md-10">
 											
 											<input type="hidden" name="tahun" value="{{ $yearnow }}">
+											<input type="hidden" name="wilayah" value="{{ $wilnow }}">
 
 											@if(!(is_null($pds)))
 											<table class="myTable table table-hover table-striped">
@@ -145,9 +146,9 @@
 												<label for="durasi" class="col-md-2 control-label"> Durasi </label>
 												<div class="col-md-8">
 													<select class="form-control" name="durasi" id="durasi">
-														<option value="saldoawal::semester1">Saldo Awal -> Semester 1</option>
+														<!-- <option value="saldoawal::semester1">Saldo Awal -> Semester 1</option> -->
 														<option value="saldoawal::saldoakhir">Saldo Awal -> Saldo Akhir</option>
-														<option value="saldoawal::audited">Saldo Awal -> Audited</option>
+														<!-- <option value="saldoawal::audited">Saldo Awal -> Audited</option> -->
 													</select>
 												</div>
 											</div>
