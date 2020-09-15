@@ -67,26 +67,111 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-info">
-								<div class="panel-heading">Isi 
+								<div class="panel-heading">WELCOME,
+									@if(Auth::user()->usname_skpd)
+										@if($_SESSION['user_data']['TLEVEL'] == 2)
+										P3B
+										@elseif($_SESSION['user_data']['TLEVEL'] == 3)
+										Pengurus Barang
+										@endif
+									@elseif(Auth::user()->usname_admin)
+									{{ $_SESSION['user_data']['idgroup'] }}
+									@elseif(Auth::user()->id_emp)
+									{{ $_SESSION['user_data']['idgroup'] }}
+									@endif
+									 - 
+									@if(Auth::user()->usname_skpd)
+									{{ $_SESSION['user_data']['deskripsi_user'] }}
+									@elseif(Auth::user()->usname_admin)
+									{{ $_SESSION['user_data']['usname'] }}
+									@elseif(Auth::user()->id_emp)
+									{{ $_SESSION['user_data']['nm_emp'] }}
+									@endif
+
 									<div class="pull-right"><a href="#" data-perform="panel-collapse"><i class="ti-minus"></i></a> </div>
 								</div>
 								<div class="panel-wrapper collapse in">
 									<div class="panel-body">
 										<div>
-											Welcome 
-											@if(Auth::user()->usname_skpd)
-											{{ $_SESSION['user_data']['deskripsi_user'] }}
-											@elseif(Auth::user()->usname_admin)
-											{{ $_SESSION['user_data']['usname'] }}
-											@elseif(Auth::user()->id_emp)
-											{{ $_SESSION['user_data']['nm_emp'] }}
-											@endif	
+											<form method="GET" action="/laporanbmd/home">
+												<div class="row col-md-12">
+													<div class=" col-md-3">
+														<select class="form-control" name="yearnow" id="yearnow" onchange="this.form.submit()">
+															@foreach($years as $year)
+															<option <?php if ($yearnow == $year['tahun']): ?> selected <?php endif ?> value="{{ $year['tahun'] }}">{{ $year['tahun'] }}</option>
+															@endforeach
+														</select>
+													</div>
+												</div>
+											</form>
 										</div>
 									</div>
 								</div>
 							</div>	
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="row">
+                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                            <div class="white-box">
+                                <h3 class="box-title">KIB A</h3>
+                                <ul class="list-inline two-part">
+                                    <li><i class=" icon-flag text-info"></i></li>
+                                    <li class="text-right"><span class="counter">{{ $arraykib['KIBA'] }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                            <div class="white-box">
+                                <h3 class="box-title">KIB B</h3>
+                                <ul class="list-inline two-part">
+                                    <li><i class="icon-chart text-purple"></i></li>
+                                    <li class="text-right"><span class="counter">{{ $arraykib['KIBB'] }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                            <div class="white-box">
+                                <h3 class="box-title">KIB C</h3>
+                                <ul class="list-inline two-part">
+                                    <li><i class="icon-home text-danger"></i></li>
+                                    <li class="text-right"><span class="">{{ $arraykib['KIBC'] }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+					<div class="row">
+                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                            <div class="white-box">
+                                <h3 class="box-title">KIB D</h3>
+                                <ul class="list-inline two-part">
+                                    <li><i class="icon-map text-default"></i></li>
+                                    <li class="text-right"><span class="counter">{{ $arraykib['KIBD'] }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                            <div class="white-box">
+                                <h3 class="box-title">KIB E</h3>
+                                <ul class="list-inline two-part">
+                                    <li><i class="icon-pencil text-warning"></i></li>
+                                    <li class="text-right"><span class="counter">{{ $arraykib['KIBE'] }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                            <div class="white-box">
+                                <h3 class="box-title">KIB F</h3>
+                                <ul class="list-inline two-part">
+                                    <li><i class="icon-wrench text-success"></i></li>
+                                    <li class="text-right"><span class="">{{ $arraykib['KIBF'] }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 			</div>
 		</div>

@@ -194,6 +194,174 @@ class HomeController extends Controller
 
 		$_SESSION['menus'] = $menus;
 
-		return view('home');
+		//////////////////////////////////////////////
+		if ($request->yearnow) {
+			$year = $request->yearnow;
+		} else {
+			$year = 2020;
+		}
+
+		$years = Glo_profile_skpd::
+					distinct()
+					->orderBy('tahun', 'desc')
+					->get(['tahun']);
+
+		//MULAI KIB
+		// $arraykib = array();
+
+		//KIB A
+		$tbla = "bpadlaporandata.dbo.[" . $year . "_A_SALDOAKHIR]";
+		$query = DB::select( DB::raw("
+					IF OBJECT_ID('$tbla') IS NOT NULL
+					   BEGIN
+						  select 1 as nilai
+					   END;
+					ELSE
+					   BEGIN
+						  select 0 as nilai
+					   END;"))[0];
+		$query = json_decode(json_encode($query), true);
+		if ($query['nilai'] == 1) {
+			$kiba = DB::select( DB::raw("
+						SELECT count(sts) as total
+						FROM $tbla
+						WHERE sts = 1
+						"))[0];
+			$kiba = json_decode(json_encode($kiba), true);
+			$arraykib['KIBA'] = $kiba['total'];
+		} else {
+			$kiba = 0;
+			$arraykib['KIBA'] = 0; 
+		}
+
+		//KIB B
+		$tblb = "bpadlaporandata.dbo.[" . $year . "_B_SALDOAKHIR]";
+		$query = DB::select( DB::raw("
+					IF OBJECT_ID('$tblb') IS NOT NULL
+					   BEGIN
+						  select 1 as nilai
+					   END;
+					ELSE
+					   BEGIN
+						  select 0 as nilai
+					   END;"))[0];
+		$query = json_decode(json_encode($query), true);
+		if ($query['nilai'] == 1) {
+			$kibb = DB::select( DB::raw("
+						SELECT count(sts) as total
+						FROM $tblb
+						WHERE sts = 1
+						"))[0];
+			$kibb = json_decode(json_encode($kibb), true);
+			$arraykib['KIBB'] = $kibb['total'];
+		} else {
+			$kibb = 0;
+			$arraykib['KIBB'] = 0; 
+		}
+
+		//KIB C
+		$tblc = "bpadlaporandata.dbo.[" . $year . "_C_SALDOAKHIR]";
+		$query = DB::select( DB::raw("
+					IF OBJECT_ID('$tblc') IS NOT NULL
+					   BEGIN
+						  select 1 as nilai
+					   END;
+					ELSE
+					   BEGIN
+						  select 0 as nilai
+					   END;"))[0];
+		$query = json_decode(json_encode($query), true);
+		if ($query['nilai'] == 1) {
+			$kibc = DB::select( DB::raw("
+						SELECT count(sts) as total
+						FROM $tblc
+						WHERE sts = 1
+						"))[0];
+			$kibc = json_decode(json_encode($kibc), true);
+			$arraykib['KIBC'] = $kibc['total'];
+		} else {
+			$kibc = 0;
+			$arraykib['KIBC'] = 0; 
+		}
+
+		//KIB D
+		$tbld = "bpadlaporandata.dbo.[" . $year . "_D_SALDOAKHIR]";
+		$query = DB::select( DB::raw("
+					IF OBJECT_ID('$tbld') IS NOT NULL
+					   BEGIN
+						  select 1 as nilai
+					   END;
+					ELSE
+					   BEGIN
+						  select 0 as nilai
+					   END;"))[0];
+		$query = json_decode(json_encode($query), true);
+		if ($query['nilai'] == 1) {
+			$kibd = DB::select( DB::raw("
+						SELECT count(sts) as total
+						FROM $tbld
+						WHERE sts = 1
+						"))[0];
+			$kibd = json_decode(json_encode($kibd), true);
+			$arraykib['KIBD'] = $kibd['total'];
+		} else {
+			$kibd = 0;
+			$arraykib['KIBD'] = 0; 
+		}
+
+		//KIB E
+		$tble = "bpadlaporandata.dbo.[" . $year . "_E_SALDOAKHIR]";
+		$query = DB::select( DB::raw("
+					IF OBJECT_ID('$tble') IS NOT NULL
+					   BEGIN
+						  select 1 as nilai
+					   END;
+					ELSE
+					   BEGIN
+						  select 0 as nilai
+					   END;"))[0];
+		$query = json_decode(json_encode($query), true);
+		if ($query['nilai'] == 1) {
+			$kibe = DB::select( DB::raw("
+						SELECT count(sts) as total
+						FROM $tble
+						WHERE sts = 1
+						"))[0];
+			$kibe = json_decode(json_encode($kibe), true);
+			$arraykib['KIBE'] = $kibe['total'];
+		} else {
+			$kibe = 0;
+			$arraykib['KIBE'] = 0; 
+		}
+
+		//KIB F
+		$tblf = "bpadlaporandata.dbo.[" . $year . "_F_SALDOAKHIR]";
+		$query = DB::select( DB::raw("
+					IF OBJECT_ID('$tblf') IS NOT NULL
+					   BEGIN
+						  select 1 as nilai
+					   END;
+					ELSE
+					   BEGIN
+						  select 0 as nilai
+					   END;"))[0];
+		$query = json_decode(json_encode($query), true);
+		if ($query['nilai'] == 1) {
+			$kibf = DB::select( DB::raw("
+						SELECT count(sts) as total
+						FROM $tblf
+						WHERE sts = 1
+						"))[0];
+			$kibf = json_decode(json_encode($kibf), true);
+			$arraykib['KIBF'] = $kibf['total'];
+		} else {
+			$kibf = 0;
+			$arraykib['KIBF'] = 0; 
+		}
+
+		return view('home')
+				->with('years', $years)
+				->with('yearnow', $year)
+				->with('arraykib', $arraykib);
 	}
 }
