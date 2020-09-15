@@ -101,6 +101,7 @@ class LaporanController extends Controller
 
 		$laporans = Dat_laporan::
 					where('sts', 1)
+					->where('tampilkan', 1)
 					->orderBy('kode')
 					->get();
 
@@ -167,7 +168,7 @@ class LaporanController extends Controller
 					->with('msg_num', 2);
 				}
 
-				$tblname = "bpadlaporandata.dbo." . $year . "_" . $cekkib . "_REKAP_SALDOAWAL";
+				$tblname = "bpadlaporandata.dbo." . $year . "_" . $cekkib . "_REKAP";
 				$query = DB::select( DB::raw("
 							IF OBJECT_ID('$tblname') IS NOT NULL
 							   BEGIN
@@ -258,70 +259,7 @@ class LaporanController extends Controller
 					// $nmtabelakhir = "bpadlaporandata.dbo.[" . $tabelakhir . "]"; 
 					// $nmtabelakhirrekap = "bpadlaporandata.dbo.[" . $tabelakhir . "]"; 
 
-					$nmtabelawal = "bpadlaporandata.dbo.[" . $year . "_" . $kib . "_" . strtoupper($splitdurasi[0]) . "]"; 
-					$nmtabelawalrekap = "bpadlaporandata.dbo.[" . $year . "_" . $kib . "_REKAP_" . strtoupper($splitdurasi[0]) . "]"; 
-					$nmtabelakhir = "bpadlaporandata.dbo.[" . $year . "_" . $kib . "_" . strtoupper($splitdurasi[1]) . "]"; 
-					$nmtabelakhirrekap = "bpadlaporandata.dbo.[" . $year . "_" . $kib . "_REKAP_" . strtoupper($splitdurasi[1]) . "]"; 
-
-					$cekrekap = DB::select( DB::raw("
-								SELECT *
-								FROM $nmtabelawalrekap
-								WHERE sts = 1
-								AND kolok = '$kolok'
-								"));
-					$cekrekap = json_decode(json_encode($cekrekap), true);
-
-					if (count($cekrekap) == 0) {
-						$query = DB::select( DB::raw("
-									SELECT
-								      kobar
-									  , kolok
-									  , satuan
-									  , sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total
-									  , count(kobar) as kuantitas
-									from $nmtabelawal
-									where kolok like '$kolok'
-									GROUP BY
-								    kobar, kolok, satuan;
-								    "));
-						$query = json_decode(json_encode($query), true);
-
-						$temp_nmtabelawalrekap = str_replace("[", "", $nmtabelawalrekap);
-						$temp_nmtabelawalrekap = str_replace("]", "", $temp_nmtabelawalrekap);
-
-						if (count($query) == 0) {
-							# code...
-						} else {
-							foreach ($query as $key => $data) {
-								DB::table($temp_nmtabelawalrekap)->insert(
-								    ['sts' => 1,
-								     'uname' => Auth::user()->usname_skpd, 
-								     'tgl' => date('Y-m-d'),
-								     'usname' => Auth::user()->usname_skpd, 
-								     'tahun' => $year,
-								     'KOLOK' => $data['kolok'],
-								     'NALOK' => '',
-								     'KOBAR_SALDOAWAL' => $data['kobar'],
-								     'NABAR_SALDOAWAL' => '',
-								     'NOREG_SALDOAWAL' => '',
-								     'SATUAN_SALDOAWAL' => ($data['satuan'] ?? ''),
-								     'KUANTITAS_SALDOAWAL' => $data['kuantitas'],
-								     'HARGA_SALDOAWAL' => $data['total'],
-
-								 	]
-								);
-							}
-						}
-							
-
-						$cekrekap = DB::select( DB::raw("
-									SELECT *
-									FROM $nmtabelawalrekap
-									WHERE sts = 1
-									AND kolok = '$kolok'
-									"));
-						$cekrekap = json_decode(json_encode($cekrekap), true);
-					} 
+						 
 
 					//TABLE HEAD
 
@@ -330,6 +268,149 @@ class LaporanController extends Controller
 					$col = $result[1];
 
 					if ($laporannow['kode'] == "K01" || $laporannow['kode'] == "K05" || $laporannow['kode'] == "K06") {
+						$nmtabelawal = "bpadlaporandata.dbo.[" . $year . "_" . $kib . "_" . strtoupper($splitdurasi[0]) . "]"; 
+						$nmtabelawalrekap = "bpadlaporandata.dbo.[" . $year . "_" . $kib . "_REKAP]"; 
+						$nmtabelakhir = "bpadlaporandata.dbo.[" . $year . "_" . $kib . "_" . strtoupper($splitdurasi[1]) . "]"; 
+						$nmtabelakhirrekap = "bpadlaporandata.dbo.[" . $year . "_" . $kib . "_REKAP]"; 
+
+						$cekrekap = DB::select( DB::raw("
+									SELECT *
+									FROM $nmtabelawalrekap
+									WHERE sts = 1
+									AND kolok = '$kolok'
+									"));
+						$cekrekap = json_decode(json_encode($cekrekap), true);
+
+						if (count($cekrekap) == 0) {
+
+							//SALDO AWAL ---- SALDOAWAL
+							$queryawal = DB::select( DB::raw("
+										SELECT
+									      kobar
+										  , kolok
+										  , satuan
+										  , sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total
+										  , count(kobar) as kuantitas
+										from $nmtabelawal
+										where kolok like '$kolok'
+										GROUP BY
+									    kobar, kolok, satuan;
+									    "));
+							$queryawal = json_decode(json_encode($queryawal), true);
+
+							$temp_nmtabelawalrekap = str_replace("[", "", $nmtabelawalrekap);
+							$temp_nmtabelawalrekap = str_replace("]", "", $temp_nmtabelawalrekap);
+
+							if (count($queryawal) == 0) {
+								# code...
+							} else {
+								foreach ($queryawal as $key => $data) {
+									DB::table($temp_nmtabelawalrekap)->insert(
+									    ['sts' => 1,
+									     'uname' => Auth::user()->usname_skpd, 
+									     'tgl' => date('Y-m-d'),
+									     'usname' => Auth::user()->usname_skpd, 
+									     'tahun' => $year,
+									     'KOLOK' => $data['kolok'],
+									     'NALOK' => '',
+									     'KOBAR' => $data['kobar'],
+									     'NABAR' => '',
+									     'NOREG' => '',
+									     'SATUAN' => ($data['satuan'] ?? ''),
+									     'KUANTITAS_SALDOAWAL' => $data['kuantitas'],
+									     'HARGA_SALDOAWAL' => $data['total'],
+
+									 	]
+									);
+								}
+							}
+
+
+							//SALDO AKHIR ---- SALDOAKHIR
+							$queryakhir = DB::select( DB::raw("
+										SELECT
+									      kobar
+										  , kolok
+										  , satuan
+										  , sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total
+										  , count(kobar) as kuantitas
+										from $nmtabelakhir
+										where kolok like '$kolok'
+										GROUP BY
+									    kobar, kolok, satuan;
+									    "));
+							$queryakhir = json_decode(json_encode($queryakhir), true);	
+
+							$temp_nmtabelakhirrekap = str_replace("[", "", $nmtabelakhirrekap);
+							$temp_nmtabelakhirrekap = str_replace("]", "", $temp_nmtabelakhirrekap);
+
+							if (count($queryakhir) == 0) {
+								# code...
+							} else {
+								foreach ($queryakhir as $key => $data) {
+									// $cekudahadabelom = DB::select( DB::raw("
+									// 			SELECT count(kobar)
+									// 			from $nmtabelakhirrekap
+									// 			where kolok like '$kolok'
+									// 			AND kobar like '$data['kobar']'
+									// 			AND satuan like '$data['satuan']'
+									// 		    "));
+									// $cekudahadabelom = json_decode(json_encode($cekudahadabelom), true);
+
+									// if ($cekudahadabelom == 0) {
+									// 	DB::table($temp_nmtabelakhirrekap)->insert(
+									// 	    ['sts' => 1,
+									// 	     'uname' => Auth::user()->usname_skpd, 
+									// 	     'tgl' => date('Y-m-d'),
+									// 	     'usname' => Auth::user()->usname_skpd, 
+									// 	     'tahun' => $year,
+									// 	     'KOLOK' => $data['kolok'],
+									// 	     'NALOK' => '',
+									// 	     'KOBAR' => $data['kobar'],
+									// 	     'NABAR' => '',
+									// 	     'NOREG' => '',
+									// 	     'SATUAN' => ($data['satuan'] ?? ''),
+									// 	     'KUANTITAS_SALDOAKHIR' => $data['kuantitas'],
+									// 	     'HARGA_SALDOAKHIR' => $data['total'],
+
+									// 	 	]
+									// 	);
+									// } else {
+
+									// }
+
+									DB::table($temp_nmtabelakhirrekap)
+									    ->updateOrInsert(
+									        ['KOLOK' => $kolok, 'KOBAR' => $data['kobar'], 'SATUAN' => $data['satuan'], 'sts' => 1],
+									        [
+												'uname' => Auth::user()->usname_skpd, 
+												'tgl' => date('Y-m-d'),
+												'usname' => Auth::user()->usname_skpd, 
+												'tahun' => $year,
+												'NALOK' => '',
+												'NABAR' => '',
+												'NOREG' => '',
+												'SATUAN' => ($data['satuan'] ?? ''),
+												'KUANTITAS_SALDOAKHIR' => $data['kuantitas'],
+												'HARGA_SALDOAKHIR' => $data['total'],
+									        ]
+									    );
+
+										
+								}
+							}
+
+
+							//SELECT REKAPHASILNYA
+							$cekrekap = DB::select( DB::raw("
+										SELECT *
+										FROM $nmtabelawalrekap
+										WHERE sts = 1
+										AND kolok = '$kolok'
+										"));
+							$cekrekap = json_decode(json_encode($cekrekap), true);
+						}
+
 						$result = $this->excelK01($sheet, $row, $col, $alphabet, $year, $cekrekap, $nowuser, $pd, $upd);
 					} elseif ($laporannow['kode'] == "K02") {
 						# code...
@@ -486,14 +567,17 @@ class LaporanController extends Controller
 		$sheet->getStyle($alphabet[$col].($row-3) . ':' . $alphabet[$col+10].$row)->applyFromArray($styleArray);
 
 		//TABLE ISI
-		$total = 0;
+		$jmlhawal = 0;
+		$totalawal = 0;
+		$jmlhakhir = 0;
+		$totalakhir = 0;
 		if (count($cekrekap) == 0) {
 		} else {
 			foreach ($cekrekap as $key => $value) {
 				$row++;
-				$sheet->setCellValue($alphabet[$col].$row, $value['KOBAR_SALDOAWAL']);
-				$sheet->setCellValue($alphabet[$col+1].$row, $value['NABAR_SALDOAWAL']);
-				$sheet->setCellValue($alphabet[$col+2].$row, $value['SATUAN_SALDOAWAL']);
+				$sheet->setCellValue($alphabet[$col].$row, $value['KOBAR']);
+				$sheet->setCellValue($alphabet[$col+1].$row, $value['NABAR']);
+				$sheet->setCellValue($alphabet[$col+2].$row, $value['SATUAN']);
 				$sheet->setCellValue($alphabet[$col+3].$row, $value['KUANTITAS_SALDOAWAL']);
 				$sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('###');
 				$sheet->setCellValueExplicit($alphabet[$col+4].$row, $value['HARGA_SALDOAWAL'], DataType::TYPE_NUMERIC);
@@ -501,10 +585,15 @@ class LaporanController extends Controller
 				$sheet->setCellValue($alphabet[$col+6].$row, '');
 				$sheet->setCellValue($alphabet[$col+7].$row, '');
 				$sheet->setCellValue($alphabet[$col+8].$row, '');
-				$sheet->setCellValue($alphabet[$col+9].$row, '');
-				$sheet->setCellValue($alphabet[$col+10].$row, '');
+				$sheet->setCellValue($alphabet[$col+9].$row, $value['KUANTITAS_SALDOAKHIR']);
+				$sheet->getStyle($alphabet[$col+10].$row)->getNumberFormat()->setFormatCode('###');
+				$sheet->setCellValueExplicit($alphabet[$col+10].$row, $value['HARGA_SALDOAKHIR'], DataType::TYPE_NUMERIC);
 
-				$total += $value['HARGA_SALDOAWAL'];
+				$jmlhawal += $value['KUANTITAS_SALDOAWAL'];
+				$totalawal += $value['HARGA_SALDOAWAL'];
+
+				$jmlhakhir += $value['KUANTITAS_SALDOAKHIR'];
+				$totalakhir += $value['HARGA_SALDOAKHIR'];
 			}
 		}
 		
@@ -513,12 +602,17 @@ class LaporanController extends Controller
 		$row++;
 		// $sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('###');
 		$sheet->setCellValue($alphabet[$col].$row, 'Total');
-		$sheet->mergeCells($alphabet[$col].$row.':'.$alphabet[$col+3].$row);
-		$sheet->getStyle($alphabet[$col].$row.':'.$alphabet[$col+3].$row)->getAlignment()->setHorizontal('center');
-		$sheet->getStyle($alphabet[$col].$row .':'. $alphabet[$col+3].$row)->getAlignment()->setVertical('center');
+		$sheet->mergeCells($alphabet[$col].$row.':'.$alphabet[$col+2].$row);
+		$sheet->getStyle($alphabet[$col].$row.':'.$alphabet[$col+2].$row)->getAlignment()->setHorizontal('center');
+		$sheet->getStyle($alphabet[$col].$row .':'. $alphabet[$col+2].$row)->getAlignment()->setVertical('center');
 
+		$sheet->setCellValue($alphabet[$col+3].$row, $jmlhawal);
 		$sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('###');
-		$sheet->setCellValueExplicit($alphabet[$col+4].$row, $total, DataType::TYPE_NUMERIC);
+		$sheet->setCellValueExplicit($alphabet[$col+4].$row, $totalawal, DataType::TYPE_NUMERIC);
+
+		$sheet->setCellValue($alphabet[$col+9].$row, $jmlhakhir);
+		$sheet->getStyle($alphabet[$col+10].$row)->getNumberFormat()->setFormatCode('###');
+		$sheet->setCellValueExplicit($alphabet[$col+10].$row, $totalakhir, DataType::TYPE_NUMERIC);
 
 		$sheet->getStyle($alphabet[$col].($row-count($cekrekap)).':'.$alphabet[$col+10].$row)->applyFromArray($styleArray);
 
@@ -600,10 +694,6 @@ class LaporanController extends Controller
 		    $sheet->getColumnDimension($columnID)
 		        ->setAutoSize(true);
 		}
-
-		$sheet->getStyle('F:F')
-		    ->getNumberFormat()
-		    ->setFormatCode('###,###,###,###,###');
 
 		$arr = array($row, $col);
 
