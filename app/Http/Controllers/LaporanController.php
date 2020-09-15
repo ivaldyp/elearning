@@ -14,12 +14,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Schema\Blueprint;
 use App\Traits\SessionCheckTraits;
 
 use App\Aset_quserid;
 use App\Glo_profile_skpd;
 use App\Dat_laporan;
+use App\Dat_ttd;
 use App\Log_susun_laporan;
 
 session_start();
@@ -211,10 +213,20 @@ class LaporanController extends Controller
 		$col = $result[1];
 
 		foreach ($request->kolok as $key => $kolok) {
-			$nowuser = Glo_profile_skpd::
+			$nowuser1 = Glo_profile_skpd::
 						where('kolok', $kolok)
 						->where('tahun', $year)
 						->first();
+			$nowuser1 = new Collection($nowuser1);
+
+			$nowuser2 = Dat_ttd::
+						where('sts', 1)
+						->where('usname', 'AS'.$kolok.'2')
+						->first();
+			$nowuser2 = new Collection($nowuser2);
+
+			$nowuser = $nowuser2->merge($nowuser1);
+
 
 			$nowuserskpd = Glo_profile_skpd::
 						where('kolok', $nowuser['kolokskpd'])
@@ -672,9 +684,19 @@ class LaporanController extends Controller
 		$sheet->mergeCells($alphabet[$laporannow['back_column']-3].$row.':'.$alphabet[$laporannow['back_column']-1].$row);
 		$sheet->getRowDimension($row)->setRowHeight(30);
 
-		$row+=3;
-		$sheet->setCellValue($alphabet[$laporannow['back_column']-3].$row, '..............');
-		$sheet->mergeCells($alphabet[$laporannow['back_column']-3].($row-2).':'.$alphabet[$laporannow['back_column']-1].$row);
+		$row+=5;
+		if (isset($nowuser['ttd']) && $nowuser['ttd'] != '') {
+			$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+			// $drawing->setPath('public/publicfile/ttd/AS005090000000002/ttdkaAS005090000000002.png');
+			$drawing->setPath('public/publicfile/ttd/AS'.$nowuser['kolok'].'2/'.$nowuser['ttd']); // put your path and image here
+			$drawing->setCoordinates(strtoupper($alphabet[$laporannow['back_column']-2]).($row-4));
+			$drawing->setHeight(100);
+			$drawing->setResizeProportional(true);
+			$drawing->setWorksheet($sheet);
+		} else {
+			$sheet->setCellValue($alphabet[$laporannow['back_column']-3].($row-4), '..............');
+		}
+		$sheet->mergeCells($alphabet[$laporannow['back_column']-3].($row-4).':'.$alphabet[$laporannow['back_column']-1].$row);
 
 		$row++;
 		$sheet->setCellValue($alphabet[$laporannow['back_column']-3].$row, $nowuser['nm_ka']);
