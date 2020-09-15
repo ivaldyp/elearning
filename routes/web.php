@@ -28,6 +28,7 @@ Route::get('/logout', 'LandingController@logout');
 Route::group(['prefix' => 'tanda tangan'], function () {
 	Route::get('/', 'TtdController@index');
 	Route::post('/form/tambahttd', 'TtdController@forminsertttd');
+	Route::post('/form/hapusttd', 'TtdController@formdeletettd');
 });
 
 Route::group(['prefix' => 'setup'], function () {

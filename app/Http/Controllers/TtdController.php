@@ -123,4 +123,30 @@ class TtdController extends Controller
 					->with('message', 'Berhasil memasukkan tanda tangan')
 					->with('msg_num', 1);
     }
+
+    public function formdeletettd(Request $request)
+    {
+    	$usname = $request->usname;
+
+    	$fullpath = config('app.savefilettd') . "\\" . $usname;
+		$fullpath .= "\\*";
+
+		$files = glob($fullpath); // get all file names
+
+		foreach($files as $file) { // iterate files
+		  	if(is_file($file))
+		    	unlink($file); // delete file
+		}
+
+		Dat_ttd::
+			where('sts', 1)
+			->where('usname', $usname)
+			->update([
+				'sts'	=> 0,
+			]);
+
+    	return redirect('/tanda tangan')
+					->with('message', 'Berhasil menghapus tanda tangan')
+					->with('msg_num', 1);
+    }
 }

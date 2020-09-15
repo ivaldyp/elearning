@@ -84,8 +84,8 @@
 												<tr>
 													<td>{{ Auth::user()->usname_skpd }}</td>
 													@if(is_null($ttd))
-													<td>Anda belum mengunggah tandatangan</td>
-													<td>Anda belum mengunggah tandatangan</td>
+													<td><span style="color: red">Anda belum mengunggah tandatangan</span></td>
+													<td><span style="color: red">Anda belum mengunggah tandatangan</span></td>
 													<td>
 														<button type="button" class="btn btn-danger btn-outline btn-circle m-r-5 "><i class="fa fa-trash"></i></button>
 													</td>
@@ -95,7 +95,7 @@
 														<a target="_blank" href="{{ config('app.openfilettd') }}{{ Auth::user()->usname_skpd }}/{{ $ttd['ttd'] }}"><i class="fa fa-download"></i> {{ $ttd['ttd'] }}</a>
 													</td>
 													<td>
-														<button type="button" class="btn btn-danger btn-outline btn-circle m-r-5  btn-delete" data-toggle="modal" data-target="#modal-delete" data-usname="{{ Auth::user()->usname_skpd }}" ><i class="fa fa-trash"></i></button>
+														<button type="button" class="btn btn-danger btn-outline btn-circle m-r-5  btn-delete" data-toggle="modal" data-target="#modal-delete" data-usname="{{ Auth::user()->usname_skpd }}" data-nama="{{ $ttd['nama'] }}" ><i class="fa fa-trash"></i></button>
 													</td>
 													@endif
 													
@@ -180,6 +180,27 @@
 				</div>
 			</div>
 			@endif
+			<div id="modal-delete" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<form method="POST" action="/laporanbmd/tanda tangan/form/hapusttd" class="form-horizontal">
+						@csrf
+							<div class="modal-header">
+								<h4 class="modal-title"><b>Hapus Tanda Tangan</b></h4>
+							</div>
+							<div class="modal-body">
+								<h4 id="label_delete"></h4>
+								<input type="hidden" name="usname" id="modal_delete_usname" value="">
+								<input type="hidden" name="nama" id="modal_delete_nama" value="">
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-danger pull-right">Hapus</button>
+								<button type="button" class="btn btn-default pull-right" style="margin-right: 10px" data-dismiss="modal">Close</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 @endsection
@@ -203,6 +224,18 @@
 
 	<script>
 		$(function () {
+			$('.btn-delete').on('click', function () {
+				var $el = $(this);
+
+				$("#label_delete").append('Apakah anda yakin ingin menghapus tanda tangan milik <b>' + $el.data('nama') + '</b>?');
+				$("#modal_delete_usname").val($el.data('usname'));
+				$("#modal_delete_nama").val($el.data('nama'));
+			});
+
+			$("#modal-delete").on("hidden.bs.modal", function () {
+				$("#label_delete").empty();
+			});
+
 			$(".select2").select2();
 			$('.myTable').DataTable({
 				"ordering" : false,
