@@ -286,10 +286,11 @@ class LaporanController extends Controller
 						$nmtabelakhirrekap = "bpadlaporandata.dbo.[" . $year . "_" . $kib . "_REKAP]"; 
 
 						$cekrekap = DB::select( DB::raw("
-									SELECT *
-									FROM $nmtabelawalrekap
-									WHERE sts = 1
-									AND kolok = '$kolok'
+									SELECT awal.*, bar.NABAR as nabarref
+									FROM $nmtabelawalrekap awal
+									JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
+									WHERE awal.sts = 1
+									AND awal.kolok = '$kolok'
 									"));
 						$cekrekap = json_decode(json_encode($cekrekap), true);
 
@@ -415,10 +416,11 @@ class LaporanController extends Controller
 
 							//SELECT REKAPHASILNYA
 							$cekrekap = DB::select( DB::raw("
-										SELECT *
-										FROM $nmtabelawalrekap
-										WHERE sts = 1
-										AND kolok = '$kolok'
+										SELECT awal.*, bar.NABAR as nabarref
+										FROM $nmtabelawalrekap awal
+										JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
+										WHERE awal.sts = 1
+										AND awal.kolok = '$kolok'
 										"));
 							$cekrekap = json_decode(json_encode($cekrekap), true);
 						}
@@ -588,7 +590,7 @@ class LaporanController extends Controller
 			foreach ($cekrekap as $key => $value) {
 				$row++;
 				$sheet->setCellValue($alphabet[$col].$row, $value['KOBAR']);
-				$sheet->setCellValue($alphabet[$col+1].$row, $value['NABAR']);
+				$sheet->setCellValue($alphabet[$col+1].$row, $value['nabarref']);
 				$sheet->setCellValue($alphabet[$col+2].$row, $value['SATUAN']);
 				$sheet->setCellValue($alphabet[$col+3].$row, $value['KUANTITAS_SALDOAWAL']);
 				$sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('###');
