@@ -70,7 +70,7 @@
 						</div>
 					</div>
 					<div class="col-md-6" align="center">
-						<img src="{{ ('/laporanbmd/public/landing/img/E-PENGAMANAN.png') }}" width="90%">
+						<img src="{{ ('/laporanbmd/public/img/photo/ico-laporan.png32') }}" width="90%">
 					</div>
 				</div>
 			</div>
