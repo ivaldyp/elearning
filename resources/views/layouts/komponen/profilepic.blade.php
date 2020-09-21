@@ -1,6 +1,6 @@
 <li class="dropdown">
 	<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> 
-	 <img src="{{ config('app.openfileimgdefault') }}" width="36" class=" img-circle" alt="img">
+	 <img src="{{ config('app.openfileimgdefault') }}32" width="36" class=" img-circle" alt="img">
 
 	  <b class="hidden-xs pull-right">Welcome</b><span class="caret"></span> </a>
 	<ul class="dropdown-menu dropdown-user animated flipInY">
