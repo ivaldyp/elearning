@@ -718,7 +718,7 @@ class LaporanController extends Controller
 		    $sheet->getColumnDimension($columnID)
 		        ->setAutoSize(true);
 		}
-		$sheet->getColumnDimension('D')->setWidth(10);
+		$sheet->getColumnDimension('D')->setWidth('10');
 
 		$arr = array($row, $col);
 
