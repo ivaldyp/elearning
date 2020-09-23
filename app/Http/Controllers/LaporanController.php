@@ -687,6 +687,8 @@ class LaporanController extends Controller
 		$sheet->getRowDimension($row)->setRowHeight(30);
 
 		$row+=5;
+		var_dump($nowuser);
+		die();
 		if (isset($nowuser['ttd']) && $nowuser['ttd'] != '') {
 			$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
 			// $drawing->setPath('public/publicfile/ttd/AS005090000000002/ttdkaAS005090000000002.png');
@@ -718,6 +720,7 @@ class LaporanController extends Controller
 		    $sheet->getColumnDimension($columnID)
 		        ->setAutoSize(true);
 		}
+		$sheet->getColumnDimension('D')->setWidth(10);
 
 		$arr = array($row, $col);
 
