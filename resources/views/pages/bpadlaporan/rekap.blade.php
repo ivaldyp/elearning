@@ -164,6 +164,25 @@
 												</div>
 											</div>
 
+											<div class="form-group">
+												<label class="col-md-2 control-label"> Output </label>
+												<div class="radio-list col-md-8">
+													<label class="radio-inline">
+														<div class="radio radio-info">
+															<input type="radio" name="output" id="output1" value="excel" data-error="Pilih salah satu" checked>
+															<label for="output1">Excel</label> 
+														</div>
+													</label>
+													<label class="radio-inline">
+														<div class="radio radio-info">
+															<input type="radio" name="output" id="output2" value="pdf">
+															<label for="output2">PDF</label>
+														</div>
+													</label>
+													<div class="help-block with-errors"></div>  
+												</div>
+											</div>
+
 											<!-- <div class="form-group">
 												<label for="tipe" class="col-md-2 control-label"> Tipe </label>
 												<div class="col-md-8">
@@ -176,7 +195,7 @@
 
 											<div class="form-group">
 												<div class="col-md-10">
-													<button type="submit" class="btn btn-success pull-right">SUSUN</button>	
+													<button type="submit" class="btn btn-success pull-right">CETAK</button>	
 												</div>
 											</div>
 
