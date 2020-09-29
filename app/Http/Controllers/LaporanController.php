@@ -294,6 +294,7 @@ class LaporanController extends Controller
 									JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
 									WHERE awal.sts = 1
 									AND awal.kolok = '$kolok'
+									ORDER BY kobar
 									"));
 						$cekrekap = json_decode(json_encode($cekrekap), true);
 
@@ -343,14 +344,38 @@ class LaporanController extends Controller
 
 
 							//SALDO AKHIR ---- SALDOAKHIR
+							// $queryakhir = DB::select( DB::raw("
+							// 			SELECT
+							// 			  kobar
+							// 			  , kolok
+							// 			  , satuan
+							// 			  , sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total
+							// 			  , count(kobar) as kuantitas
+							// 			from $nmtabelakhir
+							// 			where kolok like '$kolok'
+							// 			GROUP BY
+							// 			kobar, kolok, satuan;
+							// 			"));
 							$queryakhir = DB::select( DB::raw("
 										SELECT
-										  kobar
-										  , kolok
-										  , satuan
-										  , sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total
-										  , count(kobar) as kuantitas
-										from $nmtabelakhir
+										kobar
+										, kolok
+										, satuan
+										, sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total
+										, count(kobar) as kuantitas
+										, (
+											SELECT distinct(CASE
+													WHEN tnskoreksi is null or tnskoreksi = '' THEN NULL
+													ELSE (tnskoreksi + ' - ' + prof.nalok) + '::' 
+													END) AS 'data()' 
+											FROM $nmtabelakhir qa
+											join bpadas.dbo.glo_profile_skpd as prof on prof.kolok = qa.KOLOKLAMA and prof.tahun = $year
+											where qa.KOLOK = sakhir.KOLOK
+											and qa.kobar = sakhir.kobar
+											and qa.SATUAN = sakhir.satuan
+											FOR XML PATH('')
+										) as keterangan
+										from $nmtabelakhir sakhir
 										where kolok like '$kolok'
 										GROUP BY
 										kobar, kolok, satuan;
@@ -394,7 +419,7 @@ class LaporanController extends Controller
 									// } else {
 
 									// }
-
+									$keterangan = substr($data['keterangan'], 0, 199);
 									DB::table($temp_nmtabelakhirrekap)
 										->updateOrInsert(
 											['KOLOK' => $kolok, 'KOBAR' => $data['kobar'], 'SATUAN' => $data['satuan'], 'sts' => 1],
@@ -409,6 +434,7 @@ class LaporanController extends Controller
 												'SATUAN' => ($data['satuan'] ?? ''),
 												'KUANTITAS_SALDOAKHIR' => $data['kuantitas'],
 												'HARGA_SALDOAKHIR' => $data['total'],
+												'KETERANGAN' => $keterangan,
 											]
 										);
 								}
@@ -422,6 +448,7 @@ class LaporanController extends Controller
 										JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
 										WHERE awal.sts = 1
 										AND awal.kolok = '$kolok'
+										ORDER BY kobar
 										"));
 							$cekrekap = json_decode(json_encode($cekrekap), true);
 						}
@@ -443,7 +470,7 @@ class LaporanController extends Controller
 			}
 		}
 
-		$filename = $year.'_LAPORAN';		
+		$filename = date('dm') . $year.'_LAPORAN';		
 		// Redirect output to a client's web browser (Xlsx)
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Cache-Control: max-age=0');

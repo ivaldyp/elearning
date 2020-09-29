@@ -98,6 +98,9 @@ trait ExcelTraits
 		$sheet->setCellValue($alphabet[$col+9].$row, 'Saldo Akhir Per '.$year);
 		$sheet->mergeCells($alphabet[$col+9].$row.':'.$alphabet[$col+10].($row+1));
 
+		$sheet->setCellValue($alphabet[$col+11].$row, 'Keterangan');
+		$sheet->mergeCells($alphabet[$col+11].$row.':'.$alphabet[$col+11].($row+2));
+
 		$row++;
 		$sheet->setCellValue($alphabet[$col+5].$row, 'Bertambah');
 		$sheet->mergeCells($alphabet[$col+5].$row.':'.$alphabet[$col+6].$row);
@@ -129,11 +132,12 @@ trait ExcelTraits
 		$sheet->setCellValue($alphabet[$col+8].$row, '9');
 		$sheet->setCellValue($alphabet[$col+9].$row, '10');
 		$sheet->setCellValue($alphabet[$col+10].$row, '11');
+		$sheet->setCellValue($alphabet[$col+11].$row, '12');
 
 
-		$sheet->getStyle($alphabet[$col].($row-3) . ':' . $alphabet[$col+10].$row)->getAlignment()->setWrapText(true);
-		$sheet->getStyle($alphabet[$col].($row-3) . ':' . $alphabet[$col+10].$row)->getAlignment()->setHorizontal('center');
-		$sheet->getStyle($alphabet[$col].($row-3) . ':' . $alphabet[$col+10].$row)->getAlignment()->setVertical('center');
+		$sheet->getStyle($alphabet[$col].($row-3) . ':' . $alphabet[$col+11].$row)->getAlignment()->setWrapText(true);
+		$sheet->getStyle($alphabet[$col].($row-3) . ':' . $alphabet[$col+11].$row)->getAlignment()->setHorizontal('center');
+		$sheet->getStyle($alphabet[$col].($row-3) . ':' . $alphabet[$col+11].$row)->getAlignment()->setVertical('center');
 
 		$styleArray = [
 		    'borders' => [
@@ -143,7 +147,7 @@ trait ExcelTraits
 		    ],
 		];
 
-		$sheet->getStyle($alphabet[$col].($row-3) . ':' . $alphabet[$col+10].$row)->applyFromArray($styleArray);
+		$sheet->getStyle($alphabet[$col].($row-3) . ':' . $alphabet[$col+11].$row)->applyFromArray($styleArray);
 
 		//TABLE ISI
 		$jmlhawal = 0;
@@ -167,6 +171,7 @@ trait ExcelTraits
 				$sheet->setCellValue($alphabet[$col+9].$row, $value['KUANTITAS_SALDOAKHIR']);
 				$sheet->getStyle($alphabet[$col+10].$row)->getNumberFormat()->setFormatCode('###');
 				$sheet->setCellValueExplicit($alphabet[$col+10].$row, $value['HARGA_SALDOAKHIR'], DataType::TYPE_NUMERIC);
+				$sheet->setCellValue($alphabet[$col+11].$row, $value['KETERANGAN']);
 
 				$jmlhawal += $value['KUANTITAS_SALDOAWAL'];
 				$totalawal += $value['HARGA_SALDOAWAL'];
@@ -193,7 +198,9 @@ trait ExcelTraits
 		$sheet->getStyle($alphabet[$col+10].$row)->getNumberFormat()->setFormatCode('###');
 		$sheet->setCellValueExplicit($alphabet[$col+10].$row, $totalakhir, DataType::TYPE_NUMERIC);
 
-		$sheet->getStyle($alphabet[$col].($row-count($cekrekap)).':'.$alphabet[$col+10].$row)->applyFromArray($styleArray);
+		$sheet->getStyle($alphabet[$col].($row-count($cekrekap)).':'.$alphabet[$col+11].$row)->applyFromArray($styleArray);
+
+		$sheet->setCellValue($alphabet[$col+9].$row, '');
 
 		// //TABLE FOOTER
 		// $row+=2;
