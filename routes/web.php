@@ -36,6 +36,9 @@ Route::group(['prefix' => 'setup'], function () {
 	Route::post('/form/tambahlaporan', 'SetupController@forminsertlaporan');
 	Route::post('/form/ubahlaporan', 'SetupController@formupdatelaporan');
 	Route::post('/form/hapuslaporan', 'SetupController@formdeletelaporan');
+
+	Route::get('/db', 'SetupController@dball');
+	Route::post('/form/resetdb', 'SetupController@formresetdb');
 });
 
 // Route::group(['prefix' => 'lbkp'], function () {

@@ -14,19 +14,19 @@ session_start();
 
 class SetupController extends Controller
 {
-    public function laporanall(Request $request)
-    {
-    	$laporans = Dat_laporan::
-    				where('sts', 1)
-    				->orderBy('kode')
-    				->get();
+	public function laporanall(Request $request)
+	{
+		$laporans = Dat_laporan::
+					where('sts', 1)
+					->orderBy('kode')
+					->get();
 
-    	return view('pages.bpadsetup.laporan')
+		return view('pages.bpadsetup.laporan')
 				->with('laporans', $laporans);
-    }
+	}
 
-    public function forminsertlaporan(Request $request)
-    {
+	public function forminsertlaporan(Request $request)
+	{
 		$insert = [
 			'sts'       => 1,
 			'uname'     => Auth::user()->usname,
@@ -41,11 +41,11 @@ class SetupController extends Controller
 		return redirect('/setup/laporan')
 					->with('message', 'Laporan baru berhasil ditambah')
 					->with('msg_num', 1);
-    }
+	}
 
-    public function formupdatelaporan (Request $request)
-    {
-    	Dat_laporan::
+	public function formupdatelaporan (Request $request)
+	{
+		Dat_laporan::
 			where('ids', $request->ids)
 			->update([
 				'kode'		=> $request->kode,
@@ -56,11 +56,11 @@ class SetupController extends Controller
 		return redirect('/setup/laporan')
 					->with('message', 'Laporan berhasil diubah')
 					->with('msg_num', 1);
-    }
+	}
 
-    public function formdeletelaporan (Request $request)
-    {
-    	Dat_laporan::
+	public function formdeletelaporan (Request $request)
+	{
+		Dat_laporan::
 			where('ids', $request->ids)
 			->update([
 				'sts' 	=> 0,
@@ -69,5 +69,37 @@ class SetupController extends Controller
 		return redirect('/setup/laporan')
 					->with('message', 'Laporan berhasil dihapus')
 					->with('msg_num', 1);
-    }
+	}
+
+	public function dball(Request $request)
+	{
+		$dbs = DB::select( DB::raw("  
+					SELECT TABLE_NAME as name
+					FROM bpadlaporandata.INFORMATION_SCHEMA.TABLES 
+					WHERE TABLE_TYPE = 'BASE TABLE'
+					ORDER BY name
+				") );
+		$dbs = json_decode(json_encode($dbs), true);
+
+		return view('pages.bpadsetup.db')
+				->with('dbs', $dbs);
+	}
+
+	public function formresetdb(Request $request)
+	{
+
+		$tblname = '';
+		foreach ($request->kolok as $key => $kolok) {
+			$tblname = "bpadlaporandata.dbo.[";
+			$tblname .= $kolok;
+			$tblname .= "]";
+			DB::statement("
+				DELETE FROM $tblname;
+			");
+		}
+
+		return redirect('/setup/db')
+					->with('message', 'Database berhasil direset')
+					->with('msg_num', 1);
+	}
 }
