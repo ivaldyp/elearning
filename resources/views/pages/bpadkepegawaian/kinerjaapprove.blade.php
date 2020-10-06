@@ -77,7 +77,7 @@
 												@forelse($pegawais as $pegawai)
 												<option <?php if ($now_id_emp == $pegawai['id_emp']): ?> selected <?php endif ?> value="{{ $pegawai['id_emp'] }}">{{ ucwords(strtolower($pegawai['nm_emp'])) }}-{{ $pegawai['nrk_emp'] }}</option>
 												@empty
-												<option value="{{ $_SESSION['user_data']['id_emp'] }}">{{ ucwords(strtolower($_SESSION['user_data']['nm_emp'])) }}-{{ $_SESSION['user_data']['nrk_emp'] }}</option>
+												<option value="{{ $_SESSION['user_laporan']['id_emp'] }}">{{ ucwords(strtolower($_SESSION['user_laporan']['nm_emp'])) }}-{{ $_SESSION['user_laporan']['nrk_emp'] }}</option>
 												@endforelse
 											</select>
 										</div>
@@ -91,8 +91,8 @@
 											<table class=" table table-hover color-table primary-table" >
 												<thead>
 													<tr>
-														@if($_SESSION['user_data']['idunit'])
-														@if(strlen($_SESSION['user_data']['idunit']) < 10)
+														@if($_SESSION['user_laporan']['idunit'])
+														@if(strlen($_SESSION['user_laporan']['idunit']) < 10)
 														<th style="display: none;"></th>
 														<th>Pilih</th>
 														@endif
@@ -129,8 +129,8 @@
 													?>
 
 													<tr>
-														@if($_SESSION['user_data']['idunit'])
-														@if(strlen($_SESSION['user_data']['idunit']) < 10)
+														@if($_SESSION['user_laporan']['idunit'])
+														@if(strlen($_SESSION['user_laporan']['idunit']) < 10)
 														<input type="hidden" name="idemp_{{$key}}" value="{{ $laporan['idemp'] }}">
 														<input type="hidden" name="tgl_trans_{{$key}}" value="{{ $laporan['tgl_trans'] }}">
 														<input type="hidden" name="tipe_hadir_{{$key}}" value="{{ $laporan['tipe_hadir'] }}">
@@ -183,8 +183,8 @@
 												</tbody>
 											</table>
 										</div>
-									@if($_SESSION['user_data']['idunit'])
-									@if(strlen($_SESSION['user_data']['idunit']) < 10)
+									@if($_SESSION['user_laporan']['idunit'])
+									@if(strlen($_SESSION['user_laporan']['idunit']) < 10)
 									@if(count($laporans) != 0)
 									<button id="confirmButton" type="submit" class="btn btn-warning">Setujui & Proses</button>
 									@endif

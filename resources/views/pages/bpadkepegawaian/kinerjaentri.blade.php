@@ -68,7 +68,7 @@
                             <div class="panel-body">
                             	<div class="row" style="margin-bottom: 10px">
                             		<div class="col-md-1">
-										@if ($access['zadd'] == 'y' && $_SESSION['user_data']['id_emp'] )
+										@if ($access['zadd'] == 'y' && $_SESSION['user_laporan']['id_emp'] )
 										<form class="form-horizontal" method="POST" action="/laporanbmd/kepegawaian/kinerja tambah">
 											<button class="btn btn-info" style="margin-bottom: 10px">Tambah</button>
 										@csrf

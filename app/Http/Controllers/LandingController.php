@@ -21,10 +21,10 @@ class LandingController extends Controller
 
 	public function logout()
 	{
-		unset($_SESSION['user_data']);
-		unset($_SESSION['idgroup']);
-		unset($_SESSION['kolok']);
-		unset($_SESSION['menus']);
+		unset($_SESSION['user_laporan']);
+		unset($_SESSION['idgroup_laporan']);
+		unset($_SESSION['kolok_laporan']);
+		unset($_SESSION['menus_laporan']);
 		
 		Auth::logout();
 		return redirect('/');

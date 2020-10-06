@@ -127,7 +127,7 @@
 																$thisfile = $disp['nm_file'];
 															}
 
-															if ($disp['to_id'] == $_SESSION['user_data']['id_emp'] && ($disp['rd'] == 'N' || $disp['rd'] == 'Y')) { ?>
+															if ($disp['to_id'] == $_SESSION['user_laporan']['id_emp'] && ($disp['rd'] == 'N' || $disp['rd'] == 'Y')) { ?>
 																<tr>
 																	<td>{{ $thisnoform ?? '-' }}</td>
 																	<td class="col-md-2">{{ date('d-M-Y',strtotime($thistanggal ?? '-')) }}</td>
@@ -285,7 +285,7 @@
 																$thisfile = $disp['nm_file'];
 															}
 
-															if ($disp['from_id'] == $_SESSION['user_data']['id_emp'] || ($disp['to_id'] == $_SESSION['user_data']['id_emp'] && $disp['selesai'] == 'Y' && $disp['rd'] == 'S')) { ?>
+															if ($disp['from_id'] == $_SESSION['user_laporan']['id_emp'] || ($disp['to_id'] == $_SESSION['user_laporan']['id_emp'] && $disp['selesai'] == 'Y' && $disp['rd'] == 'S')) { ?>
 																<tr>
 																	<td>{{ $thisnoform }}</td>
 																	<td class="col-md-2">{{ date('d-M-Y',strtotime($thistanggal)) }}</td>

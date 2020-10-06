@@ -9,24 +9,24 @@
 				<div class="u-text">
 					<h4>
 						@if(Auth::user()->usname_skpd)
-						{{ $_SESSION['user_data']['deskripsi_user'] }}
+						{{ $_SESSION['user_laporan']['deskripsi_user'] }}
 						@elseif(Auth::user()->usname_admin)
-						{{ $_SESSION['user_data']['usname'] }}
+						{{ $_SESSION['user_laporan']['usname'] }}
 						@elseif(Auth::user()->id_emp)
-						{{ $_SESSION['user_data']['nm_emp'] }}
+						{{ $_SESSION['user_laporan']['nm_emp'] }}
 						@endif
 					</h4>
 					<h4 class="text-muted">
 						@if(Auth::user()->usname_skpd)
-							@if($_SESSION['user_data']['TLEVEL'] == 2)
+							@if($_SESSION['user_laporan']['TLEVEL'] == 2)
 							P3B
-							@elseif($_SESSION['user_data']['TLEVEL'] == 3)
+							@elseif($_SESSION['user_laporan']['TLEVEL'] == 3)
 							Pengurus Barang
 							@endif
 						@elseif(Auth::user()->usname_admin)
-						{{ $_SESSION['user_data']['idgroup'] }}
+						{{ $_SESSION['user_laporan']['idgroup'] }}
 						@elseif(Auth::user()->id_emp)
-						{{ $_SESSION['user_data']['idgroup'] }}
+						{{ $_SESSION['user_laporan']['idgroup'] }}
 						@endif
 					</h4>
 				</div>

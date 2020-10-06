@@ -83,7 +83,7 @@
 										<div class="form-group">
 											<label class="col-md-2 control-label"> No Form </label>
 											<div class="col-md-8">
-												<?php if (is_null($_SESSION['user_data']['id_emp'])) : ?>
+												<?php if (is_null($_SESSION['user_laporan']['id_emp'])) : ?>
 												<input autocomplete="off" type="text" name="no_form" class="form-control" id="no_form" value="{{ $opendisposisi[0]['no_form'] }}">
 												<?php else : ?>
 												<p>{{ $opendisposisi[0]['no_form'] }}</p>
@@ -240,7 +240,7 @@
 													?>
 													<!-- <a target="_blank" href="{{ config('app.openfiledisposisi') }}/{{ $opendisposisi[0]['nm_file'] }}">{{ $opendisposisi[0]['nm_file'] }}</a> -->
 												</p>
-												<?php if ($_SESSION['user_data']['idgroup'] == 'SKPD INTERNAL'): ?>
+												<?php if ($_SESSION['user_laporan']['idgroup'] == 'SKPD INTERNAL'): ?>
 												<span style="color: red">*untuk mengubah file, upload ulang semua file</span>
 												<input type="file" class="form-control formDisp" id="nm_file" name="nm_file[]" multiple>
 												<?php endif ?>
@@ -249,7 +249,7 @@
 									</div>
 
 									<div class="col-md-6">
-										<?php if ($_SESSION['user_data']['child'] == 1 || is_null($_SESSION['user_data']['id_emp'])): ?>
+										<?php if ($_SESSION['user_laporan']['child'] == 1 || is_null($_SESSION['user_laporan']['id_emp'])): ?>
 											<div class="form-group">
 												<label class="col-md-2 control-label"> Disposisi Ke </label>
 												<div class="col-md-8">
@@ -263,7 +263,7 @@
 														<?php endif ?>
 														
 													</select>
-													@if(is_null($_SESSION['user_data']['id_emp']))
+													@if(is_null($_SESSION['user_laporan']['id_emp']))
 													<span style="color: red">
 														*disposisi yang baru dibuat otomatis ditujukan kepada Kepala Badan 
 													</span>
@@ -271,7 +271,7 @@
 												</div>
 											</div>
 
-											<?php if ($_SESSION['user_data']['child'] == 1): ?>
+											<?php if ($_SESSION['user_laporan']['child'] == 1): ?>
 											<div class="form-group">
 												<label for="nip_emp" class="col-md-2 control-label"> Staf </label>
 												<div class="col-md-8">
@@ -314,7 +314,7 @@
 											</div>
 										</div>
 
-										<!-- <?php if (!($_SESSION['user_data']['idgroup'] == 'SKPD INTERNAL')): ?>
+										<!-- <?php if (!($_SESSION['user_laporan']['idgroup'] == 'SKPD INTERNAL')): ?>
 										<div class="form-group">
 											<label for="nm_tambahan" class="col-lg-2 control-label"> File Tambahan <br> </label>
 											<div class="col-lg-8">
@@ -380,7 +380,7 @@
 								</div>
 							</div>
 							<div class="panel-footer">
-								<?php if (is_null($_SESSION['user_data']['id_emp']) && $opendisposisi[0]['status_surat'] == 'd'): ?>
+								<?php if (is_null($_SESSION['user_laporan']['id_emp']) && $opendisposisi[0]['status_surat'] == 'd'): ?>
 									<input type="submit" name="btnKirim" class="btn btn-info pull-right m-r-10" value="Kirim">
 									<input type="submit" name="btnDraft" class="btn btn-warning pull-right m-r-10" value="Draft">
 

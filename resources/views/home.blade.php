@@ -69,23 +69,23 @@
 							<div class="panel panel-info">
 								<div class="panel-heading">WELCOME,
 									@if(Auth::user()->usname_skpd)
-										@if($_SESSION['user_data']['TLEVEL'] == 2)
+										@if($_SESSION['user_laporan']['TLEVEL'] == 2)
 										P3B
-										@elseif($_SESSION['user_data']['TLEVEL'] == 3)
+										@elseif($_SESSION['user_laporan']['TLEVEL'] == 3)
 										Pengurus Barang
 										@endif
 									@elseif(Auth::user()->usname_admin)
-									{{ $_SESSION['user_data']['idgroup'] }}
+									{{ $_SESSION['user_laporan']['idgroup'] }}
 									@elseif(Auth::user()->id_emp)
-									{{ $_SESSION['user_data']['idgroup'] }}
+									{{ $_SESSION['user_laporan']['idgroup'] }}
 									@endif
 									 - 
 									@if(Auth::user()->usname_skpd)
-									{{ $_SESSION['user_data']['deskripsi_user'] }}
+									{{ $_SESSION['user_laporan']['deskripsi_user'] }}
 									@elseif(Auth::user()->usname_admin)
-									{{ $_SESSION['user_data']['usname'] }}
+									{{ $_SESSION['user_laporan']['usname'] }}
 									@elseif(Auth::user()->id_emp)
-									{{ $_SESSION['user_data']['nm_emp'] }}
+									{{ $_SESSION['user_laporan']['nm_emp'] }}
 									@endif
 
 									<div class="pull-right"><a href="#" data-perform="panel-collapse"><i class="ti-minus"></i></a> </div>

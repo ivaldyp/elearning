@@ -135,7 +135,7 @@
 												<input type="hidden" name="usname" value="{{ Auth::user()->usname_skpd }}">
 												<p class="form-control-static">
 													{{ Auth::user()->usname_skpd }} <br> 
-													{{ $_SESSION['user_data']['deskripsi_user'] }}
+													{{ $_SESSION['user_laporan']['deskripsi_user'] }}
 												</p>
 											</div>
 										</div>
@@ -144,12 +144,12 @@
 											<label for="nama" class="col-md-2 control-label"> Nama </label>
 											<div class="col-md-8">
 												@if(is_null($ttd))
-													@if($_SESSION['user_data']['TLEVEL'] == 2)
-														<p class="form-control-static">{{ $_SESSION['user_data']['nm_ka'] }}</p>
-														<input type="hidden" class="form-control" name="nama" value="{{ $_SESSION['user_data']['nm_ka'] }}">
+													@if($_SESSION['user_laporan']['TLEVEL'] == 2)
+														<p class="form-control-static">{{ $_SESSION['user_laporan']['nm_ka'] }}</p>
+														<input type="hidden" class="form-control" name="nama" value="{{ $_SESSION['user_laporan']['nm_ka'] }}">
 													@else
-														<p class="form-control-static">{{ $_SESSION['user_data']['nm_pb'] }}</p>
-														<input type="hidden" class="form-control" name="nama" value="{{ $_SESSION['user_data']['nm_pb'] }}">
+														<p class="form-control-static">{{ $_SESSION['user_laporan']['nm_pb'] }}</p>
+														<input type="hidden" class="form-control" name="nama" value="{{ $_SESSION['user_laporan']['nm_pb'] }}">
 													@endif
 												@else
 													<p class="form-control-static">{{ $ttd['nama'] }}</p>

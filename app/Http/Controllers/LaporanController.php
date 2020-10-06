@@ -51,7 +51,7 @@ class LaporanController extends Controller
 			$year = 2020;
 		}
 
-		$kolok = $_SESSION['kolok'] ?? '';
+		$kolok = $_SESSION['kolok_laporan'] ?? '';
 
 		// if ($request->searchnow) {
 		// 	$searchnow = $request->searchnow;
@@ -70,11 +70,11 @@ class LaporanController extends Controller
 		} else {
 			if ($thisprofile['kolok'] == $thisprofile['kolokskpd']) {
 				$pds = Glo_profile_skpd::
-						where('kolokskpd', $_SESSION['kolok'])
+						where('kolokskpd', $_SESSION['kolok_laporan'])
 						->where('tahun', $year);
 			} else {
 				$pds = Glo_profile_skpd::
-						where('kolok', $_SESSION['kolok'])
+						where('kolok', $_SESSION['kolok_laporan'])
 						->where('tahun', $year);
 			}
 		}

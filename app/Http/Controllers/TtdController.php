@@ -54,7 +54,7 @@ class TtdController extends Controller
 				return redirect('/tanda tangan')->with('message', 'File yang diunggah harus berbentuk JPG / JPEG / PNG');     
 			} 
 
-			if ($_SESSION['user_data']['TLEVEL'] == 2) {
+			if ($_SESSION['user_laporan']['TLEVEL'] == 2) {
 				$file_name = "ttdka";
 			} else {
 				$file_name = "ttdpb";

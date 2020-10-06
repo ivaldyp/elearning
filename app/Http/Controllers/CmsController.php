@@ -92,7 +92,7 @@ class CmsController extends Controller
 		$currentpath = str_replace("%20", " ", $_SERVER['REQUEST_URI']);
 		$currentpath = explode("?", $currentpath)[0];
 		$thismenu = Sec_menu::where('urlnew', $currentpath)->first('ids');
-		$access = $this->checkAccess($_SESSION['user_data']['idgroup'], $thismenu['ids']);
+		$access = $this->checkAccess($_SESSION['user_laporan']['idgroup'], $thismenu['ids']);
 
 		$all_menu = [];
 

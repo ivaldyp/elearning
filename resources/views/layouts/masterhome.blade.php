@@ -63,7 +63,7 @@
                 <div class="sidebar-head">
                     <h3><span class="fa-fw open-close"><i class="ti-menu hidden-xs"></i><i class="ti-close visible-xs"></i></span> <span class="hide-menu">Menu</span></h3> 
                 </div>
-                {!! $_SESSION['menus'] !!}
+                {!! $_SESSION['menus_laporan'] !!}
             </div>
         </div>
         <!-- ============================================================== -->

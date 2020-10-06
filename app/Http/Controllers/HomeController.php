@@ -123,17 +123,17 @@ class HomeController extends Controller
 	{
 		// $this->checkSessionTime();
 		
-		unset($_SESSION['user_data']);
-		unset($_SESSION['idgroup']);
-		unset($_SESSION['kolok']);
-		unset($_SESSION['menus']);
+		unset($_SESSION['user_laporan']);
+		unset($_SESSION['idgroup_laporan']);
+		unset($_SESSION['kolok_laporan']);
+		unset($_SESSION['menus_laporan']);
 
 
 		date_default_timezone_set('Asia/Jakarta');
 		
 		if (Auth::user()->usname_skpd) {
 			$iduser = Auth::user()->usname_skpd;
-			$_SESSION['kolok'] = substr($iduser, 2, -1);
+			$_SESSION['kolok_laporan'] = substr($iduser, 2, -1);
 
 			// $user_data = Aset_quserid::
 			// 				where('usname', $iduser)
@@ -145,7 +145,7 @@ class HomeController extends Controller
 			$asetid1 = new Collection($asetid1);
 
 			$asetid2 = Glo_profile_skpd::
-							where('kolok', $_SESSION['kolok'])
+							where('kolok', $_SESSION['kolok_laporan'])
 							->orderBy('tahun', 'desc')
 							->first();
 			$asetid2 = new Collection($asetid2);
@@ -169,7 +169,7 @@ class HomeController extends Controller
 
 			$idgroup = $user_data['idgroup'];
 
-			// $_SESSION['kolok'] = '512';
+			// $_SESSION['kolok_laporan'] = '512';
 		} elseif (Auth::user()->id_emp){
 			$iduser = Auth::user()->id_emp;
 
@@ -182,17 +182,17 @@ class HomeController extends Controller
 
 			$idgroup = $user_data['idgroup'];
 
-			// $_SESSION['kolok'] = '512';
+			// $_SESSION['kolok_laporan'] = '512';
 		}
 
-		$_SESSION['idgroup'] = $idgroup;
-		$_SESSION['user_data'] = $user_data;
+		$_SESSION['idgroup_laporan'] = $idgroup;
+		$_SESSION['user_laporan'] = $user_data;
 
 		$all_menu = [];
 
-		$menus = $this->display_menus($all_menu, 0, 0, $_SESSION['idgroup']);
+		$menus = $this->display_menus($all_menu, 0, 0, $_SESSION['idgroup_laporan']);
 
-		$_SESSION['menus'] = $menus;
+		$_SESSION['menus_laporan'] = $menus;
 
 		//////////////////////////////////////////////
 		if ($request->yearnow) {

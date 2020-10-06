@@ -44,7 +44,7 @@ class KepegawaianController extends Controller
 		$currentpath = str_replace("%20", " ", $_SERVER['REQUEST_URI']);
 		$currentpath = explode("?", $currentpath)[0];
 		$thismenu = Sec_menu::where('urlnew', $currentpath)->first('ids');
-		$access = $this->checkAccess($_SESSION['user_data']['idgroup'], $thismenu['ids']);
+		$access = $this->checkAccess($_SESSION['user_laporan']['idgroup'], $thismenu['ids']);
 
 		$units = Glo_org_unitkerja::orderBy('kd_unit')->get();
 
@@ -962,7 +962,7 @@ class KepegawaianController extends Controller
 		$currentpath = str_replace("%20", " ", $_SERVER['REQUEST_URI']);
 		$currentpath = explode("?", $currentpath)[0];
 		$thismenu = Sec_menu::where('urlnew', $currentpath)->first('ids');
-		$access = $this->checkAccess($_SESSION['user_data']['idgroup'], $thismenu['ids']);
+		$access = $this->checkAccess($_SESSION['user_laporan']['idgroup'], $thismenu['ids']);
 
 		$ids = Auth::user()->id_emp;
 
@@ -1309,7 +1309,7 @@ class KepegawaianController extends Controller
 		$currentpath = str_replace("%20", " ", $_SERVER['REQUEST_URI']);
 		$currentpath = explode("?", $currentpath)[0];
 		$thismenu = Sec_menu::where('urlnew', $currentpath)->first('ids');
-		$access = $this->checkAccess($_SESSION['user_data']['idgroup'], $thismenu['ids']);
+		$access = $this->checkAccess($_SESSION['user_laporan']['idgroup'], $thismenu['ids']);
 
 		$surats = Fr_suratkeluar::
 					orderBy('tgl_input', 'desc')
@@ -1364,7 +1364,7 @@ class KepegawaianController extends Controller
 	public function forminsertsuratkeluar(Request $request)
 	{
 		$this->checkSessionTime();
-		$accessid = $this->checkAccess($_SESSION['user_data']['idgroup'], 1375);
+		$accessid = $this->checkAccess($_SESSION['user_laporan']['idgroup'], 1375);
 
 		$maxnoform = Fr_suratkeluar::max('no_form');
 		if (is_null($maxnoform)) {
@@ -1502,7 +1502,7 @@ class KepegawaianController extends Controller
 		$currentpath = str_replace("%20", " ", $_SERVER['REQUEST_URI']);
 		$currentpath = explode("?", $currentpath)[0];
 		$thismenu = Sec_menu::where('urlnew', $currentpath)->first('ids');
-		$access = $this->checkAccess($_SESSION['user_data']['idgroup'], $thismenu['ids']);
+		$access = $this->checkAccess($_SESSION['user_laporan']['idgroup'], $thismenu['ids']);
 
 		$idemp = Auth::user()->id_emp;
 
@@ -1864,10 +1864,10 @@ class KepegawaianController extends Controller
 		$currentpath = str_replace("%20", " ", $_SERVER['REQUEST_URI']);
 		$currentpath = explode("?", $currentpath)[0];
 		$thismenu = Sec_menu::where('urlnew', $currentpath)->first('ids');
-		$access = $this->checkAccess($_SESSION['user_data']['idgroup'], $thismenu['ids']);
+		$access = $this->checkAccess($_SESSION['user_laporan']['idgroup'], $thismenu['ids']);
 
-		if ($_SESSION['user_data']['idunit']) {
-			$idunit = $_SESSION['user_data']['idunit'];
+		if ($_SESSION['user_laporan']['idunit']) {
+			$idunit = $_SESSION['user_laporan']['idunit'];
 		} else {
 			$idunit = '01';
 		}
@@ -1893,7 +1893,7 @@ class KepegawaianController extends Controller
 				$now_id_emp = $pegawais[0]['id_emp'];
 			} elseif (Auth::user()->id_emp) {
 				// kalo yg login pegawai
-				if (strlen($_SESSION['user_data']['idunit']) == 10) {
+				if (strlen($_SESSION['user_laporan']['idunit']) == 10) {
 					// set id_emp sekarang = id_emp pegawai yg login
 					$now_id_emp = Auth::user()->id_emp;
 				} else {
@@ -2352,10 +2352,10 @@ class KepegawaianController extends Controller
 		$currentpath = str_replace("%20", " ", $_SERVER['REQUEST_URI']);
 		$currentpath = explode("?", $currentpath)[0];
 		$thismenu = Sec_menu::where('urlnew', $currentpath)->first('ids');
-		$access = $this->checkAccess($_SESSION['user_data']['idgroup'], $thismenu['ids']);
+		$access = $this->checkAccess($_SESSION['user_laporan']['idgroup'], $thismenu['ids']);
 
-		if ($_SESSION['user_data']['idunit']) {
-			$idunit = $_SESSION['user_data']['idunit'];
+		if ($_SESSION['user_laporan']['idunit']) {
+			$idunit = $_SESSION['user_laporan']['idunit'];
 		} else {
 			$idunit = '01';
 		}
@@ -2381,7 +2381,7 @@ class KepegawaianController extends Controller
 				$now_id_emp = $pegawais[0]['id_emp'];
 			} elseif (Auth::user()->id_emp) {
 				// kalo yg login pegawai
-				if (strlen($_SESSION['user_data']['idunit']) == 10) {
+				if (strlen($_SESSION['user_laporan']['idunit']) == 10) {
 					// set id_emp sekarang = id_emp pegawai yg login
 					$now_id_emp = Auth::user()->id_emp;
 				} else {

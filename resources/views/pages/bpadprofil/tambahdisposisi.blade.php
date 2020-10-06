@@ -170,7 +170,7 @@
 									</div>
 
 									<div class="col-md-6">
-										<?php if ($_SESSION['user_data']['child'] == 1 || is_null($_SESSION['user_data']['id_emp'])): ?>
+										<?php if ($_SESSION['user_laporan']['child'] == 1 || is_null($_SESSION['user_laporan']['id_emp'])): ?>
 										<div class="form-group">
 											<label class="col-md-2 control-label"> Disposisi Ke  </label>
 											<div class="col-md-8">
@@ -179,7 +179,7 @@
 														<option <?php if (isset(Auth::user()->usname)): ?> selected <?php endif ?> value="{{ $jabatan['jabatan'] }}"> {{ $jabatan['jabatan'] }} </option>
 													@endforeach
 												</select>
-												@if(is_null($_SESSION['user_data']['id_emp']))
+												@if(is_null($_SESSION['user_laporan']['id_emp']))
 												<span style="color: red">
 													*disposisi yang baru dibuat otomatis ditujukan kepada Kepala Badan 
 												</span>
@@ -187,7 +187,7 @@
 											</div>
 										</div>
 
-										<?php if ($_SESSION['user_data']['child'] == 1): ?>
+										<?php if ($_SESSION['user_laporan']['child'] == 1): ?>
 										<div class="form-group">
 											<label for="nip_emp" class="col-md-2 control-label"> Staf </label>
 											<div class="col-md-8">
