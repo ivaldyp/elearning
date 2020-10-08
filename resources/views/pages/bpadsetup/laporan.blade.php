@@ -78,6 +78,7 @@
 													<th>No</th>
 													<th>Kode</th>
 													<th>Jenis Laporan</th>
+													<th>Front / Back</th>
 													<th>Tampilkan</th>
 													<th class="col-md-2">Action</th>
 												</tr>
@@ -88,6 +89,7 @@
 													<td>{{ $key + 1 }}</td>
 													<td>{{ $lap['kode'] }}</td>
 													<td>{{ ucwords(strtolower($lap['jns_laporan'])) }}</td>
+													<td>{{ $lap['front_column'] }} / {{ $lap['back_column'] }}</td>
 													<td>
 														@if($lap['tampilkan'] == 1)
 															<span style="color: green"><i class="fa fa-check"></i></span>
@@ -96,7 +98,7 @@
 														@endif
 													</td>
 													<td>
-															<button type="button" class="btn btn-info btn-update" data-toggle="modal" data-target="#modal-update" data-ids="{{ $lap['ids'] }}" data-jns_laporan="{{ $lap['jns_laporan'] }}" data-kode="{{ $lap['kode'] }}" data-tampilkan="{{ $lap['tampilkan'] }}"><i class="fa fa-edit"></i></button>
+															<button type="button" class="btn btn-info btn-update" data-toggle="modal" data-target="#modal-update" data-ids="{{ $lap['ids'] }}" data-jns_laporan="{{ $lap['jns_laporan'] }}" data-kode="{{ $lap['kode'] }}" data-tampilkan="{{ $lap['tampilkan'] }}" data-front="{{ $lap['front_column'] }}" data-back="{{ $lap['back_column'] }}"><i class="fa fa-edit"></i></button>
 															<button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target="#modal-delete" data-ids="{{ $lap['ids'] }}"><i class="fa fa-trash"></i></button>
 													</td>
 												</tr>
@@ -135,11 +137,21 @@
 								</div>
 
 								<div class="form-group">
+									<label for="jns_laporan" class="col-sm-2 control-label"> Front/Back </label>
+									<div class="col-sm-4">
+										<input type="text" name="front" id="front" class="form-control" autocomplete="off" required="">
+									</div>
+									<div class="col-sm-4">
+										<input type="text" name="back" id="back" class="form-control" autocomplete="off" required="">
+									</div>
+								</div>
+
+								<div class="form-group">
 									<label for="tampilkan" class="col-md-2 control-label"> Tampilkan? </label>
 									<div class="radio-list col-md-8">
 										<label class="radio-inline">
 											<div class="radio radio-info">
-												<input type="radio" name="tampilkan" id="tampil1" value="1" data-error="Pilih salah satu" required>
+												<input type="radio" name="tampilkan" id="tampil1" value="1" data-error="Pilih salah satu" required checked="">
 												<label for="tampil1">Ya</label> 
 											</div>
 										</label>
@@ -182,6 +194,16 @@
 									<label for="jns_laporan" class="col-sm-2 control-label"> Nama </label>
 									<div class="col-sm-8">
 										<input type="text" name="jns_laporan" id="modal_update_jns_laporan" class="form-control" autocomplete="off" required="">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="jns_laporan" class="col-sm-2 control-label"> Front/Back </label>
+									<div class="col-sm-4">
+										<input type="text" name="front" id="modal_update_front" class="form-control" autocomplete="off" required="">
+									</div>
+									<div class="col-sm-4">
+										<input type="text" name="back" id="modal_update_back" class="form-control" autocomplete="off" required="">
 									</div>
 								</div>
 
@@ -262,6 +284,8 @@
 				$("#modal_update_ids").val($el.data('ids'));
 				$("#modal_update_kode").val($el.data('kode'));
 				$("#modal_update_jns_laporan").val($el.data('jns_laporan'));
+				$("#modal_update_front").val($el.data('front'));
+				$("#modal_update_back").val($el.data('back'));
 
 				if ($el.data('tampilkan') == 1) {
 					$("#update_tampil1").attr('checked', true);

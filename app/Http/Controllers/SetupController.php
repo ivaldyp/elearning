@@ -34,6 +34,8 @@ class SetupController extends Controller
 			'kode'		=> $request->kode,
 			'jns_laporan' => $request->jns_laporan,
 			'tampilkan'	=> $request->tampilkan ?? 0,
+			'front_column'	=> $request->front ?? NULL,
+			'back_column'	=> $request->back ?? NULL,
 		];
 
 		Dat_laporan::insert($insert);
@@ -51,6 +53,8 @@ class SetupController extends Controller
 				'kode'		=> $request->kode,
 				'jns_laporan' => $request->jns_laporan,
 				'tampilkan'	=> $request->tampilkan ?? 0,
+				'front_column'	=> $request->front ?? NULL,
+				'back_column'	=> $request->back ?? NULL,
 			]);
 
 		return redirect('/setup/laporan')

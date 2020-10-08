@@ -252,6 +252,10 @@ class LaporanController extends Controller
 			$row = $result[0];
 			$col = $result[1];
 
+			$result = $this->exceltipelaporan($sheet, $row, $col, $alphabet, $laporannow);
+			$row = $result[0];
+			$col = $result[1];
+
 			if ($request->kib[0] == 'semua') {
 				$logsusun = Log_susun_laporan::
 						where('sts', 1)
@@ -305,13 +309,12 @@ class LaporanController extends Controller
 										SELECT
 										  kobar
 										  , kolok
-										  , satuan
 										  , sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total
 										  , count(kobar) as kuantitas
 										from $nmtabelawal
 										where kolok like '$kolok'
 										GROUP BY
-										kobar, kolok, satuan;
+										kobar, kolok;
 										"));
 							$queryawal = json_decode(json_encode($queryawal), true);
 
@@ -334,8 +337,8 @@ class LaporanController extends Controller
 										 'NABAR' => '',
 										 'NOREG' => '',
 										 'SATUAN' => ($data['satuan'] ?? ''),
-										 'KUANTITAS_SALDOAWAL' => $data['kuantitas'],
-										 'HARGA_SALDOAWAL' => $data['total'],
+										 'KUANTITAS_SALDOAWAL' => $data['kuantitas'] ?? 0,
+										 'HARGA_SALDOAWAL' => $data['total'] ?? 0,
 
 										]
 									);
@@ -344,41 +347,28 @@ class LaporanController extends Controller
 
 
 							//SALDO AKHIR ---- SALDOAKHIR
-							// $queryakhir = DB::select( DB::raw("
-							// 			SELECT
-							// 			  kobar
-							// 			  , kolok
-							// 			  , satuan
-							// 			  , sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total
-							// 			  , count(kobar) as kuantitas
-							// 			from $nmtabelakhir
-							// 			where kolok like '$kolok'
-							// 			GROUP BY
-							// 			kobar, kolok, satuan;
-							// 			"));
 							$queryakhir = DB::select( DB::raw("
 										SELECT
 										kobar
 										, kolok
-										, satuan
 										, sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total
 										, count(kobar) as kuantitas
-										, (
-											SELECT distinct(CASE
-													WHEN tnskoreksi is null or tnskoreksi = '' THEN NULL
-													ELSE (tnskoreksi + ' - ' + prof.nalok) + '::' 
-													END) AS 'data()' 
-											FROM $nmtabelakhir qa
-											join bpadas.dbo.glo_profile_skpd as prof on prof.kolok = qa.KOLOKLAMA and prof.tahun = $year
-											where qa.KOLOK = sakhir.KOLOK
-											and qa.kobar = sakhir.kobar
-											and qa.SATUAN = sakhir.satuan
-											FOR XML PATH('')
-										) as keterangan
+										-- , (
+										-- 	SELECT distinct(CASE
+										-- 			WHEN tnskoreksi is null or tnskoreksi = '' THEN NULL
+										-- 			ELSE (tnskoreksi + ' - ' + prof.nalok) + '::' 
+										-- 			END) AS 'data()' 
+										-- 	FROM $nmtabelakhir qa
+										-- 	join bpadas.dbo.glo_profile_skpd as prof on prof.kolok = qa.KOLOKLAMA and prof.tahun = $year
+										-- 	where qa.KOLOK = sakhir.KOLOK
+										-- 	and qa.kobar = sakhir.kobar
+										-- 	and qa.SATUAN = sakhir.satuan
+										-- 	FOR XML PATH('')
+										-- ) as keterangan
 										from $nmtabelakhir sakhir
 										where kolok like '$kolok'
 										GROUP BY
-										kobar, kolok, satuan;
+										kobar, kolok;
 										"));
 							$queryakhir = json_decode(json_encode($queryakhir), true);	
 
@@ -389,40 +379,15 @@ class LaporanController extends Controller
 								# code...
 							} else {
 								foreach ($queryakhir as $key => $data) {
-									// $cekudahadabelom = DB::select( DB::raw("
-									// 			SELECT count(kobar)
-									// 			from $nmtabelakhirrekap
-									// 			where kolok like '$kolok'
-									// 			AND kobar like '$data['kobar']'
-									// 			AND satuan like '$data['satuan']'
-									// 		    "));
-									// $cekudahadabelom = json_decode(json_encode($cekudahadabelom), true);
-
-									// if ($cekudahadabelom == 0) {
-									// 	DB::table($temp_nmtabelakhirrekap)->insert(
-									// 	    ['sts' => 1,
-									// 	     'uname' => Auth::user()->usname_skpd, 
-									// 	     'tgl' => date('Y-m-d'),
-									// 	     'usname' => Auth::user()->usname_skpd, 
-									// 	     'tahun' => $year,
-									// 	     'KOLOK' => $data['kolok'],
-									// 	     'NALOK' => '',
-									// 	     'KOBAR' => $data['kobar'],
-									// 	     'NABAR' => '',
-									// 	     'NOREG' => '',
-									// 	     'SATUAN' => ($data['satuan'] ?? ''),
-									// 	     'KUANTITAS_SALDOAKHIR' => $data['kuantitas'],
-									// 	     'HARGA_SALDOAKHIR' => $data['total'],
-
-									// 	 	]
-									// 	);
-									// } else {
-
-									// }
-									$keterangan = substr($data['keterangan'], 0, 199);
+									// $keterangan = substr($data['keterangan'], 0, 199);
 									DB::table($temp_nmtabelakhirrekap)
 										->updateOrInsert(
-											['KOLOK' => $kolok, 'KOBAR' => $data['kobar'], 'SATUAN' => $data['satuan'], 'sts' => 1],
+											[
+												'KOLOK' => $kolok
+												, 'KOBAR' => $data['kobar']
+												// , 'SATUAN' => $data['satuan']
+												, 'sts' => 1
+											],
 											[
 												'uname' => Auth::user()->usname_skpd, 
 												'tgl' => date('Y-m-d'),
@@ -432,9 +397,9 @@ class LaporanController extends Controller
 												'NABAR' => '',
 												'NOREG' => '',
 												'SATUAN' => ($data['satuan'] ?? ''),
-												'KUANTITAS_SALDOAKHIR' => $data['kuantitas'],
-												'HARGA_SALDOAKHIR' => $data['total'],
-												'KETERANGAN' => $keterangan,
+												'KUANTITAS_SALDOAKHIR' => $data['kuantitas'] ?? 0,
+												'HARGA_SALDOAKHIR' => $data['total'] ?? 0,
+												// 'KETERANGAN' => $keterangan,
 											]
 										);
 								}
@@ -442,6 +407,61 @@ class LaporanController extends Controller
 
 
 							//SELECT REKAPHASILNYA
+							$cekrekap = DB::select( DB::raw("
+										SELECT awal.*, bar.NABAR as nabarref
+										FROM $nmtabelawalrekap awal
+										JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
+										WHERE awal.sts = 1
+										AND awal.kolok = '$kolok'
+										ORDER BY kobar
+										"));
+							$cekrekap = json_decode(json_encode($cekrekap), true);
+
+							foreach ($cekrekap as $key => $rekap) {
+								$kobarnow = $rekap['KOBAR'];
+								$qmutasitambah = DB::select( DB::raw("
+											SELECT 
+												sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total, 
+												count(kobar) as kuantitas
+											FROM $nmtabelakhir sakhir
+											where sakhir.kolok = '$kolok'
+											and sakhir.kobar = '$kobarnow'
+											and sakhir.NOREG not in (select sawal.NOREG 
+																		from $nmtabelawal sawal
+																		where sawal.kolok = '$kolok'
+																		  and sawal.kobar = '$kobarnow'
+																	  )
+											"))[0];
+								$qmutasitambah = json_decode(json_encode($qmutasitambah), true);
+
+								if ($qmutasitambah['kuantitas'] + $rekap['KUANTITAS_SALDOAWAL'] == $rekap['KUANTITAS_SALDOAKHIR']) {
+									DB::table($temp_nmtabelakhirrekap)
+						              ->where('kolok', $kolok)
+						              ->where('kobar', $rekap['KOBAR'])
+						              ->where('sts', 1)
+						              ->update([
+						              		'TAMBAH_QTY' => $qmutasitambah['kuantitas'] ,
+						              		'TAMBAH_HARGA' => $qmutasitambah['total'],
+						              		'KURANG_QTY' => 0,
+						              		'KURANG_HARGA' => 0,
+						              	]);
+								} else {
+									$kurangqty = abs( $rekap['KUANTITAS_SALDOAKHIR'] - ($qmutasitambah['kuantitas'] + $rekap['KUANTITAS_SALDOAWAL']) );
+									$kurangharga = abs( $rekap['HARGA_SALDOAKHIR'] - ($qmutasitambah['total'] + $rekap['HARGA_SALDOAWAL']) );
+
+									DB::table($temp_nmtabelakhirrekap)
+						              ->where('kolok', $kolok)
+						              ->where('kobar', $rekap['KOBAR'])
+						              ->where('sts', 1)
+						              ->update([
+						              		'TAMBAH_QTY' => $qmutasitambah['kuantitas'],
+						              		'TAMBAH_HARGA' => $qmutasitambah['total'],
+						              		'KURANG_QTY' => $kurangqty,
+						              		'KURANG_HARGA' => $kurangharga,
+						              	]);
+								}
+							}
+
 							$cekrekap = DB::select( DB::raw("
 										SELECT awal.*, bar.NABAR as nabarref
 										FROM $nmtabelawalrekap awal
