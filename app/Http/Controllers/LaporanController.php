@@ -517,5 +517,6 @@ class LaporanController extends Controller
 		header('Content-Disposition: attachment;filename="'.$filename.'"');
 		ob_end_clean();
 		$writer->save('php://output');
+		
 	}
 }

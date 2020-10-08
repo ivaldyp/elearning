@@ -66,6 +66,7 @@ trait ExcelTraits
 		$row+=2;
 		$sheet->setCellValue($alphabet[$col].$row, 'SKPD/UKPD');
 		$sheet->setCellValue($alphabet[$col+1].$row, ': ' . $kolokpd . ' - ' . ($upd == "NONE" ? strtoupper($pd) : strtoupper($upd)) );
+		$sheet->mergeCells($alphabet[$col+1].$row.':'.$alphabet[$col+3].$row);
 		// $sheet->setCellValue($alphabet[$col+2].$row, strtoupper($pd));
 
 		// if ($upd != "NONE") {
