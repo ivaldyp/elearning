@@ -240,29 +240,29 @@ trait ExcelTraits
 				$sheet->setCellValue($alphabet[$col+2].$row, $value['nabarref']);
 				// $sheet->setCellValue($alphabet[$col+2].$row, $value['SATUAN']);
 
-				$sheet->setCellValue($alphabet[$col+3].$row, $value['KUANTITAS_SALDOAWAL']);
-				$sheet->getStyle($alphabet[$col+3].$row)->getNumberFormat()->setFormatCode('#,###');
+				$sheet->setCellValue($alphabet[$col+3].$row, is_null($value['KUANTITAS_SALDOAWAL']) ? 0 : $value['KUANTITAS_SALDOAWAL']);
+				$sheet->getStyle($alphabet[$col+3].$row)->getNumberFormat()->setFormatCode('#,##0');
 
-				$sheet->setCellValue($alphabet[$col+4].$row, $value['HARGA_SALDOAWAL'] );
-				$sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('#,###');
+				$sheet->setCellValue($alphabet[$col+4].$row, is_null($value['HARGA_SALDOAWAL']) ? 0 : $value['HARGA_SALDOAWAL'] );
+				$sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('#,##0');
 
-				$sheet->setCellValue($alphabet[$col+5].$row, $value['TAMBAH_QTY']);
-				$sheet->getStyle($alphabet[$col+5].$row)->getNumberFormat()->setFormatCode('#,###');
+				$sheet->setCellValue($alphabet[$col+5].$row, is_null($value['TAMBAH_QTY']) ? 0 : $value['TAMBAH_QTY'] );
+				$sheet->getStyle($alphabet[$col+5].$row)->getNumberFormat()->setFormatCode('#,##0');
 
-				$sheet->setCellValue($alphabet[$col+6].$row, $value['TAMBAH_HARGA']);
-				$sheet->getStyle($alphabet[$col+6].$row)->getNumberFormat()->setFormatCode('#,###');
+				$sheet->setCellValue($alphabet[$col+6].$row, is_null($value['TAMBAH_HARGA']) ? 0 : $value['TAMBAH_HARGA'] );
+				$sheet->getStyle($alphabet[$col+6].$row)->getNumberFormat()->setFormatCode('#,##0');
 				
-				$sheet->setCellValue($alphabet[$col+7].$row, $value['KURANG_QTY']);
-				$sheet->getStyle($alphabet[$col+7].$row)->getNumberFormat()->setFormatCode('#,###');
+				$sheet->setCellValue($alphabet[$col+7].$row, is_null($value['KURANG_QTY']) ? 0 : $value['KURANG_QTY'] );
+				$sheet->getStyle($alphabet[$col+7].$row)->getNumberFormat()->setFormatCode('#,##0');
 
-				$sheet->setCellValue($alphabet[$col+8].$row, $value['KURANG_HARGA']);
-				$sheet->getStyle($alphabet[$col+8].$row)->getNumberFormat()->setFormatCode('#,###');
+				$sheet->setCellValue($alphabet[$col+8].$row, is_null($value['KURANG_HARGA']) ? 0 : $value['KURANG_HARGA'] );
+				$sheet->getStyle($alphabet[$col+8].$row)->getNumberFormat()->setFormatCode('#,##0');
 				
-				$sheet->setCellValue($alphabet[$col+9].$row, $value['KUANTITAS_SALDOAKHIR'] == '' || is_null($value['KUANTITAS_SALDOAKHIR']) ? 0 : $value['KUANTITAS_SALDOAKHIR']);
-				$sheet->getStyle($alphabet[$col+9].$row)->getNumberFormat()->setFormatCode('#,###');
+				$sheet->setCellValue($alphabet[$col+9].$row, is_null($value['KUANTITAS_SALDOAKHIR']) ? 0 : $value['KUANTITAS_SALDOAKHIR']);
+				$sheet->getStyle($alphabet[$col+9].$row)->getNumberFormat()->setFormatCode('#,##0');
 				
-				$sheet->setCellValue($alphabet[$col+10].$row, $value['HARGA_SALDOAKHIR'] == '' || is_null($value['HARGA_SALDOAKHIR']) ? 0 : $value['HARGA_SALDOAKHIR']);
-				$sheet->getStyle($alphabet[$col+10].$row)->getNumberFormat()->setFormatCode('#,###');
+				$sheet->setCellValue($alphabet[$col+10].$row, is_null($value['HARGA_SALDOAKHIR']) ? 0 : $value['HARGA_SALDOAKHIR']);
+				$sheet->getStyle($alphabet[$col+10].$row)->getNumberFormat()->setFormatCode('#,##0');
 
 				// $jmlhawal += $value['KUANTITAS_SALDOAWAL'];
 				// $totalawal += $value['HARGA_SALDOAWAL'];
@@ -275,7 +275,7 @@ trait ExcelTraits
 
 		//TABLE TOTAL
 		$row++;
-		// $sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('#,###');
+		// $sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('#,##0');
 		$sheet->setCellValue($alphabet[$col].$row, 'JUMLAH');
 		$sheet->mergeCells($alphabet[$col].$row.':'.$alphabet[$col+2].$row);
 		$sheet->getStyle($alphabet[$col].$row.':'.$alphabet[$col+2].$row)->getAlignment()->setHorizontal('center');
@@ -288,16 +288,16 @@ trait ExcelTraits
 		$jmlnilakhir = strtoupper($alphabet[$col+10]).($row-1).':'.strtoupper($alphabet[$col+10]).($row-count($cekrekap));
 
 		$sheet->setCellValue($alphabet[$col+3].$row, '=SUM('.$jmlqtyawal.')');
-		$sheet->getStyle($alphabet[$col+3].$row)->getNumberFormat()->setFormatCode('#,###');
+		$sheet->getStyle($alphabet[$col+3].$row)->getNumberFormat()->setFormatCode('#,##0');
 
 		$sheet->setCellValue($alphabet[$col+4].$row, '=SUM('.$jmlnilawal.')');
-		$sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('#,###');
+		$sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('#,##0');
 
 		$sheet->setCellValue($alphabet[$col+9].$row, '=SUM('.$jmlqtyakhir.')');
-		$sheet->getStyle($alphabet[$col+9].$row)->getNumberFormat()->setFormatCode('#,###');
+		$sheet->getStyle($alphabet[$col+9].$row)->getNumberFormat()->setFormatCode('#,##0');
 
 		$sheet->setCellValue($alphabet[$col+10].$row, '=SUM('.$jmlnilakhir.')');
-		$sheet->getStyle($alphabet[$col+10].$row)->getNumberFormat()->setFormatCode('#,###');
+		$sheet->getStyle($alphabet[$col+10].$row)->getNumberFormat()->setFormatCode('#,##0');
 
 		//sum buat mutasi tambah & kurang
 		$jmlqtytambah = strtoupper($alphabet[$col+5]).($row-1).':'.strtoupper($alphabet[$col+5]).($row-count($cekrekap));
@@ -306,16 +306,16 @@ trait ExcelTraits
 		$jmlhargakurang = strtoupper($alphabet[$col+8]).($row-1).':'.strtoupper($alphabet[$col+8]).($row-count($cekrekap));
 
 		$sheet->setCellValue($alphabet[$col+5].$row, '=SUM('.$jmlqtytambah.')');
-		$sheet->getStyle($alphabet[$col+5].$row)->getNumberFormat()->setFormatCode('#,###');
+		$sheet->getStyle($alphabet[$col+5].$row)->getNumberFormat()->setFormatCode('#,##0');
 
 		$sheet->setCellValue($alphabet[$col+6].$row, '=SUM('.$jmlhargatambah.')');
-		$sheet->getStyle($alphabet[$col+6].$row)->getNumberFormat()->setFormatCode('#,###');
+		$sheet->getStyle($alphabet[$col+6].$row)->getNumberFormat()->setFormatCode('#,##0');
 
 		$sheet->setCellValue($alphabet[$col+7].$row, '=SUM('.$jmlqtykurang.')');
-		$sheet->getStyle($alphabet[$col+7].$row)->getNumberFormat()->setFormatCode('#,###');
+		$sheet->getStyle($alphabet[$col+7].$row)->getNumberFormat()->setFormatCode('#,##0');
 
 		$sheet->setCellValue($alphabet[$col+8].$row, '=SUM('.$jmlhargakurang.')');
-		$sheet->getStyle($alphabet[$col+8].$row)->getNumberFormat()->setFormatCode('#,###');
+		$sheet->getStyle($alphabet[$col+8].$row)->getNumberFormat()->setFormatCode('#,##0');
 
 
 
