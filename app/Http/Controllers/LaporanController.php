@@ -309,7 +309,7 @@ class LaporanController extends Controller
 										SELECT
 										  kobar
 										  , kolok
-										  , sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total
+										  , sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as total
 										  , count(kobar) as kuantitas
 										from $nmtabelawal
 										where kolok like '$kolok'
@@ -351,7 +351,7 @@ class LaporanController extends Controller
 										SELECT
 										kobar
 										, kolok
-										, sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total
+										, sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as total
 										, count(kobar) as kuantitas
 										-- , (
 										-- 	SELECT distinct(CASE
@@ -421,7 +421,7 @@ class LaporanController extends Controller
 								$kobarnow = $rekap['KOBAR'];
 								$qmutasitambah = DB::select( DB::raw("
 											SELECT 
-												sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0)) as total, 
+												sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as total, 
 												count(kobar) as kuantitas
 											FROM $nmtabelakhir sakhir
 											where sakhir.kolok = '$kolok'
