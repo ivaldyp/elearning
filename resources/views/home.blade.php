@@ -117,7 +117,7 @@
 					<div class="row">
                         <div class="col-lg-4 col-sm-6 col-xs-12">
                             <div class="white-box">
-                                <h3 class="box-title">KIB A</h3>
+                                <h3 class="box-title">JUMLAH KIB A</h3>
                                 <ul class="list-inline two-part">
                                     <li><i class=" icon-flag text-info"></i></li>
                                     <li class="text-right"><span class="counter">{{ number_format($arraykib['KIBA']) }}</span></li>
@@ -126,7 +126,7 @@
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xs-12">
                             <div class="white-box">
-                                <h3 class="box-title">KIB B</h3>
+                                <h3 class="box-title">JUMLAH KIB B</h3>
                                 <ul class="list-inline two-part">
                                     <li><i class="icon-chart text-purple"></i></li>
                                     <li class="text-right"><span class="counter">{{ number_format($arraykib['KIBB']) }}</span></li>
@@ -135,7 +135,7 @@
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xs-12">
                             <div class="white-box">
-                                <h3 class="box-title">KIB C</h3>
+                                <h3 class="box-title">JUMLAH KIB C</h3>
                                 <ul class="list-inline two-part">
                                     <li><i class="icon-home text-danger"></i></li>
                                     <li class="text-right"><span class="">{{ number_format($arraykib['KIBC']) }}</span></li>
@@ -146,7 +146,7 @@
 					<div class="row">
                         <div class="col-lg-4 col-sm-6 col-xs-12">
                             <div class="white-box">
-                                <h3 class="box-title">KIB D</h3>
+                                <h3 class="box-title">JUMLAH KIB D</h3>
                                 <ul class="list-inline two-part">
                                     <li><i class="icon-map text-default"></i></li>
                                     <li class="text-right"><span class="counter">{{ number_format($arraykib['KIBD']) }}</span></li>
@@ -155,7 +155,7 @@
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xs-12">
                             <div class="white-box">
-                                <h3 class="box-title">KIB E</h3>
+                                <h3 class="box-title">JUMLAH KIB E</h3>
                                 <ul class="list-inline two-part">
                                     <li><i class="icon-pencil text-warning"></i></li>
                                     <li class="text-right"><span class="counter">{{ number_format($arraykib['KIBE']) }}</span></li>
@@ -164,7 +164,7 @@
                         </div>
                         <div class="col-lg-4 col-sm-6 col-xs-12">
                             <div class="white-box">
-                                <h3 class="box-title">KIB F</h3>
+                                <h3 class="box-title">JUMLAH KIB F</h3>
                                 <ul class="list-inline two-part">
                                     <li><i class="icon-wrench text-success"></i></li>
                                     <li class="text-right"><span class="">{{ number_format($arraykib['KIBF']) }}</span></li>
