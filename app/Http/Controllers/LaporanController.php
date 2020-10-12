@@ -31,6 +31,11 @@ class LaporanController extends Controller
 {
 	use ExcelTraits;
 
+	public function __construct()
+	{
+		set_time_limit(3000);
+	}
+
 	public function index(Request $request)
 	{
 
