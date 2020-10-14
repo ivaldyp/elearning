@@ -352,11 +352,6 @@ class LaporanController extends Controller
 
 
 							//SALDO AKHIR ---- SALDOAKHIR
-							$qkib = "";
-							if ($kib == 'E' || $kib == 'B') {
-								$qkib = "AND sts='1' AND kd_app='1' AND (jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(jukor_form,'')='')";
-							}
-
 							$queryakhir = DB::select( DB::raw("
 										SELECT
 										kobar
