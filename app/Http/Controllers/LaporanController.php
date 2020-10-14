@@ -377,7 +377,7 @@ class LaporanController extends Controller
 										-- ) as keterangan
 										from $nmtabelakhir sakhir
 										where kolok like '$kolok'
-										$qkib
+										AND sts='1' AND kd_app='1' AND (jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(jukor_form,'')='')
 										GROUP BY
 										kobar, kolok;
 										"));
