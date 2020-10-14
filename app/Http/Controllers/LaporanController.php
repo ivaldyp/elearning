@@ -318,6 +318,7 @@ class LaporanController extends Controller
 										  , count(kobar) as kuantitas
 										from $nmtabelawal
 										where kolok like '$kolok'
+										AND sts='1' AND kd_app='1' AND (jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(jukor_form,'')='')
 										GROUP BY
 										kobar, kolok;
 										"));
@@ -432,6 +433,7 @@ class LaporanController extends Controller
 											FROM $nmtabelakhir sakhir
 											where sakhir.kolok = '$kolok'
 											and sakhir.kobar = '$kobarnow'
+											AND sakhir.sts='1' AND sakhir.kd_app='1' AND (sakhir.jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(sakhir.jukor_form,'')='')
 											and sakhir.NOREG not in (select sawal.NOREG 
 																		from $nmtabelawal sawal
 																		where sawal.kolok = '$kolok'
