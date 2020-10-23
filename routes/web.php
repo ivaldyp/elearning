@@ -51,6 +51,9 @@ Route::group(['prefix' => 'setup'], function () {
 Route::group(['prefix' => 'laporan'], function () {
 	Route::get('/', 'LaporanController@index');
 	Route::post('/excel', 'LaporanController@excel');
+
+	Route::get('/intrakomptabel', 'LaporanIntrakomptabelController@index');
+	Route::get('/intrakomptabel/excel', 'LaporanIntrakomptabelController@excel');
 });
 
 Route::group(['prefix' => 'cms'], function () {
