@@ -63,7 +63,7 @@
 			</div>
 			<div class="row ">
 				<div class="col-md-1"></div>
-				<div class="col-md-10">
+				<div class="col-md-10" >
 					<!-- <div class="white-box"> -->
 					<div class="panel panel-info">
 						<div class="panel-heading">Intrakomptabel</div>
@@ -97,7 +97,7 @@
 								</div>
 								<hr>	
 								<div class="row">
-									<form method="POST" action="/laporanbmd/laporan/intrakomptabel/excel" class="form-horizontal">
+									<form method="GET" action="/laporanbmd/laporan/intrakomptabel/pdf" class="form-horizontal">
 										@csrf
 
 										<input id="tahun" type="hidden" name="tahun" value="{{ $yearnow }}">
@@ -151,8 +151,8 @@
 														<td style="vertical-align: middle;">{{ $pd['kolok'] }}</td>
 														<td style="vertical-align: middle;">{{ $pd['nalok'] }}</td>
 														<td>
-															<button type="button" style="background-color: Transparent; border: none;" output="excel" kolok="{{ $pd['kolok'] }}"><i class="fa fa-file-excel-o fa-2x" style="color: green; cursor: pointer;"></i></button>
-															<button type="button" style="background-color: Transparent; border: none;" output="pdf" kolok="{{ $pd['kolok'] }}"><i class="fa fa-file-pdf-o fa-2x" style="color: red; cursor: pointer;"></i></button>
+															<button type="button" style="background-color: Transparent; border: none;" data-output="excel" data-kolok="{{ $pd['kolok'] }}" class="btnExcel"><i class="fa fa-file-excel-o fa-2x" style="color: green; cursor: pointer;"></i></button>
+															<button type="button" style="background-color: Transparent; border: none;" data-output="pdf" data-kolok="{{ $pd['kolok'] }}" class="btnPdf"><i class="fa fa-file-pdf-o fa-2x" style="color: red; cursor: pointer;"></i></button>
 														</td>
 													</tr>
 													@endforeach
@@ -215,19 +215,18 @@
 
 		$(function () {
 
-			$("button").click(function() {
+			// $(".btnExcel").click(function() {
+			$('.btnExcel').on('click', function () {
 			    // alert(this.id); // or alert($(this).attr('id'));
 
    				var tahun = $("#tahun").val();
    				var wilayah = $("#wilayah").val();
    				var laporan = $("#laporan").val();
    				var kib = $( "#kib" ).val();
-   				// var kib = splitkib[0];
    				var durasi = $("#durasi").val();
-   				var kolok = $(this).attr('kolok');
-   				var output = $(this).attr('output');
-   				
-   				// var url = "/laporanbmd/laporan/intrakomptabel/excel?";
+
+   				var kolok = $(this).data('kolok');
+   				var output = $(this).data('output');
 
    				var url = "/laporanbmd/laporan/intrakomptabel/excel?"+
    							"tahun="+tahun+"&"+
@@ -239,40 +238,30 @@
 							"output="+output;
 
    				window.location.href = url;
-   				// alert(url);
-   				// window.open(url);
+			});
 
-				// $.ajax({ 
-				// type: "GET", 
-				// url: "/laporanbmd/laporan/intrakomptabel/excel",
-				// data: 
-				// 	{ 
-				// 		tahun : tahun
-				// 		, laporan : laporan 
-				// 		, kib : kib 
-				// 		, durasi : durasi 
-				// 		, wilayah : wilayah 
-				// 		, kolok : kolok 
-				// 		, output : output 
-				// 	},
-				// dataType: "json",
-				// }).done(function( data ) { 
-				// 	// alert(data);
-				// 	window.location = page;
-				// 	// if (data == 0) {
-				// 	// 	alert("Disposisi berhasil dihapus");
-				// 	// 	location.reload();
-				// 	// } else {
-				// 	// 	alert("Tidak dapat menghapus");
-				// 	// 	location.reload();
-				// 	// }
-					
-				// })
-				// .fail(function(xhr, status, error) {
-			 //        alert(status);
-			 //        alert(error);
-			 //    });
+			$('.btnPdf').on('click', function () {
+			    // alert(this.id); // or alert($(this).attr('id'));
 
+   				var tahun = $("#tahun").val();
+   				var wilayah = $("#wilayah").val();
+   				var laporan = $("#laporan").val();
+   				var kib = $( "#kib" ).val();
+   				var durasi = $("#durasi").val();
+
+   				var kolok = $(this).data('kolok');
+   				var output = $(this).data('output');
+
+   				var url = "/laporanbmd/laporan/intrakomptabel/pdf?"+
+   							"tahun="+tahun+"&"+
+   							"wilayah="+wilayah+"&"+
+   							"laporan="+laporan+"&"+
+							"kib="+kib+"&"+
+							"durasi="+durasi+"&"+
+							"kolok="+kolok+"&"+
+							"output="+output;
+
+   				window.location.href = url;
 			});
 
 			$(".select2").select2();

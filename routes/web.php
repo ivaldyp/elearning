@@ -19,6 +19,8 @@
 //     return view('index');
 // });
 
+Route::get('/uwow', 'LandingController@testes');
+
 Route::get('/', 'LandingController@index');
 Route::get('/materi', 'LandingController@materi');
 Route::get('/home', 'HomeController@index');
@@ -54,6 +56,13 @@ Route::group(['prefix' => 'laporan'], function () {
 
 	Route::get('/intrakomptabel', 'LaporanIntrakomptabelController@index');
 	Route::get('/intrakomptabel/excel', 'LaporanIntrakomptabelController@excel');
+	Route::get('/intrakomptabel/pdf', 'LaporanIntrakomptabelController@pdf');
+	// Route::get('/intrakomptabel/pdf', function(){
+	// 	// return view('pages.bpadlaporan.intraprev.preview');
+	// 	$pdf = PDF::loadView('pages.bpadlaporan.intraprev.preview');
+	// 	return $pdf->stream('preview.pdf');
+	// });
+
 });
 
 Route::group(['prefix' => 'cms'], function () {

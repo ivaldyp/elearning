@@ -504,7 +504,7 @@ trait ExcelTraits
 
 		//TAMBAH IMG LOGO DKI
 		$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-		$drawing->setPath('/excelimg/excel/dki2.png'); // put your path and image here
+		$drawing->setPath($_SERVER["DOCUMENT_ROOT"].'/laporanbmd/public/img/excel/excel-logo-dki2.png');
 		$drawing->setCoordinates(strtoupper($alphabet[$col+2]).'3');
 		// $drawing->setHeight(100);
 		// $drawing->setResizeProportional(true);
@@ -512,7 +512,7 @@ trait ExcelTraits
 
 		//TAMBAH IMG LOGO BPAD
 		$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-		$drawing->setPath('/excelimg/excel/bpad2.png'); // put your path and image here
+		$drawing->setPath($_SERVER["DOCUMENT_ROOT"].'/laporanbmd/public/img/excel/excel-logo-bpad2.png');
 		$drawing->setCoordinates(strtoupper($alphabet[$laporannow['back_column']]).'3');
 		$drawing->setHeight(75);
 		$drawing->setResizeProportional(true);

@@ -29,4 +29,9 @@ class LandingController extends Controller
 		Auth::logout();
 		return redirect('/');
 	}	
+
+	public function testes()
+	{
+		return view('tes');
+	}
 }
