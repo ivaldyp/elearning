@@ -438,6 +438,7 @@ trait ExcelTraits
 			// $drawing->setPath('public/publicfile/ttd/AS005090000000002/ttdkaAS005090000000002.png');
 			$drawing->setPath('public/publicfile/ttd/AS'.$nowuser['kolok'].'2/'.$nowuser['ttd']); // put your path and image here
 			$drawing->setCoordinates(strtoupper($alphabet[$laporannow['back_column']-2]).($row-4));
+			$drawing->setOffsetX(40);
 			$drawing->setHeight(100);
 			$drawing->setResizeProportional(true);
 			$drawing->setWorksheet($sheet);

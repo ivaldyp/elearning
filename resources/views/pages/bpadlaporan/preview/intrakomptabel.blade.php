@@ -180,9 +180,12 @@
 				<td class="col-md-1" style="width: 100%; text-align: center; vertical-align: middle;">
 					<p style="bottom: 0px">Jakarta, {{date('d M Y')}}</p><br>
 					<p style="top: 0px">KEPALA {{ ($upd == "NONE" ? strtoupper($pd) : strtoupper($upd)) }}</p><br>
+					@if(isset($nowuser['ttd']) && $nowuser['ttd'] != '')
+					<img src="{{ $_SERVER['DOCUMENT_ROOT'] }}/laporanbmd/public/publicfile/ttd/AS{{$nowuser['kolok']}}2/{{$nowuser['ttd']}}" height="100">
+					@endif
 					<br><br>
-					<p style="font-weight: bold;">{{ $nowuser['nm_ka'] }}</p><br>
-					<p>NIP. {{ $nowuser['nip_ka'] }}</p><br>
+					<p><span style="font-weight: bold;">{{ $nowuser['nm_ka'] }}</span><br>
+					NIP. {{ $nowuser['nip_ka'] }}</p><br>
 				</td>
 			</tr>
 		</table>
