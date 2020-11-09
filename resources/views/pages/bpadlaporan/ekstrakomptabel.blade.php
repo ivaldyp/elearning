@@ -102,7 +102,7 @@
 
 										<input id="tahun" type="hidden" name="tahun" value="{{ $yearnow }}">
 										<input id="wilayah" type="hidden" name="wilayah" value="{{ $wilnow }}">
-										<input id="laporan" type="hidden" name="laporan" value="K01">
+										<input id="laporan" type="hidden" name="laporan" value="K02">
 
 										<div class="form-group">
 											<label for="durasi" class="col-md-1 control-label"> Periode </label>

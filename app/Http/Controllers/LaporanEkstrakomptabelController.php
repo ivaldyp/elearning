@@ -139,6 +139,7 @@ class LaporanEkstrakomptabelController extends Controller
 						where('sts', 1)
 						->where('kode', $request->laporan)
 						->first();
+
 		// return json_encode($laporannow['ids']);
 
 		$tblname = "bpadlaporandata.dbo.REKON" . $splitdurasi[0] . "_G" . $year;
@@ -215,6 +216,7 @@ class LaporanEkstrakomptabelController extends Controller
 		// 	$this->pdf($sheet, $rowstart, $colstart, $alphabet, $kolok, $output, $wil, $splitkib, $year, $splitdurasi, $laporannow);
 		// 	// return 0;
 		// } else {
+
 			$result = $this->excelhead($sheet, $rowstart, $colstart, $alphabet, $year, $laporannow);
 			$row = $result[0];
 			$col = $result[1];

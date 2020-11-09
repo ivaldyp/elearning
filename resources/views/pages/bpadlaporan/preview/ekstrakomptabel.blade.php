@@ -85,6 +85,11 @@
 						<td class="col-md-10" style="width: 100%">: {{$kolokpd}} - {{ $upd == "NONE" ? strtoupper($pd) : strtoupper($upd) }}</td>
 						<td class="col-md-1 tipetop">TIPE LAPORAN</td>
 					</tr>
+					<tr>
+						<td class="col-md-1"></td>
+						<td class="col-md-10" style="width: 100%"></td>
+						<td class="col-md-1 tipebot">{{ strtoupper($laporannow['jns_laporan']) }}</td>
+					</tr>
 				</tbody>
 			</table>	
 		</div>
