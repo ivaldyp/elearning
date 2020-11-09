@@ -57,6 +57,10 @@ Route::group(['prefix' => 'laporan'], function () {
 	Route::get('/intrakomptabel', 'LaporanIntrakomptabelController@index');
 	Route::get('/intrakomptabel/excel', 'LaporanIntrakomptabelController@excel');
 	Route::get('/intrakomptabel/pdf', 'LaporanIntrakomptabelController@pdf');
+
+	Route::get('/ekstrakomptabel', 'LaporanEkstrakomptabelController@index');
+	Route::get('/ekstrakomptabel/excel', 'LaporanEkstrakomptabelController@excel');
+	Route::get('/ekstrakomptabel/pdf', 'LaporanEkstrakomptabelController@pdf');
 	// Route::get('/intrakomptabel/pdf', function(){
 	// 	// return view('pages.bpadlaporan.intraprev.preview');
 	// 	$pdf = PDF::loadView('pages.bpadlaporan.intraprev.preview');
