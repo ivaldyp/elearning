@@ -776,8 +776,12 @@ trait ExcelTraits
 		$sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
 
 		//RENAME SHEET
-		$sheet->setTitle("KIB".$kib.'_'.$kolok);
-
+		if ($kib != '') {
+			$sheet->setTitle("KIB".$kib.'_'.$kolok);
+		} else {
+			$sheet->setTitle($kolok . "_" . $laporannow['jns_laporan']);
+		}
+		
 		$arr = array($row, $col);
 
 		return $arr;

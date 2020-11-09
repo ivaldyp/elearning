@@ -154,7 +154,7 @@ class LaporanEkstrakomptabelController extends Controller
 		$query = json_decode(json_encode($query), true);
 		if ($query['nilai'] == 0) {
 			return redirect('/laporan/ekstrakomptabel?yearnow='.$year.'&wilnow='.$wil)
-			->with('message', 'Data KIB ' . $kib . ' tahun ' . $year . ' belum ada')
+			->with('message', 'Data Ekstrakomptabel tahun ' . $year . ' belum ada')
 			->with('msg_num', 2);
 		}
 
@@ -171,7 +171,7 @@ class LaporanEkstrakomptabelController extends Controller
 		$query = json_decode(json_encode($query), true);
 		if ($query['nilai'] == 0) {
 			return redirect('/laporan/ekstrakomptabel?yearnow='.$year.'&wilnow='.$wil)
-			->with('message', 'Data KIB ' . $kib . ' tahun ' . $year . ' belum ada')
+			->with('message', 'Data Ekstrakomptabel tahun ' . $year . ' belum ada')
 			->with('msg_num', 2);
 		}
 
@@ -188,7 +188,7 @@ class LaporanEkstrakomptabelController extends Controller
 		$query = json_decode(json_encode($query), true);
 		if ($query['nilai'] == 0) {
 			return redirect('/laporan/ekstrakomptabel?yearnow='.$year.'&wilnow='.$wil)
-			->with('message', 'Data KIB ' . $kib . ' tahun ' . $year . ' belum ada')
+			->with('message', 'Data Ekstrakomptabel tahun ' . $year . ' belum ada')
 			->with('msg_num', 2);
 		}
 
@@ -255,10 +255,6 @@ class LaporanEkstrakomptabelController extends Controller
 			$col = $result[1];
 
 			$result = $this->exceltipelaporan($sheet, $row, $col, $alphabet, $laporannow);
-			$row = $result[0];
-			$col = $result[1];
-
-			$result = $this->excelkib($sheet, $row, $col, $alphabet, $kib, $splitkib[1]);
 			$row = $result[0];
 			$col = $result[1];
 
@@ -455,11 +451,12 @@ class LaporanEkstrakomptabelController extends Controller
 			$row = $result[0];
 			$col = $result[1];
 
+			$kib = '';
 			$result = $this->excelfooter($sheet, $row, $col, $alphabet, $year, $cekrekap, $nowuser, $pd, $upd, $laporannow, $kib, $kolok);
 			$row = $result[0];
 			$col = $result[1];
 
-			$filename = $year.'_'.$kib.'_'.$kolok.'_LAPORAN';   
+			$filename = $year.'_'.$kolok.'_LAPORAN_EKSTRAKOMPTABEL';   
 			// $objPHPExcel->getActiveSheet()->setTitle("Title");   
 			if ($output == 'pdf') {
 				header("Content-type:application/pdf");
@@ -527,7 +524,7 @@ class LaporanEkstrakomptabelController extends Controller
 		$query = json_decode(json_encode($query), true);
 		if ($query['nilai'] == 0) {
 			return redirect('/laporan/ekstrakomptabel?yearnow='.$year.'&wilnow='.$wil)
-			->with('message', 'Data KIB ' . $kib . ' tahun ' . $year . ' belum ada')
+			->with('message', 'Data Ekstrakomptabel tahun ' . $year . ' belum ada')
 			->with('msg_num', 2);
 		}
 
@@ -544,7 +541,7 @@ class LaporanEkstrakomptabelController extends Controller
 		$query = json_decode(json_encode($query), true);
 		if ($query['nilai'] == 0) {
 			return redirect('/laporan/ekstrakomptabel?yearnow='.$year.'&wilnow='.$wil)
-			->with('message', 'Data KIB ' . $kib . ' tahun ' . $year . ' belum ada')
+			->with('message', 'Data Ekstrakomptabel tahun ' . $year . ' belum ada')
 			->with('msg_num', 2);
 		}
 
@@ -561,7 +558,7 @@ class LaporanEkstrakomptabelController extends Controller
 		$query = json_decode(json_encode($query), true);
 		if ($query['nilai'] == 0) {
 			return redirect('/laporan/ekstrakomptabel?yearnow='.$year.'&wilnow='.$wil)
-			->with('message', 'Data KIB ' . $kib . ' tahun ' . $year . ' belum ada')
+			->with('message', 'Data Ekstrakomptabel tahun ' . $year . ' belum ada')
 			->with('msg_num', 2);
 		}
 
@@ -808,11 +805,11 @@ class LaporanEkstrakomptabelController extends Controller
 							'kolokpd' => $kolokpd,
 							'kolokupd' => $kolokupd,
 							'laporannow' => $laporannow,
-							'kib' => $splitkib,
 							'cekrekap' => $cekrekap,
 							'nowuser' => $nowuser,
 						]);
 		// return $pdf->stream('preview.pdf');
-		return $pdf->download('KIB_'.$splitkib[0].'_'.$kolok.'.pdf');
+		$year.'_'.$kolok.'_LAPORAN_EKSTRAKOMPTABEL'
+		return $pdf->download($year.'_'.$kolok.'_LAPORAN_EKSTRAKOMPTABEL.pdf');
 	}
 }

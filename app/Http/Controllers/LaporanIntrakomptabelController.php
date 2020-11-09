@@ -468,7 +468,7 @@ class LaporanIntrakomptabelController extends Controller
 			$row = $result[0];
 			$col = $result[1];
 
-			$filename = $year.'_'.$kib.'_'.$kolok.'_LAPORAN';   
+			$filename = $year.'_'.$kib.'_'.$kolok.'_LAPORAN_INTRAKOMPTABEL';   
 			// $objPHPExcel->getActiveSheet()->setTitle("Title");   
 			if ($output == 'pdf') {
 				header("Content-type:application/pdf");
@@ -831,6 +831,7 @@ class LaporanIntrakomptabelController extends Controller
 							'nowuser' => $nowuser,
 						]);
 		// return $pdf->stream('preview.pdf');
-		return $pdf->download('KIB_'.$splitkib[0].'_'.$kolok.'.pdf');
+		return $pdf->download($year.'_'.$kib.'_'.$kolok.'_LAPORAN_INTRAKOMPTABEL.pdf');
+		// return $pdf->download('KIB_'.$splitkib[0].'_'.$kolok.'.pdf');
 	}
 }
