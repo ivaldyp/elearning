@@ -809,7 +809,6 @@ class LaporanEkstrakomptabelController extends Controller
 							'nowuser' => $nowuser,
 						]);
 		// return $pdf->stream('preview.pdf');
-		$year.'_'.$kolok.'_LAPORAN_EKSTRAKOMPTABEL'
 		return $pdf->download($year.'_'.$kolok.'_LAPORAN_EKSTRAKOMPTABEL.pdf');
 	}
 }
