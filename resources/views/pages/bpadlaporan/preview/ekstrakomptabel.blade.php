@@ -101,11 +101,14 @@
 					<th rowspan="2">no</th>
 					<th colspan="3">Sub-sub rincian objek</th>
 					<th colspan="2">Saldo awal</th>
+					<th colspan="2">Mutasi Bertambah</th>
 					<th colspan="2">Saldo akhir</th>
 				</tr>
 				<tr class="headclrblue">
 					<th colspan="2">kobar</th>
 					<th>Nama Barang</th>
+					<th>Qty</th>
+					<th>Nilai</th>
 					<th>Qty</th>
 					<th>Nilai</th>
 					<th>Qty</th>
@@ -119,6 +122,9 @@
 					<th >5</th>
 					<th >6</th>
 					<th >7</th>
+					<th >8</th>
+					<th >9</th>
+
 				</tr>
 			</thead>
 			<tbody>
@@ -129,6 +135,8 @@
 					<td>{{ $rekap['nabarref'] }}</td>
 					<td style="text-align: right;">{{ number_format($rekap['KUANTITAS_SALDOAWAL']) }}</td>
 					<td style="text-align: right;">{{ number_format($rekap['HARGA_SALDOAWAL']) }}</td>
+					<td style="text-align: right;">{{ number_format($rekap['TAMBAH_QTY']) }}</td>
+					<td style="text-align: right;">{{ number_format($rekap['TAMBAH_HARGA']) }}</td>
 					<td style="text-align: right;">{{ number_format($rekap['KUANTITAS_SALDOAKHIR']) }}</td>
 					<td style="text-align: right;">{{ number_format($rekap['HARGA_SALDOAKHIR']) }}</td>
 				</tr>
@@ -138,11 +146,16 @@
 					$jmlnilawal = array_sum(array_column($cekrekap, 'HARGA_SALDOAWAL'));
 					$jmlqtyakhir = array_sum(array_column($cekrekap, 'KUANTITAS_SALDOAKHIR'));
 					$jmlnilakhir = array_sum(array_column($cekrekap, 'HARGA_SALDOAKHIR'));
+
+					$jmlqtytambah = array_sum(array_column($cekrekap, 'TAMBAH_QTY'));
+					$jmlhargatambah = array_sum(array_column($cekrekap, 'TAMBAH_HARGA'));
 				?>
 				<tr>
 					<td colspan="4" style="text-align: center; text-transform: uppercase; font-weight: bold;">Jumlah</td>
 					<td style="text-align: right;">{{ number_format($jmlqtyawal) }}</td>
 					<td style="text-align: right;">{{ number_format($jmlnilawal) }}</td>
+					<td style="text-align: right;">{{ number_format($jmlqtytambah) }}</td>
+					<td style="text-align: right;">{{ number_format($jmlhargatambah) }}</td>
 					<td style="text-align: right;">{{ number_format($jmlqtyakhir) }}</td>
 					<td style="text-align: right;">{{ number_format($jmlnilakhir) }}</td>
 				</tr>
