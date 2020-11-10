@@ -392,61 +392,61 @@ class LaporanEkstrakomptabelController extends Controller
 							"));
 				$cekrekap = json_decode(json_encode($cekrekap), true);
 
-				// foreach ($cekrekap as $key => $rekap) {
-				// 	$kobarnow = $rekap['KOBAR'];
-				// 	$qmutasitambah = DB::select( DB::raw("
-				// 				SELECT 
-				// 					sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as total, 
-				// 					count(kobar) as kuantitas
-				// 				FROM $nmtabelakhir sakhir
-				// 				where sakhir.kolok = '$kolok'
-				// 				and sakhir.kobar = '$kobarnow'
-				// 				AND sakhir.sts='1' AND sakhir.kd_app='1' AND (sakhir.jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(sakhir.jukor_form,'')='')
-				// 				and sakhir.NOREG not in (select sawal.NOREG 
-				// 											from $nmtabelawal sawal
-				// 											where sawal.kolok = '$kolok'
-				// 											  and sawal.kobar = '$kobarnow'
-				// 										  )
-				// 				"))[0];
-				// 	$qmutasitambah = json_decode(json_encode($qmutasitambah), true);
+				foreach ($cekrekap as $key => $rekap) {
+					$kobarnow = $rekap['KOBAR'];
+					$qmutasitambah = DB::select( DB::raw("
+								SELECT 
+									sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as total, 
+									count(kobar) as kuantitas
+								FROM $nmtabelakhir sakhir
+								where sakhir.kolok = '$kolok'
+								and sakhir.kobar = '$kobarnow'
+								AND sakhir.sts='1' AND sakhir.kd_app='1' AND (sakhir.jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(sakhir.jukor_form,'')='')
+								and sakhir.NOREG not in (select sawal.NOREG 
+															from $nmtabelawal sawal
+															where sawal.kolok = '$kolok'
+															  and sawal.kobar = '$kobarnow'
+														  )
+								"))[0];
+					$qmutasitambah = json_decode(json_encode($qmutasitambah), true);
 
-				// 	if ($qmutasitambah['kuantitas'] + $rekap['KUANTITAS_SALDOAWAL'] == $rekap['KUANTITAS_SALDOAKHIR']) {
-				// 		DB::table($temp_nmtabelakhirrekap)
-				// 		  ->where('kolok', $kolok)
-				// 		  ->where('kobar', $rekap['KOBAR'])
-				// 		  ->where('sts', 1)
-				// 		  ->update([
-				// 				'TAMBAH_QTY' => $qmutasitambah['kuantitas'] ,
-				// 				'TAMBAH_HARGA' => $qmutasitambah['total'],
-				// 				'KURANG_QTY' => 0,
-				// 				'KURANG_HARGA' => 0,
-				// 			]);
-				// 	} else {
-				// 		$kurangqty = abs( $rekap['KUANTITAS_SALDOAKHIR'] - ($qmutasitambah['kuantitas'] + $rekap['KUANTITAS_SALDOAWAL']) );
-				// 		$kurangharga = abs( $rekap['HARGA_SALDOAKHIR'] - ($qmutasitambah['total'] + $rekap['HARGA_SALDOAWAL']) );
+					if ($qmutasitambah['kuantitas'] + $rekap['KUANTITAS_SALDOAWAL'] == $rekap['KUANTITAS_SALDOAKHIR']) {
+						DB::table($temp_nmtabelakhirrekap)
+						  ->where('kolok', $kolok)
+						  ->where('kobar', $rekap['KOBAR'])
+						  ->where('sts', 1)
+						  ->update([
+								'TAMBAH_QTY' => $qmutasitambah['kuantitas'] ,
+								'TAMBAH_HARGA' => $qmutasitambah['total'],
+								'KURANG_QTY' => 0,
+								'KURANG_HARGA' => 0,
+							]);
+					} else {
+						$kurangqty = abs( $rekap['KUANTITAS_SALDOAKHIR'] - ($qmutasitambah['kuantitas'] + $rekap['KUANTITAS_SALDOAWAL']) );
+						$kurangharga = abs( $rekap['HARGA_SALDOAKHIR'] - ($qmutasitambah['total'] + $rekap['HARGA_SALDOAWAL']) );
 
-				// 		DB::table($temp_nmtabelakhirrekap)
-				// 		  ->where('kolok', $kolok)
-				// 		  ->where('kobar', $rekap['KOBAR'])
-				// 		  ->where('sts', 1)
-				// 		  ->update([
-				// 				'TAMBAH_QTY' => $qmutasitambah['kuantitas'],
-				// 				'TAMBAH_HARGA' => $qmutasitambah['total'],
-				// 				'KURANG_QTY' => $kurangqty,
-				// 				'KURANG_HARGA' => $kurangharga,
-				// 			]);
-				// 	}
-				// }
+						DB::table($temp_nmtabelakhirrekap)
+						  ->where('kolok', $kolok)
+						  ->where('kobar', $rekap['KOBAR'])
+						  ->where('sts', 1)
+						  ->update([
+								'TAMBAH_QTY' => $qmutasitambah['kuantitas'],
+								'TAMBAH_HARGA' => $qmutasitambah['total'],
+								'KURANG_QTY' => $kurangqty,
+								'KURANG_HARGA' => $kurangharga,
+							]);
+					}
+				}
 
-				// $cekrekap = DB::select( DB::raw("
-				// 			SELECT awal.*, bar.NABAR as nabarref
-				// 			FROM $nmtabelawalrekap awal
-				// 			JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
-				// 			WHERE awal.sts = 1
-				// 			AND awal.kolok = '$kolok'
-				// 			ORDER BY kobar
-				// 			"));
-				// $cekrekap = json_decode(json_encode($cekrekap), true);
+				$cekrekap = DB::select( DB::raw("
+							SELECT awal.*, bar.NABAR as nabarref
+							FROM $nmtabelawalrekap awal
+							JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
+							WHERE awal.sts = 1
+							AND awal.kolok = '$kolok'
+							ORDER BY kobar
+							"));
+				$cekrekap = json_decode(json_encode($cekrekap), true);
 			}
 
 			$result = $this->excelK02($sheet, $row, $col, $alphabet, $year, $cekrekap, $nowuser, $pd, $upd);
@@ -739,61 +739,61 @@ class LaporanEkstrakomptabelController extends Controller
 						"));
 			$cekrekap = json_decode(json_encode($cekrekap), true);
 
-			// foreach ($cekrekap as $key => $rekap) {
-			// 	$kobarnow = $rekap['KOBAR'];
-			// 	$qmutasitambah = DB::select( DB::raw("
-			// 				SELECT 
-			// 					sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as total, 
-			// 					count(kobar) as kuantitas
-			// 				FROM $nmtabelakhir sakhir
-			// 				where sakhir.kolok = '$kolok'
-			// 				and sakhir.kobar = '$kobarnow'
-			// 				AND sakhir.sts='1' AND sakhir.kd_app='1' AND (sakhir.jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(sakhir.jukor_form,'')='')
-			// 				and sakhir.NOREG not in (select sawal.NOREG 
-			// 											from $nmtabelawal sawal
-			// 											where sawal.kolok = '$kolok'
-			// 											  and sawal.kobar = '$kobarnow'
-			// 										  )
-			// 				"))[0];
-			// 	$qmutasitambah = json_decode(json_encode($qmutasitambah), true);
+			foreach ($cekrekap as $key => $rekap) {
+				$kobarnow = $rekap['KOBAR'];
+				$qmutasitambah = DB::select( DB::raw("
+							SELECT 
+								sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as total, 
+								count(kobar) as kuantitas
+							FROM $nmtabelakhir sakhir
+							where sakhir.kolok = '$kolok'
+							and sakhir.kobar = '$kobarnow'
+							AND sakhir.sts='1' AND sakhir.kd_app='1' AND (sakhir.jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(sakhir.jukor_form,'')='')
+							and sakhir.NOREG not in (select sawal.NOREG 
+														from $nmtabelawal sawal
+														where sawal.kolok = '$kolok'
+														  and sawal.kobar = '$kobarnow'
+													  )
+							"))[0];
+				$qmutasitambah = json_decode(json_encode($qmutasitambah), true);
 
-			// 	if ($qmutasitambah['kuantitas'] + $rekap['KUANTITAS_SALDOAWAL'] == $rekap['KUANTITAS_SALDOAKHIR']) {
-			// 		DB::table($temp_nmtabelakhirrekap)
-			// 		  ->where('kolok', $kolok)
-			// 		  ->where('kobar', $rekap['KOBAR'])
-			// 		  ->where('sts', 1)
-			// 		  ->update([
-			// 				'TAMBAH_QTY' => $qmutasitambah['kuantitas'] ,
-			// 				'TAMBAH_HARGA' => $qmutasitambah['total'],
-			// 				'KURANG_QTY' => 0,
-			// 				'KURANG_HARGA' => 0,
-			// 			]);
-			// 	} else {
-			// 		$kurangqty = abs( $rekap['KUANTITAS_SALDOAKHIR'] - ($qmutasitambah['kuantitas'] + $rekap['KUANTITAS_SALDOAWAL']) );
-			// 		$kurangharga = abs( $rekap['HARGA_SALDOAKHIR'] - ($qmutasitambah['total'] + $rekap['HARGA_SALDOAWAL']) );
+				if ($qmutasitambah['kuantitas'] + $rekap['KUANTITAS_SALDOAWAL'] == $rekap['KUANTITAS_SALDOAKHIR']) {
+					DB::table($temp_nmtabelakhirrekap)
+					  ->where('kolok', $kolok)
+					  ->where('kobar', $rekap['KOBAR'])
+					  ->where('sts', 1)
+					  ->update([
+							'TAMBAH_QTY' => $qmutasitambah['kuantitas'] ,
+							'TAMBAH_HARGA' => $qmutasitambah['total'],
+							'KURANG_QTY' => 0,
+							'KURANG_HARGA' => 0,
+						]);
+				} else {
+					$kurangqty = abs( $rekap['KUANTITAS_SALDOAKHIR'] - ($qmutasitambah['kuantitas'] + $rekap['KUANTITAS_SALDOAWAL']) );
+					$kurangharga = abs( $rekap['HARGA_SALDOAKHIR'] - ($qmutasitambah['total'] + $rekap['HARGA_SALDOAWAL']) );
 
-			// 		DB::table($temp_nmtabelakhirrekap)
-			// 		  ->where('kolok', $kolok)
-			// 		  ->where('kobar', $rekap['KOBAR'])
-			// 		  ->where('sts', 1)
-			// 		  ->update([
-			// 				'TAMBAH_QTY' => $qmutasitambah['kuantitas'],
-			// 				'TAMBAH_HARGA' => $qmutasitambah['total'],
-			// 				'KURANG_QTY' => $kurangqty,
-			// 				'KURANG_HARGA' => $kurangharga,
-			// 			]);
-			// 	}
-			// }
+					DB::table($temp_nmtabelakhirrekap)
+					  ->where('kolok', $kolok)
+					  ->where('kobar', $rekap['KOBAR'])
+					  ->where('sts', 1)
+					  ->update([
+							'TAMBAH_QTY' => $qmutasitambah['kuantitas'],
+							'TAMBAH_HARGA' => $qmutasitambah['total'],
+							'KURANG_QTY' => $kurangqty,
+							'KURANG_HARGA' => $kurangharga,
+						]);
+				}
+			}
 
-			// $cekrekap = DB::select( DB::raw("
-			// 			SELECT awal.*, bar.NABAR as nabarref
-			// 			FROM $nmtabelawalrekap awal
-			// 			JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
-			// 			WHERE awal.sts = 1
-			// 			AND awal.kolok = '$kolok'
-			// 			ORDER BY kobar
-			// 			"));
-			// $cekrekap = json_decode(json_encode($cekrekap), true);
+			$cekrekap = DB::select( DB::raw("
+						SELECT awal.*, bar.NABAR as nabarref
+						FROM $nmtabelawalrekap awal
+						JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
+						WHERE awal.sts = 1
+						AND awal.kolok = '$kolok'
+						ORDER BY kobar
+						"));
+			$cekrekap = json_decode(json_encode($cekrekap), true);
 		}
 
 		// return view('pages.bpadlaporan.intraprev.preview');
