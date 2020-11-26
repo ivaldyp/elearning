@@ -510,8 +510,6 @@ class LaporanIntrakomptabelController extends Controller
 	// public function pdf($sheet, $row, $col, $alphabet, $kolok, $output, $wil, $splitkib, $year, $splitdurasi, $laporannow)
 	public function pdf(Request $request)
 	{
-		ini_set('memory_limit','-1');
-
 		$kolok = $request->kolok;
 		$output = $request->output;
 		$wil = $request->wilayah;
