@@ -77,7 +77,7 @@
 									@elseif(Auth::user()->usname_admin)
 									{{ $_SESSION['user_laporan']['idgroup'] }}
 									@elseif(Auth::user()->id_emp)
-									{{ $_SESSION['user_laporan']['idgroup'] }}
+									EMPLOYEE
 									@endif
 									 - 
 									@if(Auth::user()->usname_skpd)

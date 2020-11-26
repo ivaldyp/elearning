@@ -153,6 +153,9 @@
 														<td>
 															<button type="button" style="background-color: Transparent; border: none;" data-output="excel" data-kolok="{{ $pd['kolok'] }}" class="btnExcel"><i class="fa fa-file-excel-o fa-2x" style="color: green; cursor: pointer;"></i></button>
 															<button type="button" style="background-color: Transparent; border: none;" data-output="pdf" data-kolok="{{ $pd['kolok'] }}" class="btnPdf"><i class="fa fa-file-pdf-o fa-2x" style="color: red; cursor: pointer;"></i></button>
+															@if(strtolower($_SESSION['user_laporan']['usname']) == 'valadmin')
+																<button type="button" style="background-color: Transparent; border: none;" data-output="view" data-kolok="{{ $pd['kolok'] }}" class="btnView"><i class="fa fa-eye fa-2x" style="color: yellow; cursor: pointer;"></i></button>
+															@endif
 														</td>
 													</tr>
 													@endforeach
@@ -262,6 +265,34 @@
 							"output="+output;
 
    				window.location.href = url;
+			});
+
+			$('.btnView').on('click', function () {
+			    // alert(this.id); // or alert($(this).attr('id'));
+
+   				var tahun = $("#tahun").val();
+   				var wilayah = $("#wilayah").val();
+   				var laporan = $("#laporan").val();
+   				var kib = $( "#kib" ).val();
+   				var durasi = $("#durasi").val();
+
+   				var kolok = $(this).data('kolok');
+   				var output = $(this).data('output');
+
+   				var url = "/laporanbmd/laporan/intrakomptabel/view?"+
+   							"tahun="+tahun+"&"+
+   							"wilayah="+wilayah+"&"+
+   							"laporan="+laporan+"&"+
+							"kib="+kib+"&"+
+							"durasi="+durasi+"&"+
+							"kolok="+kolok+"&"+
+							"output="+output;
+
+				window.open(
+					url,
+					'_blank' // <- This is what makes it open in a new window.
+				);
+   				// window.location.href = url;
 			});
 
 			$(".select2").select2();

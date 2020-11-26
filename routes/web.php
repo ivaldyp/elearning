@@ -57,6 +57,7 @@ Route::group(['prefix' => 'laporan'], function () {
 	Route::get('/intrakomptabel', 'LaporanIntrakomptabelController@index');
 	Route::get('/intrakomptabel/excel', 'LaporanIntrakomptabelController@excel');
 	Route::get('/intrakomptabel/pdf', 'LaporanIntrakomptabelController@pdf');
+	Route::get('/intrakomptabel/view', 'LaporanIntrakomptabelController@view');
 
 	Route::get('/ekstrakomptabel', 'LaporanEkstrakomptabelController@index');
 	Route::get('/ekstrakomptabel/excel', 'LaporanEkstrakomptabelController@excel');

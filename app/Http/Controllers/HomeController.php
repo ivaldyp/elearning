@@ -175,6 +175,8 @@ class HomeController extends Controller
 
 			$user_data = Emp_data::where('id_emp', $iduser)->first();
 
+			$user_data['idgroup'] = 'EMPLOYEE';
+
 			Emp_data::where('id_emp', $user_data['id_emp'])
 			->update([
 				'lastlogin' => date('Y-m-d H:i:s'),

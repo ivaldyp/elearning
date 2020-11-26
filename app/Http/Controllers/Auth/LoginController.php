@@ -57,7 +57,9 @@ class LoginController extends Controller
 					where(function($query) use($usname){
 					    $query->where('usname_skpd', $usname)
 						->orWhere('usname_admin', $usname)
-						->orWhere('id_emp', $usname);
+						->orWhere('id_emp', $usname)
+						->orWhere('nrk_emp', $usname)
+						->orWhere('nip_emp', $usname);
 					})
 					->first();
 		} else {
@@ -67,7 +69,9 @@ class LoginController extends Controller
 					where(function($query) use($usname){
 					    $query->where('usname_skpd', $usname)
 						->orWhere('usname_admin', $usname)
-						->orWhere('id_emp', $usname);
+						->orWhere('id_emp', $usname)
+						->orWhere('nrk_emp', $usname)
+						->orWhere('nip_emp', $usname);
 					})
 					->where('passmd5', md5($uspass))
 					->first();
