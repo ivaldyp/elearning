@@ -67,8 +67,8 @@
 </head>
 <body >
 	<header>
-		<img class="floatLeft" src="{{ $_SERVER['DOCUMENT_ROOT'] }}/laporanbmd/public/img/excel/excel-logo-dki2.png" height="100">
-		<img class="floatRight" src="{{ $_SERVER['DOCUMENT_ROOT'] }}/laporanbmd/public/img/excel/excel-logo-bpad2.png" height="100">
+		<img class="floatLeft" src="{{ $_SERVER['DOCUMENT_ROOT']}}/laporanbmd/storage/img/excel/excel-logo-dki2.png" height="100">
+		<img class="floatRight" src="{{ $_SERVER['DOCUMENT_ROOT'] }}/laporanbmd/storage/img/excel/excel-logo-bpad2.png" height="100">
 		<h3 class="logoHeader"><b>
 
 			LAPORAN BARANG KUASA PENGGUNA<br>
