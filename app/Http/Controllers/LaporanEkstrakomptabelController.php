@@ -39,6 +39,11 @@ class LaporanEkstrakomptabelController extends Controller
 
 	public function index(Request $request)
 	{
+		if ($request->periodenow) {
+			$periode = $request->periodenow;
+		} else {
+			$periode = "2::5";
+		}
 
 		if ($request->wilnow) {
 			if ($request->wilnow == "prov") {
@@ -120,6 +125,7 @@ class LaporanEkstrakomptabelController extends Controller
 				->with('koloknow', $kolok)
 				// ->with('searchnow', $searchnow)
 				->with('yearnow', $year)
+				->with('periodenow', $periode)
 				->with('wilnow', $request->wilnow)
 				->with('thisprofile', $thisprofile)
 				->with('pds', $pds->get())
@@ -141,6 +147,40 @@ class LaporanEkstrakomptabelController extends Controller
 						->first();
 
 		// return json_encode($laporannow['ids']);
+
+		$tblname = "bpadlaporandata.dbo.REKON" . $splitdurasi[0] . "_G" . $year;
+		$query = DB::select( DB::raw("
+					IF OBJECT_ID('$tblname') IS NOT NULL
+					   BEGIN
+						  select 1 as nilai
+					   END;
+					ELSE
+					   BEGIN
+						  select 0 as nilai
+					   END;"))[0];
+		$query = json_decode(json_encode($query), true);
+		if ($query['nilai'] == 0) {
+			return redirect('/laporan/ekstrakomptabel?yearnow='.$year.'&wilnow='.$wil.'&periodenow='.$request->durasi)
+			->with('message', 'Periode tersebut belum ada')
+			->with('msg_num', 2);
+		}
+
+		$tblname = "bpadlaporandata.dbo.REKON" . $splitdurasi[1] . "_G" . $year;
+		$query = DB::select( DB::raw("
+					IF OBJECT_ID('$tblname') IS NOT NULL
+					   BEGIN
+						  select 1 as nilai
+					   END;
+					ELSE
+					   BEGIN
+						  select 0 as nilai
+					   END;"))[0];
+		$query = json_decode(json_encode($query), true);
+		if ($query['nilai'] == 0) {
+			return redirect('/laporan/ekstrakomptabel?yearnow='.$year.'&wilnow='.$wil.'&periodenow='.$request->durasi)
+			->with('message', 'Periode tersebut belum ada')
+			->with('msg_num', 2);
+		}
 
 		$tblname = "bpadlaporandata.dbo.REKON" . $splitdurasi[0] . "_G" . $year;
 		$query = DB::select( DB::raw("
@@ -271,6 +311,7 @@ class LaporanEkstrakomptabelController extends Controller
 						JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
 						WHERE awal.sts = 1
 						AND awal.kolok = '$kolok'
+						AND awal.periode = '$request->durasi'
 						ORDER BY kobar
 						"));
 			$cekrekap = json_decode(json_encode($cekrekap), true);
@@ -313,6 +354,7 @@ class LaporanEkstrakomptabelController extends Controller
 							 'SATUAN' => ($data['satuan'] ?? ''),
 							 'KUANTITAS_SALDOAWAL' => $data['kuantitas'] ?? 0,
 							 'HARGA_SALDOAWAL' => $data['total'] ?? 0,
+							 'periode' => $request->durasi,
 
 							]
 						);
@@ -362,6 +404,7 @@ class LaporanEkstrakomptabelController extends Controller
 									, 'KOBAR' => $data['kobar']
 									// , 'SATUAN' => $data['satuan']
 									, 'sts' => 1
+									, 'periode' => $request->durasi
 								],
 								[
 									'uname' => Auth::user()->usname_skpd, 
@@ -388,6 +431,7 @@ class LaporanEkstrakomptabelController extends Controller
 							JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
 							WHERE awal.sts = 1
 							AND awal.kolok = '$kolok'
+							AND awal.periode = '$request->durasi'
 							ORDER BY kobar
 							"));
 				$cekrekap = json_decode(json_encode($cekrekap), true);
@@ -444,6 +488,7 @@ class LaporanEkstrakomptabelController extends Controller
 							JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
 							WHERE awal.sts = 1
 							AND awal.kolok = '$kolok'
+							AND awal.periode = '$request->durasi'
 							ORDER BY kobar
 							"));
 				$cekrekap = json_decode(json_encode($cekrekap), true);
@@ -454,7 +499,7 @@ class LaporanEkstrakomptabelController extends Controller
 			$col = $result[1];
 
 			$kib = '';
-			$result = $this->excelfooter($sheet, $row, $col, $alphabet, $year, $cekrekap, $nowuser, $pd, $upd, $laporannow, $kib, $kolok);
+			$result = $this->excelfooter($sheet, $row, $col, $alphabet, $year, $nowuser, $pd, $upd, $laporannow, $kib, $kolok);
 			$row = $result[0];
 			$col = $result[1];
 
@@ -512,6 +557,40 @@ class LaporanEkstrakomptabelController extends Controller
 						->where('kode', $request->laporan)
 						->first();
 		// return json_encode($laporannow['ids']);
+
+		$tblname = "bpadlaporandata.dbo.REKON" . $splitdurasi[0] . "_G" . $year;
+		$query = DB::select( DB::raw("
+					IF OBJECT_ID('$tblname') IS NOT NULL
+					   BEGIN
+						  select 1 as nilai
+					   END;
+					ELSE
+					   BEGIN
+						  select 0 as nilai
+					   END;"))[0];
+		$query = json_decode(json_encode($query), true);
+		if ($query['nilai'] == 0) {
+			return redirect('/laporan/ekstrakomptabel?yearnow='.$year.'&wilnow='.$wil.'&periodenow='.$request->durasi)
+			->with('message', 'Periode tersebut belum ada')
+			->with('msg_num', 2);
+		}
+
+		$tblname = "bpadlaporandata.dbo.REKON" . $splitdurasi[1] . "_G" . $year;
+		$query = DB::select( DB::raw("
+					IF OBJECT_ID('$tblname') IS NOT NULL
+					   BEGIN
+						  select 1 as nilai
+					   END;
+					ELSE
+					   BEGIN
+						  select 0 as nilai
+					   END;"))[0];
+		$query = json_decode(json_encode($query), true);
+		if ($query['nilai'] == 0) {
+			return redirect('/laporan/ekstrakomptabel?yearnow='.$year.'&wilnow='.$wil.'&periodenow='.$request->durasi)
+			->with('message', 'Periode tersebut belum ada')
+			->with('msg_num', 2);
+		}
 
 		$tblname = "bpadlaporandata.dbo.REKON" . $splitdurasi[0] . "_G" . $year;
 		$query = DB::select( DB::raw("
@@ -618,6 +697,7 @@ class LaporanEkstrakomptabelController extends Controller
 					JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
 					WHERE awal.sts = 1
 					AND awal.kolok = '$kolok'
+					AND awal.periode = '$request->durasi'
 					ORDER BY kobar
 					"));
 		$cekrekap = json_decode(json_encode($cekrekap), true);
@@ -660,6 +740,7 @@ class LaporanEkstrakomptabelController extends Controller
 						 'SATUAN' => ($data['satuan'] ?? ''),
 						 'KUANTITAS_SALDOAWAL' => $data['kuantitas'] ?? 0,
 						 'HARGA_SALDOAWAL' => $data['total'] ?? 0,
+						 'periode' => $request->durasi,
 
 						]
 					);
@@ -709,6 +790,7 @@ class LaporanEkstrakomptabelController extends Controller
 								, 'KOBAR' => $data['kobar']
 								// , 'SATUAN' => $data['satuan']
 								, 'sts' => 1
+								, 'periode' => $request->durasi
 							],
 							[
 								'uname' => Auth::user()->usname_skpd, 
@@ -735,6 +817,7 @@ class LaporanEkstrakomptabelController extends Controller
 						JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
 						WHERE awal.sts = 1
 						AND awal.kolok = '$kolok'
+						AND awal.periode = '$request->durasi'
 						ORDER BY kobar
 						"));
 			$cekrekap = json_decode(json_encode($cekrekap), true);
@@ -791,6 +874,7 @@ class LaporanEkstrakomptabelController extends Controller
 						JOIN bpadas.dbo.[ASET_QFATBBAR] bar on bar.KOBAR = awal.KOBAR
 						WHERE awal.sts = 1
 						AND awal.kolok = '$kolok'
+						AND awal.periode = '$request->durasi'
 						ORDER BY kobar
 						"));
 			$cekrekap = json_decode(json_encode($cekrekap), true);

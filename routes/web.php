@@ -19,9 +19,8 @@
 //     return view('index');
 // });
 
-Route::get('/uwow', 'LandingController@testes');
-
 Route::get('/', 'LandingController@index');
+Route::get('/login', 'LandingController@index');
 Route::get('/materi', 'LandingController@materi');
 Route::get('/home', 'HomeController@index');
 Route::post('/home/password', 'HomeController@password');
@@ -62,12 +61,16 @@ Route::group(['prefix' => 'laporan'], function () {
 	Route::get('/ekstrakomptabel', 'LaporanEkstrakomptabelController@index');
 	Route::get('/ekstrakomptabel/excel', 'LaporanEkstrakomptabelController@excel');
 	Route::get('/ekstrakomptabel/pdf', 'LaporanEkstrakomptabelController@pdf');
-	// Route::get('/intrakomptabel/pdf', function(){
-	// 	// return view('pages.bpadlaporan.intraprev.preview');
-	// 	$pdf = PDF::loadView('pages.bpadlaporan.intraprev.preview');
-	// 	return $pdf->stream('preview.pdf');
-	// });
 
+	Route::get('/persediaan', 'LaporanPersediaanController@index');
+	Route::get('/persediaan/excel', 'LaporanPersediaanController@excel');
+	Route::get('/persediaan/pdf', 'LaporanPersediaanController@pdf');
+	Route::get('/persediaan/view', 'LaporanPersediaanController@view');
+});
+
+Route::group(['prefix' => 'olah'], function () {
+	Route::get('/intrakomptabel', 'OlahController@intrakomptabel');
+	Route::get('/intrakomptabel/olah', 'LaporanIntrakomptabelController@olah');
 });
 
 Route::group(['prefix' => 'cms'], function () {

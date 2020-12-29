@@ -165,6 +165,34 @@ trait ExcelTraits
 		return $arr;
 	}
 
+	protected function excelperiodepersediaan($sheet, $row, $col, $alphabet, $periode)
+	{
+		$row++;
+
+		if($periode == 1)
+			$per = "TAHUNAN";
+		else if($periode == 2)
+			$per = "SEMESTER"; 
+		else if($periode == 3)
+			$per = "SEMESTER"; 
+
+		$sheet->setCellValue($alphabet[$col+1].$row, 'PERIODE');
+		$sheet->setCellValue($alphabet[$col+3].$row, ': '.$per);
+		$sheet->mergeCells($alphabet[$col+3].$row.':'.$alphabet[$col+6].$row);
+
+		$fontArray = [
+			'font'  => [
+				'name'  => 'Arial Narrow',
+				'size'	=> 10,
+			],
+		];
+		$sheet->getStyle($alphabet[$col+1].$row.':'.$alphabet[$col+6].$row)->applyFromArray($fontArray);
+
+		$arr = array($row, $col);
+
+		return $arr;
+	}
+
 	protected function excelK01($sheet, $row, $col, $alphabet, $year, $cekrekap, $nowuser, $pd, $upd)
 	{
 		//SET HEADER TABEL
@@ -346,7 +374,7 @@ trait ExcelTraits
 		$row++;
 		// $sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('#,##0');
 		$sheet->setCellValue($alphabet[$col+1].$row, 'JUMLAH');
-		$sheet->getStyle($alphabet[$col+1].$row)->getFont()->setBold( true );
+		// $sheet->getStyle($alphabet[$col+1].$row)->getFont()->setBold( true );
 		$sheet->mergeCells($alphabet[$col+1].$row.':'.$alphabet[$col+4].$row);
 		$sheet->getStyle($alphabet[$col+1].$row.':'.$alphabet[$col+4].$row)->getAlignment()->setHorizontal('center');
 		$sheet->getStyle($alphabet[$col+1].$row .':'. $alphabet[$col+4].$row)->getAlignment()->setVertical('center');
@@ -387,7 +415,7 @@ trait ExcelTraits
 		$sheet->setCellValue( $alphabet[$col+10].$row, count($cekrekap)==0 ? '0' : '=SUM('.$jmlhargakurang.')');
 		$sheet->getStyle($alphabet[$col+10].$row)->getNumberFormat()->setFormatCode('#,##0');
 
-
+		$sheet->getStyle($alphabet[$col+1].$row . ':' . $alphabet[$col+12].$row)->getFont()->setBold( true );
 
 		$sheet->getStyle($alphabet[$col+1].($row-count($cekrekap)).':'.$alphabet[$col+12].$row)->applyFromArray($styleArray);
 
@@ -600,7 +628,7 @@ trait ExcelTraits
 		$row++;
 		// $sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('#,##0');
 		$sheet->setCellValue($alphabet[$col+1].$row, 'JUMLAH');
-		$sheet->getStyle($alphabet[$col+1].$row)->getFont()->setBold( true );
+		// $sheet->getStyle($alphabet[$col+1].$row)->getFont()->setBold( true );
 		$sheet->mergeCells($alphabet[$col+1].$row.':'.$alphabet[$col+4].$row);
 		$sheet->getStyle($alphabet[$col+1].$row.':'.$alphabet[$col+4].$row)->getAlignment()->setHorizontal('center');
 		$sheet->getStyle($alphabet[$col+1].$row .':'. $alphabet[$col+4].$row)->getAlignment()->setVertical('center');
@@ -641,6 +669,7 @@ trait ExcelTraits
 		// $sheet->setCellValue( $alphabet[$col+10].$row, count($cekrekap)==0 ? '0' : '=SUM('.$jmlhargakurang.')');
 		// $sheet->getStyle($alphabet[$col+10].$row)->getNumberFormat()->setFormatCode('#,##0');
 
+		$sheet->getStyle($alphabet[$col+1].$row . ':' . $alphabet[$col+10].$row)->getFont()->setBold( true );
 
 		$sheet->getStyle($alphabet[$col+1].($row-count($cekrekap)).':'.$alphabet[$col+10].$row)->applyFromArray($styleArray);
 
@@ -669,7 +698,263 @@ trait ExcelTraits
 		return $arr;
 	}
 
-	protected function excelfooter($sheet, $row, $col, $alphabet, $year, $cekrekap, $nowuser, $pd, $upd, $laporannow, $kib, $kolok)
+	protected function excelK03($sheet, $row, $col, $alphabet, $year, $persediaan, $nowuser, $pd, $upd)
+	{
+		//SET HEADER TABEL
+		$row+=2;
+		$sheet->setCellValue($alphabet[$col+1].$row, 'NO');
+		$sheet->mergeCells($alphabet[$col+1].$row.':'.$alphabet[$col+1].($row+1));
+
+		$sheet->setCellValue($alphabet[$col+2].$row, 'KATEGORI BARANG');
+		$sheet->mergeCells($alphabet[$col+2].$row.':'.$alphabet[$col+4].$row);
+
+		$sheet->setCellValue($alphabet[$col+5].$row, 'SALDO AWAL');
+		$sheet->mergeCells($alphabet[$col+5].$row.':'.$alphabet[$col+6].$row);
+
+		$sheet->setCellValue($alphabet[$col+7].$row, 'MUTASI BERTAMBAH');
+		$sheet->mergeCells($alphabet[$col+7].$row.':'.$alphabet[$col+8].$row);
+
+		$sheet->setCellValue($alphabet[$col+9].$row, 'MUTASI BERKURANG');
+		$sheet->mergeCells($alphabet[$col+9].$row.':'.$alphabet[$col+10].$row);
+
+		$sheet->setCellValue($alphabet[$col+11].$row, 'SALDO AKHIR');
+		$sheet->mergeCells($alphabet[$col+11].$row.':'.$alphabet[$col+12].$row);
+
+		$row++;
+		// $sheet->setCellValue($alphabet[$col+2].$row, 'KOBAR');
+		// $sheet->mergeCells($alphabet[$col+2].$row.':'.$alphabet[$col+3].$row);
+		// $sheet->setCellValue($alphabet[$col+4].$row, 'NAMA BARANG');
+		$sheet->setCellValue($alphabet[$col+5].$row, 'QTY');
+		$sheet->setCellValue($alphabet[$col+6].$row, 'NILAI');
+		$sheet->setCellValue($alphabet[$col+7].$row, 'QTY');
+		$sheet->setCellValue($alphabet[$col+8].$row, 'NILAI');
+		$sheet->setCellValue($alphabet[$col+9].$row, 'QTY');
+		$sheet->setCellValue($alphabet[$col+10].$row, 'NILAI');
+		$sheet->setCellValue($alphabet[$col+11].$row, 'QTY');
+		$sheet->setCellValue($alphabet[$col+12].$row, 'NILAI');
+
+		$sheet->getStyle($alphabet[$col+1].($row-1) . ':' . $alphabet[$col+12].$row)->getFont()->setBold( true );
+
+		$colorArray = [
+			'fill' => [
+				'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+				'startColor' => [
+					'rgb' => 'DCE6F1',
+				],
+			],
+		];
+		$sheet->getStyle($alphabet[$col+1].($row-1) . ':' . $alphabet[$col+12].$row)->applyFromArray($colorArray);
+
+		$fontArray = [
+			'font'  => [
+				'name'  => 'Arial Narrow',
+				'size'	=> 10,
+			],
+		];
+		$sheet->getStyle($alphabet[$col+1].($row-1).':'.$alphabet[$col+12].$row)->applyFromArray($fontArray);
+
+
+		//SET ANGKA ANTARA HEADER DAN BODY TABEL
+		$row++;
+		$sheet->setCellValue($alphabet[$col+1].$row, '1');
+		$sheet->setCellValue($alphabet[$col+2].$row, '2');
+		$sheet->mergeCells($alphabet[$col+2].$row.':'.$alphabet[$col+4].$row);
+		$sheet->setCellValue($alphabet[$col+5].$row, '3');
+		$sheet->setCellValue($alphabet[$col+6].$row, '4');
+		$sheet->setCellValue($alphabet[$col+7].$row, '5');
+		$sheet->setCellValue($alphabet[$col+8].$row, '6');
+		$sheet->setCellValue($alphabet[$col+9].$row, '7');
+		$sheet->setCellValue($alphabet[$col+10].$row, '8');
+		$sheet->setCellValue($alphabet[$col+11].$row, '9');
+		$sheet->setCellValue($alphabet[$col+12].$row, '10');
+		$sheet->getRowDimension($row)->setRowHeight(10.5);
+
+		$colorArray2 = [
+			'fill' => [
+				'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+				'startColor' => [
+					'rgb' => 'BFBFBF',
+				],
+			],
+		];
+		$sheet->getStyle($alphabet[$col+1].$row . ':' . $alphabet[$col+12].$row)->applyFromArray($colorArray2);
+
+		$fontArray = [
+			'font'  => [
+				'name'  => 'Arial Narrow',
+				'size'	=> 8,
+			],
+		];
+		$sheet->getStyle($alphabet[$col+1].$row.':'.$alphabet[$col+12].$row)->applyFromArray($fontArray);
+
+		$sheet->getStyle($alphabet[$col+1].($row-2) . ':' . $alphabet[$col+12].$row)->getAlignment()->setWrapText(true);
+		$sheet->getStyle($alphabet[$col+1].($row-2) . ':' . $alphabet[$col+12].$row)->getAlignment()->setHorizontal('center');
+		$sheet->getStyle($alphabet[$col+1].($row-2) . ':' . $alphabet[$col+12].$row)->getAlignment()->setVertical('center');
+
+		$styleArray = [
+			'borders' => [
+				'allBorders' => [
+					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+					'color' => array('rgb' => 'A6A6A6'),
+				],
+				'bottom' => [
+					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_DOUBLE,
+					'color' => array('rgb' => 'A6A6A6'),
+				],
+			],
+
+		];
+
+		$sheet->getStyle($alphabet[$col+1].($row-2) . ':' . $alphabet[$col+12].$row)->applyFromArray($styleArray);
+
+		//SET COLUMN WIDTHH
+		$sheet->getColumnDimension('C')->setWidth(4.2);
+		$sheet->getColumnDimension('D')->setWidth(6.6);
+		$sheet->getColumnDimension('E')->setWidth(5.6);
+		$sheet->getColumnDimension('F')->setWidth(42.2);
+		$sheet->getColumnDimension('G')->setWidth(5.7);
+		$sheet->getColumnDimension('H')->setWidth(15.44);
+		$sheet->getColumnDimension('I')->setWidth(5.7);
+		$sheet->getColumnDimension('J')->setWidth(15.44);
+		$sheet->getColumnDimension('K')->setWidth(5.7);
+		$sheet->getColumnDimension('L')->setWidth(15.44);
+		$sheet->getColumnDimension('M')->setWidth(5.7);
+		$sheet->getColumnDimension('N')->setWidth(15.44);
+
+		//TABLE ISI
+		$jmlhawal = 0;
+		$totalawal = 0;
+		$jmlhakhir = 0;
+		$totalakhir = 0;
+
+		$keykategori = [
+		    "habis" => "Persediaan Bahan Pakai Habis",
+		    "bahan" => "Persediaan Bahan/Material",
+		    "lain" => "Persediaan Barang Lainnya",
+		];
+
+		if (count($persediaan) == 0) {
+		} else {
+			$num = 1;
+			foreach ($persediaan as $key => $value) {
+				$row++;
+				$sheet->setCellValue($alphabet[$col+1].$row, ($num));
+				$sheet->getStyle($alphabet[$col+1].$row)->getAlignment()->setVertical('center');
+				$sheet->getStyle($alphabet[$col+1].$row)->getAlignment()->setHorizontal('center');
+				$num++;
+
+				$sheet->mergeCells($alphabet[$col+2].$row.':'.$alphabet[$col+4].$row);
+				$sheet->setCellValue($alphabet[$col+2].$row, $keykategori[$key]);
+				$sheet->getStyle($alphabet[$col+2].$row)->getAlignment()->setHorizontal('center');
+
+				$sheet->setCellValue($alphabet[$col+5].$row, is_null($value['awalqty']) ? 0 : $value['awalqty']);
+				$sheet->getStyle($alphabet[$col+5].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+				$sheet->setCellValue($alphabet[$col+6].$row, is_null($value['awalnil']) ? 0 : $value['awalnil'] );
+				$sheet->getStyle($alphabet[$col+6].$row)->getNumberFormat()->setFormatCode('#,##0');
+				
+				$sheet->setCellValue($alphabet[$col+7].$row, is_null($value['tambahqty']) ? 0 : $value['tambahqty'] );
+				$sheet->getStyle($alphabet[$col+7].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+				$sheet->setCellValue($alphabet[$col+8].$row, is_null($value['tambahnil']) ? 0 : $value['tambahnil'] );
+				$sheet->getStyle($alphabet[$col+8].$row)->getNumberFormat()->setFormatCode('#,##0');
+				
+				$sheet->setCellValue($alphabet[$col+9].$row, is_null($value['kurangqty']) ? 0 : $value['kurangqty']);
+				$sheet->getStyle($alphabet[$col+9].$row)->getNumberFormat()->setFormatCode('#,##0');
+				
+				$sheet->setCellValue($alphabet[$col+10].$row, is_null($value['kurangnil']) ? 0 : $value['kurangnil']);
+				$sheet->getStyle($alphabet[$col+10].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+				$sheet->setCellValue($alphabet[$col+11].$row, is_null($value['akhirqty']) ? 0 : $value['akhirqty'] );
+				$sheet->getStyle($alphabet[$col+11].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+				$sheet->setCellValue($alphabet[$col+12].$row, is_null($value['akhirnil']) ? 0 : $value['akhirnil'] );
+				$sheet->getStyle($alphabet[$col+12].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+				// $jmlhawal += $value['KUANTITAS_SALDOAWAL'];
+				// $totalawal += $value['HARGA_SALDOAWAL'];
+
+				// $jmlhakhir += $value['KUANTITAS_SALDOAKHIR'];
+				// $totalakhir += $value['HARGA_SALDOAKHIR'];
+			}
+		}
+		
+
+		//TABLE TOTAL
+		$row++;
+		// $sheet->getStyle($alphabet[$col+4].$row)->getNumberFormat()->setFormatCode('#,##0');
+		$sheet->setCellValue($alphabet[$col+1].$row, 'JUMLAH');
+		// $sheet->getStyle($alphabet[$col+1].$row)->getFont()->setBold( true );
+		$sheet->mergeCells($alphabet[$col+1].$row.':'.$alphabet[$col+4].$row);
+		$sheet->getStyle($alphabet[$col+1].$row.':'.$alphabet[$col+4].$row)->getAlignment()->setHorizontal('center');
+		$sheet->getStyle($alphabet[$col+1].$row .':'. $alphabet[$col+4].$row)->getAlignment()->setVertical('center');
+
+		//sum buat kolom saldoawal & akhir
+		$jmlqtyawal = strtoupper($alphabet[$col+5]).($row-1).':'.strtoupper($alphabet[$col+5]).($row-count($persediaan));
+		$jmlnilawal = strtoupper($alphabet[$col+6]).($row-1).':'.strtoupper($alphabet[$col+6]).($row-count($persediaan));
+		$jmlqtyakhir = strtoupper($alphabet[$col+11]).($row-1).':'.strtoupper($alphabet[$col+11]).($row-count($persediaan));
+		$jmlnilakhir = strtoupper($alphabet[$col+12]).($row-1).':'.strtoupper($alphabet[$col+12]).($row-count($persediaan));
+
+		$sheet->setCellValue( $alphabet[$col+5].$row, count($persediaan)==0 ? '0' : '=SUM('.$jmlqtyawal.')');
+		$sheet->getStyle($alphabet[$col+5].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+		$sheet->setCellValue( $alphabet[$col+6].$row, count($persediaan)==0 ? '0' : '=SUM('.$jmlnilawal.')');
+		$sheet->getStyle($alphabet[$col+6].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+		$sheet->setCellValue( $alphabet[$col+11].$row, count($persediaan)==0 ? '0' : '=SUM('.$jmlqtyakhir.')');
+		$sheet->getStyle($alphabet[$col+11].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+		$sheet->setCellValue( $alphabet[$col+12].$row, count($persediaan)==0 ? '0' : '=SUM('.$jmlnilakhir.')');
+		$sheet->getStyle($alphabet[$col+12].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+		//sum buat mutasi tambah & kurang
+		$jmlqtytambah = strtoupper($alphabet[$col+7]).($row-1).':'.strtoupper($alphabet[$col+7]).($row-count($persediaan));
+		$jmlhargatambah = strtoupper($alphabet[$col+8]).($row-1).':'.strtoupper($alphabet[$col+8]).($row-count($persediaan));
+		$jmlqtykurang = strtoupper($alphabet[$col+9]).($row-1).':'.strtoupper($alphabet[$col+9]).($row-count($persediaan));
+		$jmlhargakurang = strtoupper($alphabet[$col+10]).($row-1).':'.strtoupper($alphabet[$col+10]).($row-count($persediaan));
+
+		$sheet->setCellValue( $alphabet[$col+7].$row, count($persediaan)==0 ? '0' : '=SUM('.$jmlqtytambah.')');
+		$sheet->getStyle($alphabet[$col+7].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+		$sheet->setCellValue( $alphabet[$col+8].$row, count($persediaan)==0 ? '0' : '=SUM('.$jmlhargatambah.')');
+		$sheet->getStyle($alphabet[$col+8].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+		$sheet->setCellValue( $alphabet[$col+9].$row, count($persediaan)==0 ? '0' : '=SUM('.$jmlqtykurang.')');
+		$sheet->getStyle($alphabet[$col+9].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+		$sheet->setCellValue( $alphabet[$col+10].$row, count($persediaan)==0 ? '0' : '=SUM('.$jmlhargakurang.')');
+		$sheet->getStyle($alphabet[$col+10].$row)->getNumberFormat()->setFormatCode('#,##0');
+
+		$sheet->getStyle($alphabet[$col+1].$row . ':' . $alphabet[$col+12].$row)->getFont()->setBold( true );
+
+		$sheet->getStyle($alphabet[$col+1].($row-count($persediaan)).':'.$alphabet[$col+12].$row)->applyFromArray($styleArray);
+
+		$styleArray = [
+			'borders' => [
+				'top' => [
+					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+					'color' => array('rgb' => 'A6A6A6'),
+				],
+			],
+		];
+		$sheet->getStyle($alphabet[$col+1].$row.':'.$alphabet[$col+12].$row)->applyFromArray($styleArray);
+
+		$fontArray = [
+			'font'  => [
+				'name'  => 'Arial Narrow',
+				'size'	=> 10,
+			],
+		];
+		$sheet->getStyle($alphabet[$col+1].($row-count($persediaan)).':'.$alphabet[$col+12].$row)->applyFromArray($fontArray);
+
+		$row++;
+
+		$arr = array($row, $col);
+
+		return $arr;
+	}
+
+	protected function excelfooter($sheet, $row, $col, $alphabet, $year, $nowuser, $pd, $upd, $laporannow, $kolok)
 	{
 		//TABLE FOOTER
 
@@ -775,12 +1060,12 @@ trait ExcelTraits
 		//SET ORIENTATION LANDSCAPE
 		$sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
 
-		//RENAME SHEET
-		if ($kib != '') {
-			$sheet->setTitle("KIB".$kib.'_'.$kolok);
-		} else {
-			$sheet->setTitle($kolok . "_" . $laporannow['jns_laporan']);
-		}
+		// //RENAME SHEET
+		// if ($kib != '') {
+		// 	$sheet->setTitle("KIB".$kib.'_'.$kolok);
+		// } else {
+		// 	$sheet->setTitle($kolok . "_" . $laporannow['jns_laporan']);
+		// }
 		
 		$arr = array($row, $col);
 

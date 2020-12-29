@@ -95,13 +95,21 @@
 										<div>
 											<form method="GET" action="/laporanbmd/home">
 												<div class="row col-md-12">
-													<div class=" col-md-3">
+													<div class=" col-md-2">
 														<select class="form-control" name="yearnow" id="yearnow" onchange="this.form.submit()">
 															@foreach($years as $year)
 															<option <?php if ($yearnow == $year['tahun']): ?> selected <?php endif ?> value="{{ $year['tahun'] }}">{{ $year['tahun'] }}</option>
 															@endforeach
 														</select>
 													</div>
+													<!-- <div class=" col-md-3">
+														<input type="hidden" id="katnowcheck" value="{{ $katnow }}">
+														<select class="form-control" name="katnow" id="katnow" onchange="this.form.submit()">
+															<option value="intrakomptabel">Intrakomptabel</option>
+															<option value="ekstrakomptabel">Ekstrakomptabel</option>
+															<option value="persediaan">Persediaan</option>
+														</select>
+													</div> -->
 												</div>
 											</form>
 										</div>
@@ -115,60 +123,126 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="row">
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-sm-6 col-xs-12" data-toggle="tooltip" title="Aset Tanah">
                             <div class="white-box">
                                 <h3 class="box-title">JUMLAH KIB A</h3>
-                                <ul class="list-inline two-part">
-                                    <li><i class=" icon-flag text-info"></i></li>
-                                    <li class="text-right"><span class="counter">{{ number_format($arraykib['KIBA']) }}</span></li>
+                                <ul class="expense-box">
+                                    <li>
+                                    	<i class="icon-flag text-info"></i>
+                                    	<span>
+                                    		<h2>Rp. {{ number_format($arraykib['KIBA_NILAI']) }}</h4>
+                                    		<h4 class="text-muted">{{ number_format($arraykib['KIBA']) }} Unit</h2>
+                                    	</span>
+                                   	</li>
                                 </ul>
+                                <!-- <ul class="list-inline two-part">
+                                    <li><i class=" icon-flag text-info"></i></li>
+                                    <li class="text-right">
+                                    	<span class="counter" style="font-size: 20px">Unit {{ number_format($arraykib['KIBA']) }}</span><br>
+                                    	<span class="counter text-muted" style="font-size: 20px">Rp. {{ number_format($arraykib['KIBA_NILAI']) }}</span>
+                                    </li>
+                                </ul> -->
                             </div>
                         </div>
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-sm-6 col-xs-12" data-toggle="tooltip" title="Aset Peralatan dan Mesin">
                             <div class="white-box">
                                 <h3 class="box-title">JUMLAH KIB B</h3>
-                                <ul class="list-inline two-part">
-                                    <li><i class="icon-chart text-purple"></i></li>
-                                    <li class="text-right"><span class="counter">{{ number_format($arraykib['KIBB']) }}</span></li>
+                                <ul class="expense-box">
+                                    <li>
+                                    	<i class="icon-chart text-purple"></i>
+                                    	<span>
+                                    		<h2>Rp. {{ number_format($arraykib['KIBB_NILAI']) }}</h4>
+                                    		<h4 class="text-muted">{{ number_format($arraykib['KIBB']) }} Unit</h2>
+                                    	</span>
+                                   	</li>
                                 </ul>
+
+                                <!-- <ul class="list-inline two-part">
+                                    <li><i class="icon-chart text-purple"></i></li>
+                                    <li class="text-right">
+                                    	<span class="counter" style="font-size: 20px">Unit {{ number_format($arraykib['KIBB']) }}</span><br>
+                                    	<span class="counter" style="font-size: 20px">Rp. {{ number_format($arraykib['KIBB']) }}</span></li>
+                                </ul> -->
                             </div>
                         </div>
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-sm-6 col-xs-12" data-toggle="tooltip" title="Aset Gedung dan Bangunan">
                             <div class="white-box">
                                 <h3 class="box-title">JUMLAH KIB C</h3>
-                                <ul class="list-inline two-part">
-                                    <li><i class="icon-home text-danger"></i></li>
-                                    <li class="text-right"><span class="">{{ number_format($arraykib['KIBC']) }}</span></li>
+                                <ul class="expense-box">
+                                    <li>
+                                    	<i class="icon-home text-danger"></i>
+                                    	<span>
+                                    		<h2>Rp. {{ number_format($arraykib['KIBC_NILAI']) }}</h4>
+                                    		<h4 class="text-muted">{{ number_format($arraykib['KIBC']) }} Unit</h2>
+                                    	</span>
+                                   	</li>
                                 </ul>
+                                <!-- <ul class="list-inline two-part">
+                                    <li><i class="icon-home text-danger"></i></li>
+                                    <li class="text-right">
+                                    	<span class="counter" style="font-size: 20px">Unit {{ number_format($arraykib['KIBC']) }}</span><br>
+                                    	<span class="counter" style="font-size: 20px">Rp. {{ number_format($arraykib['KIBC']) }}</span></li>
+                                </ul> -->
                             </div>
                         </div>
-                    </div>
-					<div class="row">
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-sm-6 col-xs-12" data-toggle="tooltip" title="Aset Jalan, Irigasi, dan Jaringan">
                             <div class="white-box">
                                 <h3 class="box-title">JUMLAH KIB D</h3>
-                                <ul class="list-inline two-part">
-                                    <li><i class="icon-map text-default"></i></li>
-                                    <li class="text-right"><span class="counter">{{ number_format($arraykib['KIBD']) }}</span></li>
+                                <ul class="expense-box">
+                                    <li>
+                                    	<i class="icon-map text-default"></i>
+                                    	<span>
+                                    		<h2>Rp. {{ number_format($arraykib['KIBD_NILAI']) }}</h4>
+                                    		<h4 class="text-muted">{{ number_format($arraykib['KIBD']) }} Unit</h2>
+                                    	</span>
+                                   	</li>
                                 </ul>
+                                <!-- <ul class="list-inline two-part">
+                                    <li><i class="icon-map text-default"></i></li>
+                                    <li class="text-right">
+                                    	<span class="counter" style="font-size: 20px">Unit {{ number_format($arraykib['KIBD']) }}</span><br>
+                                    	<span class="counter" style="font-size: 20px">Rp. {{ number_format($arraykib['KIBD']) }}</span></li>
+                                </ul> -->
                             </div>
                         </div>
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-sm-6 col-xs-12" data-toggle="tooltip" title="Aset Lainnya">
                             <div class="white-box">
                                 <h3 class="box-title">JUMLAH KIB E</h3>
-                                <ul class="list-inline two-part">
-                                    <li><i class="icon-pencil text-warning"></i></li>
-                                    <li class="text-right"><span class="counter">{{ number_format($arraykib['KIBE']) }}</span></li>
+                                <ul class="expense-box">
+                                    <li>
+                                    	<i class="icon-pencil text-warning"></i>
+                                    	<span>
+                                    		<h2>Rp. {{ number_format($arraykib['KIBE_NILAI']) }}</h4>
+                                    		<h4 class="text-muted">{{ number_format($arraykib['KIBE']) }} Unit</h2>
+                                    	</span>
+                                   	</li>
                                 </ul>
+                                <!-- <ul class="list-inline two-part">
+                                    <li><i class="icon-pencil text-warning"></i></li>
+                                    <li class="text-right">
+                                    	<span class="counter" style="font-size: 20px">Unit {{ number_format($arraykib['KIBE']) }}</span><br>
+                                    	<span class="counter" style="font-size: 20px">Rp. {{ number_format($arraykib['KIBE']) }}</span></li>
+                                </ul> -->
                             </div>
                         </div>
-                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-sm-6 col-xs-12" data-toggle="tooltip" title="Aset Konstruksi Dalam Pengerjaan">
                             <div class="white-box">
                                 <h3 class="box-title">JUMLAH KIB F</h3>
-                                <ul class="list-inline two-part">
-                                    <li><i class="icon-wrench text-success"></i></li>
-                                    <li class="text-right"><span class="">{{ number_format($arraykib['KIBF']) }}</span></li>
+                                <ul class="expense-box">
+                                    <li>
+                                    	<i class="icon-wrench text-success"></i>
+                                    	<span>
+                                    		<h2>Rp. {{ number_format($arraykib['KIBF_NILAI']) }}</h4>
+                                    		<h4 class="text-muted">{{ number_format($arraykib['KIBF']) }} Unit</h2>
+                                    	</span>
+                                   	</li>
                                 </ul>
+                                <!-- <ul class="list-inline two-part">
+                                    <li><i class="icon-wrench text-success"></i></li>
+                                    <li class="text-right">
+                                    	<span class="counter" style="font-size: 20px">Unit {{ number_format($arraykib['KIBF']) }}</span><br>
+                                    	<span class="counter" style="font-size: 20px">Rp. {{ number_format($arraykib['KIBF']) }}</span></li>
+                                </ul> -->
                             </div>
                         </div>
                     </div>
@@ -200,62 +274,9 @@
 	<script src="{{ ('/laporanbmd/public/ample/plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
 
 	<script type="text/javascript">
-		$.fn.extend({
-			treed: function (o) {
-			  
-			  var openedClass = 'glyphicon-minus-sign';
-			  var closedClass = 'glyphicon-plus-sign';
-			  
-			  if (typeof o != 'undefined'){
-				if (typeof o.openedClass != 'undefined'){
-				openedClass = o.openedClass;
-				}
-				if (typeof o.closedClass != 'undefined'){
-				closedClass = o.closedClass;
-				}
-			  };
-			  
-				//initialize each of the top levels
-				var tree = $(this);
-				tree.addClass("tree");
-				tree.find('li').has("ul").each(function () {
-					var branch = $(this); //li with children ul
-					branch.prepend("<i class='indicator glyphicon " + closedClass + "'></i>");
-					branch.addClass('branch');
-					branch.on('click', function (e) {
-						if (this == e.target) {
-							var icon = $(this).children('i:first');
-							icon.toggleClass(openedClass + " " + closedClass);
-							$(this).children().children().toggle();
-						}
-					})
-					branch.children().children().toggle();
-				});
-				//fire event from the dynamically added icon
-			  tree.find('.branch .indicator').each(function(){
-				$(this).on('click', function () {
-					$(this).closest('li').click();
-				});
-			  });
-				//fire event to open branch if the li contains an anchor instead of text
-				tree.find('.branch>a').each(function () {
-					$(this).on('click', function (e) {
-						$(this).closest('li').click();
-						e.preventDefault();
-					});
-				});
-				//fire event to open branch if the li contains a button instead of text
-				tree.find('.branch>button').each(function () {
-					$(this).on('click', function (e) {
-						$(this).closest('li').click();
-						e.preventDefault();
-					});
-				});
-			}
-		});
-
-		//Initialization of treeviews
-
-		$('#tree1').treed();
+		$(function () {
+			var kat = $("#katnowcheck").val();
+            $("#katnow").val(kat);
+        });
 	</script>
 @endsection

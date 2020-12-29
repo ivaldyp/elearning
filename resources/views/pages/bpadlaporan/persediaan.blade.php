@@ -66,18 +66,16 @@
 				<div class="col-md-10" >
 					<!-- <div class="white-box"> -->
 					<div class="panel panel-info">
-						<div class="panel-heading">Intrakomptabel</div>
+						<div class="panel-heading">Persediaan</div>
 						<div class="panel-wrapper collapse in">
 							<div class="panel-body">
 								<div class="row" style="margin-bottom: 10px">
-									<form method="GET" action="/laporanbmd/laporan/intrakomptabel" class="form-horizontal">
+									<form method="GET" action="/laporanbmd/laporan/persediaan" class="form-horizontal">
 										<div class="form-group">
 											<label for="yearnow" class="col-md-1 control-label"> Filter </label>
 											<div class="col-md-2">
 												<select class="form-control" name="yearnow" id="yearnow" onchange="this.form.submit()">
-													@foreach($years as $year)
-													<option <?php if ($yearnow == $year['tahun']): ?> selected <?php endif ?> value="{{ $year['tahun'] }}">{{ $year['tahun'] }}</option>
-													@endforeach
+													<option value="2020">2020</option>
 												</select>
 											</div>
 											<div class="col-md-3">
@@ -93,47 +91,32 @@
 												</select>
 											</div>
 										</div>
-										<hr>
-										<div class="form-group">
-											<label for="kibnow" class="col-md-1 control-label"> KIB </label>
-											<div class="col-md-5">
-												<select class="form-control" name="kibnow" id="kibnow" onchange="this.form.submit()">
-													<option <?php if ($kibnow == "A::Tanah"): ?> selected <?php endif ?> value="A::Tanah">A - Tanah</option>
-													<option <?php if ($kibnow == "B::Peralatan & Mesin"): ?> selected <?php endif ?> value="B::Peralatan & Mesin">B - Peralatan & Mesin</option>
-													<option <?php if ($kibnow == "C::Gedung & Bangunan"): ?> selected <?php endif ?> value="C::Gedung & Bangunan">C - Gedung & Bangunan</option>
-													<option <?php if ($kibnow == "D::Jalan, Irigasi, dan Jaringan"): ?> selected <?php endif ?> value="D::Jalan, Irigasi, dan Jaringan">D - Jalan, Irigasi, dan Jaringan</option>
-													<option <?php if ($kibnow == "E::Aset Lainnya"): ?> selected <?php endif ?> value="E::Aset Lainnya">E - Aset Lainnya</option>
-													<option <?php if ($kibnow == "F::Konstruksi Dalam Pengerjaan"): ?> selected <?php endif ?> value="F::Konstruksi Dalam Pengerjaan">F - Konstruksi Dalam Pengerjaan</option>
-												</select>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label for="periodenow" class="col-md-1 control-label"> Periode </label>
-											<div class="col-md-5">
-												<select class="form-control" name="periodenow" id="periodenow" onchange="this.form.submit()">
-													<option <?php if ($periodenow == "saldoawal::saldoakhir"): ?> selected <?php endif ?> value="saldoawal::saldoakhir">Tahunan</option>
-													<option <?php if ($periodenow == "saldoawal::semester2"): ?> selected <?php endif ?> value="saldoawal::semester2">Semester 1</option>
-													<option <?php if ($periodenow == "semester2::saldoakhir"): ?> selected <?php endif ?> value="semester2::saldoakhir">Semester 2</option>
-												</select>
-											</div>
-										</div>
 									</form>
 								</div>
 								<hr>	
 								<div class="row">
-									<form method="GET" action="/laporanbmd/laporan/intrakomptabel/pdf" class="form-horizontal">
+									<form method="GET" action="/laporanbmd/laporan/persediaan/pdf" class="form-horizontal">
 										@csrf
 
 										<input id="tahun" type="hidden" name="tahun" value="{{ $yearnow }}">
 										<input id="wilayah" type="hidden" name="wilayah" value="{{ $wilnow }}">
-										<input id="kib" type="hidden" name="kib" value="{{ $kibnow }}">
-										<input id="durasi" type="hidden" name="durasi" value="{{ $periodenow }}">
-										<input id="laporan" type="hidden" name="laporan" value="K01">
+										<input id="laporan" type="hidden" name="laporan" value="K03">
+
+										<div class="form-group">
+											<label for="periode" class="col-md-1 control-label"> Periode </label>
+											<div class="col-md-5">
+												<select class="form-control" name="periode" id="periode">
+													<option value="2">Semester 1</option>
+													<option value="1">Tahunan</option>
+												</select>
+											</div>
+										</div>
+
+										<hr>
 
 										<div class="table-responsive" style="height:800px;overflow:auto;">
 											@if(!(is_null($pds)))
-											<table class="myTable table table-hover table-striped" > 
+											<table class="myTable table table-sm table-hover table-striped" > 
 												<thead >
 													<tr>
 														<!-- <th><input id="kolokall" type="checkbox"></th> -->
@@ -153,7 +136,7 @@
 														<td>
 															<button type="button" style="background-color: Transparent; border: none;" data-output="excel" data-kolok="{{ $pd['kolok'] }}" class="btnExcel"><i class="fa fa-file-excel-o fa-2x" style="color: green; cursor: pointer;"></i></button>
 															<button type="button" style="background-color: Transparent; border: none;" data-output="pdf" data-kolok="{{ $pd['kolok'] }}" class="btnPdf"><i class="fa fa-file-pdf-o fa-2x" style="color: red; cursor: pointer;"></i></button>
-															@if(strtolower($_SESSION['user_laporan']['usname']) == 'valadmin')
+															@if(strtolower($_SESSION['user_laporan']['idgroup']) == 'superuser')
 																<button type="button" style="background-color: Transparent; border: none;" data-output="view" data-kolok="{{ $pd['kolok'] }}" class="btnView"><i class="fa fa-eye fa-2x" style="color: yellow; cursor: pointer;"></i></button>
 															@endif
 														</td>
@@ -223,20 +206,16 @@
 			    // alert(this.id); // or alert($(this).attr('id'));
 
    				var tahun = $("#tahun").val();
-   				var wilayah = $("#wilayah").val();
+   				var periode = $( "#periode" ).val();
    				var laporan = $("#laporan").val();
-   				var kib = $( "#kib" ).val();
-   				var durasi = $("#durasi").val();
 
    				var kolok = $(this).data('kolok');
    				var output = $(this).data('output');
 
-   				var url = "/laporanbmd/laporan/intrakomptabel/excel?"+
+   				var url = "/laporanbmd/laporan/persediaan/excel?"+
    							"tahun="+tahun+"&"+
-   							"wilayah="+wilayah+"&"+
+   							"periode="+periode+"&"+
    							"laporan="+laporan+"&"+
-							"kib="+kib+"&"+
-							"durasi="+durasi+"&"+
 							"kolok="+kolok+"&"+
 							"output="+output;
 
@@ -247,20 +226,16 @@
 			    // alert(this.id); // or alert($(this).attr('id'));
 
    				var tahun = $("#tahun").val();
-   				var wilayah = $("#wilayah").val();
+   				var periode = $( "#periode" ).val();
    				var laporan = $("#laporan").val();
-   				var kib = $( "#kib" ).val();
-   				var durasi = $("#durasi").val();
 
    				var kolok = $(this).data('kolok');
    				var output = $(this).data('output');
 
-   				var url = "/laporanbmd/laporan/intrakomptabel/pdf?"+
+   				var url = "/laporanbmd/laporan/persediaan/pdf?"+
    							"tahun="+tahun+"&"+
-   							"wilayah="+wilayah+"&"+
+   							"periode="+periode+"&"+
    							"laporan="+laporan+"&"+
-							"kib="+kib+"&"+
-							"durasi="+durasi+"&"+
 							"kolok="+kolok+"&"+
 							"output="+output;
 
@@ -271,20 +246,14 @@
 			    // alert(this.id); // or alert($(this).attr('id'));
 
    				var tahun = $("#tahun").val();
-   				var wilayah = $("#wilayah").val();
-   				var laporan = $("#laporan").val();
-   				var kib = $( "#kib" ).val();
-   				var durasi = $("#durasi").val();
+   				var periode = $( "#periode" ).val();
 
    				var kolok = $(this).data('kolok');
    				var output = $(this).data('output');
 
-   				var url = "/laporanbmd/laporan/intrakomptabel/view?"+
+   				var url = "/laporanbmd/laporan/persediaan/view?"+
    							"tahun="+tahun+"&"+
-   							"wilayah="+wilayah+"&"+
-   							"laporan="+laporan+"&"+
-							"kib="+kib+"&"+
-							"durasi="+durasi+"&"+
+   							"periode="+periode+"&"+
 							"kolok="+kolok+"&"+
 							"output="+output;
 

@@ -82,31 +82,49 @@
 				<tbody>
 					<tr >
 						<td class="col-md-1">SKPD/UKPD</td>
-						<td class="col-md-10" style="width: 100%">: {{$kolokpd}} - {{ $upd == "NONE" ? strtoupper($pd) : strtoupper($upd) }}</td>
-						<td class="col-md-1 tipetop">TIPE LAPORAN</td>
+						<td class="col-md-9" style="width: 100%">: {{$kolokpd}} - {{ $upd == "NONE" ? strtoupper($pd) : strtoupper($upd) }}</td>
+						<td class="col-md-2 tipetop">TIPE LAPORAN</td>
 					</tr>
 					<tr>
-						<td class="col-md-1"></td>
-						<td class="col-md-10" style="width: 100%"></td>
-						<td class="col-md-1 tipebot">{{ strtoupper($laporannow['jns_laporan']) }}</td>
+						<td class="col-md-1">PERIODE</td>
+						<td class="col-md-9" style="width: 100%">
+							@if($periode == 1)
+								: TAHUNAN
+							@elseif($periode == 2)
+								: SEMESTER 1
+							@elseif($periode == 3)
+								: SEMESTER 2
+							@endif
+						</td>
+						<td class="col-md-2 tipebot">PERSEDIAAN</td>
 					</tr>
 				</tbody>
 			</table>	
 		</div>
 	</div>
+
+	<?php
+		$keykategori = [
+		    "habis" => "Persediaan Bahan Pakai Habis",
+		    "bahan" => "Persediaan Bahan/Material",
+		    "lain" => "Persediaan Barang Lainnya",
+		];
+	?>
+
 	<div class="row">
 		<table style="padding-top: 15px" class="table tablelaporan table-bordered">
 			<thead style="">
 				<tr class="headclrblue">
-					<th rowspan="2">no</th>
-					<th colspan="3">Sub-sub rincian objek</th>
+					<th rowspan="2">No</th>
+					<th colspan="3" rowspan="2">Kategori Barang</th>
 					<th colspan="2">Saldo awal</th>
 					<th colspan="2">Mutasi Bertambah</th>
+					<th colspan="2">Mutasi Berkurang</th>
 					<th colspan="2">Saldo akhir</th>
 				</tr>
 				<tr class="headclrblue">
-					<th colspan="2">kobar</th>
-					<th>Nama Barang</th>
+					<th>Qty</th>
+					<th>Nilai</th>
 					<th>Qty</th>
 					<th>Nilai</th>
 					<th>Qty</th>
@@ -116,7 +134,7 @@
 				</tr>
 				<tr class="headclrgray" >
 					<th >1</th>
-					<th  colspan="2">2</th>
+					<th  colspan="3">2</th>
 					<th >3</th>
 					<th >4</th>
 					<th >5</th>
@@ -124,31 +142,37 @@
 					<th >7</th>
 					<th >8</th>
 					<th >9</th>
+					<th >10</th>
 
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($cekrekap as $key => $rekap)
+				@php ($i = 0) @endphp
+				@foreach($persediaan as $key => $data)
 				<tr>
-					<td style="text-align: center;">{{ $key+1 }}</td>
-					<td colspan="2" style="text-align: center;">{{ $rekap['KOBAR'] }}</td>
-					<td>{{ $rekap['nabarref'] }}</td>
-					<td style="text-align: right;">{{ number_format($rekap['KUANTITAS_SALDOAWAL']) }}</td>
-					<td style="text-align: right;">{{ number_format($rekap['HARGA_SALDOAWAL']) }}</td>
-					<td style="text-align: right;">{{ number_format($rekap['TAMBAH_QTY']) }}</td>
-					<td style="text-align: right;">{{ number_format($rekap['TAMBAH_HARGA']) }}</td>
-					<td style="text-align: right;">{{ number_format($rekap['KUANTITAS_SALDOAKHIR']) }}</td>
-					<td style="text-align: right;">{{ number_format($rekap['HARGA_SALDOAKHIR']) }}</td>
+					<td style="text-align: center;">{{ $i+1 }}</td>
+					<td colspan="3">{{ $keykategori[$key] }}</td>
+					<td style="text-align: right;">{{ number_format($data['awalqty']) ?? 0 }}</td>
+					<td style="text-align: right;">{{ number_format($data['awalnil']) ?? 0 }}</td>
+					<td style="text-align: right;">{{ number_format($data['tambahqty']) ?? 0 }}</td>
+					<td style="text-align: right;">{{ number_format($data['tambahnil']) ?? 0 }}</td>
+					<td style="text-align: right;">{{ number_format($data['kurangqty']) ?? 0 }}</td>
+					<td style="text-align: right;">{{ number_format($data['kurangnil']) ?? 0 }}</td>
+					<td style="text-align: right;">{{ number_format($data['akhirqty']) ?? 0 }}</td>
+					<td style="text-align: right;">{{ number_format($data['akhirnil']) ?? 0 }}</td>
 				</tr>
+				@php $i++ @endphp
 				@endforeach
 				<?php
-					$jmlqtyawal = array_sum(array_column($cekrekap, 'KUANTITAS_SALDOAWAL'));
-					$jmlnilawal = array_sum(array_column($cekrekap, 'HARGA_SALDOAWAL'));
-					$jmlqtyakhir = array_sum(array_column($cekrekap, 'KUANTITAS_SALDOAKHIR'));
-					$jmlnilakhir = array_sum(array_column($cekrekap, 'HARGA_SALDOAKHIR'));
+					$jmlqtyawal = array_sum(array_column($persediaan, 'awalqty'));
+					$jmlnilawal = array_sum(array_column($persediaan, 'awalnil'));
+					$jmlqtyakhir = array_sum(array_column($persediaan, 'akhirqty'));
+					$jmlnilakhir = array_sum(array_column($persediaan, 'akhirnil'));
 
-					$jmlqtytambah = array_sum(array_column($cekrekap, 'TAMBAH_QTY'));
-					$jmlhargatambah = array_sum(array_column($cekrekap, 'TAMBAH_HARGA'));
+					$jmlqtytambah = array_sum(array_column($persediaan, 'tambahqty'));
+					$jmlhargatambah = array_sum(array_column($persediaan, 'tambahnil'));
+					$jmlqtykurang = array_sum(array_column($persediaan, 'kurangqty'));
+					$jmlhargakurang = array_sum(array_column($persediaan, 'kurangnil'));
 				?>
 				<tr>
 					<td colspan="4" style="text-align: center; text-transform: uppercase; font-weight: bold;">Jumlah</td>
@@ -156,6 +180,8 @@
 					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlnilawal) }}</td>
 					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlqtytambah) }}</td>
 					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlhargatambah) }}</td>
+					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlqtykurang) }}</td>
+					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlhargakurang) }}</td>
 					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlqtyakhir) }}</td>
 					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlnilakhir) }}</td>
 				</tr>

@@ -225,15 +225,17 @@ class HomeController extends Controller
 		$query = json_decode(json_encode($query), true);
 		if ($query['nilai'] == 1) {
 			$kiba = DB::select( DB::raw("
-						SELECT count(sts) as total
+						SELECT count(sts) as total, sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as nilai
 						FROM $tbla
-						WHERE sts = 1
+						WHERE sts = 1 AND kd_app='1' AND (jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(jukor_form,'')='')
 						"))[0];
 			$kiba = json_decode(json_encode($kiba), true);
 			$arraykib['KIBA'] = $kiba['total'];
+			$arraykib['KIBA_NILAI'] = $kiba['nilai'];
 		} else {
 			$kiba = 0;
 			$arraykib['KIBA'] = 0; 
+			$arraykib['KIBA_NILAI'] = 0;
 		}
 
 		//KIB B
@@ -250,15 +252,17 @@ class HomeController extends Controller
 		$query = json_decode(json_encode($query), true);
 		if ($query['nilai'] == 1) {
 			$kibb = DB::select( DB::raw("
-						SELECT count(sts) as total
+						SELECT count(sts) as total, sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as nilai
 						FROM $tblb
-						WHERE sts = 1
+						WHERE sts = 1 AND kd_app='1' AND (jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(jukor_form,'')='')
 						"))[0];
 			$kibb = json_decode(json_encode($kibb), true);
 			$arraykib['KIBB'] = $kibb['total'];
+			$arraykib['KIBB_NILAI'] = $kibb['nilai'];
 		} else {
 			$kibb = 0;
 			$arraykib['KIBB'] = 0; 
+			$arraykib['KIBB_NILAI'] = 0;
 		}
 
 		//KIB C
@@ -275,15 +279,17 @@ class HomeController extends Controller
 		$query = json_decode(json_encode($query), true);
 		if ($query['nilai'] == 1) {
 			$kibc = DB::select( DB::raw("
-						SELECT count(sts) as total
+						SELECT count(sts) as total, sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as nilai
 						FROM $tblc
-						WHERE sts = 1
+						WHERE sts = 1 AND kd_app='1' AND (jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(jukor_form,'')='')
 						"))[0];
 			$kibc = json_decode(json_encode($kibc), true);
 			$arraykib['KIBC'] = $kibc['total'];
+			$arraykib['KIBC_NILAI'] = $kibc['nilai'];
 		} else {
 			$kibc = 0;
 			$arraykib['KIBC'] = 0; 
+			$arraykib['KIBC_NILAI'] = 0;
 		}
 
 		//KIB D
@@ -300,15 +306,17 @@ class HomeController extends Controller
 		$query = json_decode(json_encode($query), true);
 		if ($query['nilai'] == 1) {
 			$kibd = DB::select( DB::raw("
-						SELECT count(sts) as total
+						SELECT count(sts) as total, sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as nilai
 						FROM $tbld
-						WHERE sts = 1
+						WHERE sts = 1 AND kd_app='1' AND (jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(jukor_form,'')='')
 						"))[0];
 			$kibd = json_decode(json_encode($kibd), true);
 			$arraykib['KIBD'] = $kibd['total'];
+			$arraykib['KIBD_NILAI'] = $kibd['nilai'];
 		} else {
 			$kibd = 0;
 			$arraykib['KIBD'] = 0; 
+			$arraykib['KIBD_NILAI'] = 0;
 		}
 
 		//KIB E
@@ -325,15 +333,17 @@ class HomeController extends Controller
 		$query = json_decode(json_encode($query), true);
 		if ($query['nilai'] == 1) {
 			$kibe = DB::select( DB::raw("
-						SELECT count(sts) as total
+						SELECT count(sts) as total, sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as nilai
 						FROM $tble
-						WHERE sts = 1
+						WHERE sts = 1 AND kd_app='1' AND (jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(jukor_form,'')='')
 						"))[0];
 			$kibe = json_decode(json_encode($kibe), true);
 			$arraykib['KIBE'] = $kibe['total'];
+			$arraykib['KIBE_NILAI'] = $kibe['nilai'];
 		} else {
 			$kibe = 0;
 			$arraykib['KIBE'] = 0; 
+			$arraykib['KIBE_NILAI'] = 0;
 		}
 
 		//KIB F
@@ -350,20 +360,56 @@ class HomeController extends Controller
 		$query = json_decode(json_encode($query), true);
 		if ($query['nilai'] == 1) {
 			$kibf = DB::select( DB::raw("
-						SELECT count(sts) as total
+						SELECT count(sts) as total, sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as nilai
 						FROM $tblf
-						WHERE sts = 1
+						WHERE sts = 1 AND kd_app='1' AND (jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(jukor_form,'')='')
 						"))[0];
 			$kibf = json_decode(json_encode($kibf), true);
 			$arraykib['KIBF'] = $kibf['total'];
+			$arraykib['KIBF_NILAI'] = $kibf['nilai'];
 		} else {
 			$kibf = 0;
 			$arraykib['KIBF'] = 0; 
+			$arraykib['KIBF_NILAI'] = 0;
+		}
+
+		//KIB G EKSTRAKOMPTABEL
+		$tblg = "bpadlaporandata.dbo.REKON5_G" . $year;
+		$query = DB::select( DB::raw("
+					IF OBJECT_ID('$tblg') IS NOT NULL
+					   BEGIN
+						  select 1 as nilai
+					   END;
+					ELSE
+					   BEGIN
+						  select 0 as nilai
+					   END;"))[0];
+		$query = json_decode(json_encode($query), true);
+		if ($query['nilai'] == 1) {
+			$kibg = DB::select( DB::raw("
+						SELECT count(sts) as total, sum(ISNULL(harga, 0) + ISNULL(jukor_niladd, 0) + ISNULL(jukor_nilai, 0) + ISNULL(jukor_kapitalisasi, 0) + ISNULL(NILRENOV, 0)) as nilai
+						FROM $tblg
+						WHERE sts = 1 AND kd_app='1' AND (jukor_form NOT IN ('-','#','F','TK','RNV','RNX','AGD','H','I','J','K','L','M','PPAX','PPAD','G','O') OR isnull(jukor_form,'')='')
+						"))[0];
+			$kibg = json_decode(json_encode($kibg), true);
+			$arraykib['KIBG'] = $kibg['total'];
+			$arraykib['KIBG_NILAI'] = $kibg['nilai'];
+		} else {
+			$kibg = 0;
+			$arraykib['KIBG'] = 0; 
+			$arraykib['KIBG_NILAI'] = 0;
+		}
+
+		if (is_null($request->katnow)) {
+			$katnow = '';
+		} else {
+			$katnow = $request->katnow;
 		}
 
 		return view('home')
 				->with('years', $years)
 				->with('yearnow', $year)
+				->with('katnow', $katnow)
 				->with('arraykib', $arraykib);
 	}
 }

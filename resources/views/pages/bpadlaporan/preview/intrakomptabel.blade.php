@@ -160,14 +160,14 @@
 				?>
 				<tr>
 					<td colspan="4" style="text-align: center; text-transform: uppercase; font-weight: bold;">Jumlah</td>
-					<td style="text-align: right;">{{ number_format($jmlqtyawal) }}</td>
-					<td style="text-align: right;">{{ number_format($jmlnilawal) }}</td>
-					<td style="text-align: right;">{{ number_format($jmlqtytambah) }}</td>
-					<td style="text-align: right;">{{ number_format($jmlhargatambah) }}</td>
-					<td style="text-align: right;">{{ number_format($jmlqtykurang) }}</td>
-					<td style="text-align: right;">{{ number_format($jmlhargakurang) }}</td>
-					<td style="text-align: right;">{{ number_format($jmlqtyakhir) }}</td>
-					<td style="text-align: right;">{{ number_format($jmlnilakhir) }}</td>
+					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlqtyawal) }}</td>
+					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlnilawal) }}</td>
+					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlqtytambah) }}</td>
+					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlhargatambah) }}</td>
+					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlqtykurang) }}</td>
+					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlhargakurang) }}</td>
+					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlqtyakhir) }}</td>
+					<td style="text-align: right; font-weight: bold;">{{ number_format($jmlnilakhir) }}</td>
 				</tr>
 			</tbody>
 		</table>	

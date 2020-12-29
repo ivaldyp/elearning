@@ -93,31 +93,6 @@
 												</select>
 											</div>
 										</div>
-										<hr>
-										<div class="form-group">
-											<label for="kibnow" class="col-md-1 control-label"> KIB </label>
-											<div class="col-md-5">
-												<select class="form-control" name="kibnow" id="kibnow" onchange="this.form.submit()">
-													<option <?php if ($kibnow == "A::Tanah"): ?> selected <?php endif ?> value="A::Tanah">A - Tanah</option>
-													<option <?php if ($kibnow == "B::Peralatan & Mesin"): ?> selected <?php endif ?> value="B::Peralatan & Mesin">B - Peralatan & Mesin</option>
-													<option <?php if ($kibnow == "C::Gedung & Bangunan"): ?> selected <?php endif ?> value="C::Gedung & Bangunan">C - Gedung & Bangunan</option>
-													<option <?php if ($kibnow == "D::Jalan, Irigasi, dan Jaringan"): ?> selected <?php endif ?> value="D::Jalan, Irigasi, dan Jaringan">D - Jalan, Irigasi, dan Jaringan</option>
-													<option <?php if ($kibnow == "E::Aset Lainnya"): ?> selected <?php endif ?> value="E::Aset Lainnya">E - Aset Lainnya</option>
-													<option <?php if ($kibnow == "F::Konstruksi Dalam Pengerjaan"): ?> selected <?php endif ?> value="F::Konstruksi Dalam Pengerjaan">F - Konstruksi Dalam Pengerjaan</option>
-												</select>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label for="periodenow" class="col-md-1 control-label"> Periode </label>
-											<div class="col-md-5">
-												<select class="form-control" name="periodenow" id="periodenow" onchange="this.form.submit()">
-													<option <?php if ($periodenow == "saldoawal::saldoakhir"): ?> selected <?php endif ?> value="saldoawal::saldoakhir">Tahunan</option>
-													<option <?php if ($periodenow == "saldoawal::semester2"): ?> selected <?php endif ?> value="saldoawal::semester2">Semester 1</option>
-													<option <?php if ($periodenow == "semester2::saldoakhir"): ?> selected <?php endif ?> value="semester2::saldoakhir">Semester 2</option>
-												</select>
-											</div>
-										</div>
 									</form>
 								</div>
 								<hr>	
@@ -127,9 +102,34 @@
 
 										<input id="tahun" type="hidden" name="tahun" value="{{ $yearnow }}">
 										<input id="wilayah" type="hidden" name="wilayah" value="{{ $wilnow }}">
-										<input id="kib" type="hidden" name="kib" value="{{ $kibnow }}">
-										<input id="durasi" type="hidden" name="durasi" value="{{ $periodenow }}">
 										<input id="laporan" type="hidden" name="laporan" value="K01">
+
+										<div class="form-group">
+											<label for="kib" class="col-md-1 control-label"> KIB </label>
+											<div class="col-md-5">
+												<select class="form-control" name="kib" id="kib">
+													<option value="A::Tanah">A - Tanah</option>
+													<option value="B::Peralatan & Mesin">B - Peralatan & Mesin</option>
+													<option value="C::Gedung & Bangunan">C - Gedung & Bangunan</option>
+													<option value="D::Jalan, Irigasi, dan Jaringan">D - Jalan, Irigasi, dan Jaringan</option>
+													<option value="E::Aset Lainnya">E - Aset Lainnya</option>
+													<option value="F::Konstruksi Dalam Pengerjaan">F - Konstruksi Dalam Pengerjaan</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="durasi" class="col-md-1 control-label"> Periode </label>
+											<div class="col-md-5">
+												<select class="form-control" name="durasi" id="durasi">
+													<!-- <option value="saldoawal::semester1">Saldo Awal -> Semester 1</option> -->
+													<option value="saldoawal::saldoakhir">Saldo Awal -> Saldo Akhir</option>
+													<!-- <option value="saldoawal::audited">Saldo Awal -> Audited</option> -->
+												</select>
+											</div>
+										</div>
+
+										<hr>
 
 										<div class="table-responsive" style="height:800px;overflow:auto;">
 											@if(!(is_null($pds)))

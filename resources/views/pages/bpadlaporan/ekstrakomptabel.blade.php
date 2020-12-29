@@ -93,6 +93,18 @@
 												</select>
 											</div>
 										</div>
+										<hr>
+
+										<div class="form-group">
+											<label for="periodenow" class="col-md-1 control-label"> Periode </label>
+											<div class="col-md-5">
+												<select class="form-control" name="periodenow" id="periodenow" onchange="this.form.submit()">
+													<option <?php if ($periodenow == "2::5"): ?> selected <?php endif ?> value="2::5">Tahunan</option>
+													<option <?php if ($periodenow == "2::4"): ?> selected <?php endif ?> value="2::4">Semester 1</option>
+													<option <?php if ($periodenow == "4::5"): ?> selected <?php endif ?> value="4::5">Semester 2</option>
+												</select>
+											</div>
+										</div>
 									</form>
 								</div>
 								<hr>	
@@ -102,21 +114,9 @@
 
 										<input id="tahun" type="hidden" name="tahun" value="{{ $yearnow }}">
 										<input id="wilayah" type="hidden" name="wilayah" value="{{ $wilnow }}">
+										<input id="durasi" type="hidden" name="durasi" value="{{ $periodenow }}">
 										<input id="laporan" type="hidden" name="laporan" value="K02">
-
-										<div class="form-group">
-											<label for="durasi" class="col-md-1 control-label"> Periode </label>
-											<div class="col-md-5">
-												<select class="form-control" name="durasi" id="durasi">
-													<!-- <option value="saldoawal::semester1">Saldo Awal -> Semester 1</option> -->
-													<option value="1::5">Saldo Awal -> Saldo Akhir</option>
-													<!-- <option value="saldoawal::audited">Saldo Awal -> Audited</option> -->
-												</select>
-											</div>
-										</div>
-
-										<hr>
-
+										
 										<div class="table-responsive" style="height:800px;overflow:auto;">
 											@if(!(is_null($pds)))
 											<table class="myTable table table-hover table-striped" > 
